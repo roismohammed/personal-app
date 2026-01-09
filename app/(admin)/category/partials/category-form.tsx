@@ -40,7 +40,7 @@ export default function CategoryForm({ defaultValues, onSuccess }: CategoryPops)
   // };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
+    <form className="space-y-3">
       <div>
         <Label className="text-sm font-medium">Title</Label>
         <Input

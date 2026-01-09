@@ -1,8 +1,8 @@
 
-import WrapperLayout from "../wrapperLayout";
+import WrapperLayout from "../../../components/wrapperLayout";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { GridPattern } from "../ui/grid-pattern";
+import { Button } from "../../../components/ui/button";
+import { GridPattern } from "../../../components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
 export default function CallToAction() {
     return (

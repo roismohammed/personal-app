@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Check, Code, Palette, Smartphone } from "lucide-react";
 import { motion, Variants } from 'motion/react';
-import WrapperLayout from "../wrapperLayout";
+import WrapperLayout from "../../../components/wrapperLayout";
 
 export default function ServiceSection() {
 

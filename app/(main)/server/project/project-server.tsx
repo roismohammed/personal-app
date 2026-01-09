@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { createClient } from "@/lib/supabase/server"
 import { ProjectData } from "@/types"
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
-import { motion, Variants } from 'motion/react';
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,32 +19,15 @@ export default async function ProjectServer() {
     if (error) {
         return <p className="text-center">Gagal memuat project</p>
     }
-    const containerVariants: Variants = {
-        hidden: { opacity: 0, y: 40 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut",
-                // staggerChildcren: 0.15,
-            },
-        },
-    };
+
     return (
-        <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        <div className="grid grid-cols-3 gap-4">
             {projects.length === 0 ? (
                 <p className="col-span-full text-center text-muted-foreground">
                     Tidak ada project
                 </p>
             ) : (
-                projects?.map((project:ProjectData) => {
+                projects?.map((project: ProjectData) => {
                     const techList: string[] =
                         typeof project.tech_stack === "string"
                             ? project.tech_stack
@@ -138,8 +120,6 @@ export default async function ProjectServer() {
                     );
                 })
             )}
-
-
-        </motion.div>
+        </div>
     )
 }

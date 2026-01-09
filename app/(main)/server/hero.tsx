@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { GridPattern } from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
-import WrapperLayout from '../wrapperLayout';
+import WrapperLayout from '../../../components/wrapperLayout';
 export default function HeroSection() {
     return (
         <div>
