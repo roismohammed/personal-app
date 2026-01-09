@@ -1,7 +1,7 @@
 import BlogSection from "@/components/home/blog";
 import CallToAction from "@/components/home/callToAction";
 import HeroSection from "@/components/home/hero";
-import ProjectSection from "@/components/home/project";
+import ProjectSection from "@/components/home/project/project";
 import ServiceSection from "@/components/home/service";
 
 export default function Page() {

@@ -84,7 +84,7 @@ const data = {
     },
 
   ],
-  projects: [
+projects: [
      {
       title: "Settings",
       url: "#",

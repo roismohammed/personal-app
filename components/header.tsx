@@ -88,7 +88,7 @@ export default function Header01() {
             }
         };
 
-        window.addEventListener("scroll", handleScroll);z
+        window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []); // Tambah dependency array
 

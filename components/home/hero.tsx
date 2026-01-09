@@ -24,8 +24,8 @@ export default function HeroSection() {
                         [18, 10],
                         [10, 15],
                         [15, 10],
-                        [10, 15],
-                        [15, 10],
+                        [10, 16],
+                        [15, 11],
                     ]}
                     className={cn(
                         "pointer-events-none absolute inset-0 h-full w-full",
