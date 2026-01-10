@@ -27,7 +27,7 @@ export default async function ProjectServer() {
                     Tidak ada project
                 </p>
             ) : (
-                projects?.map((project: ProjectData) => {
+                projects?.map((project: ProjectData) => {  
                     const techList: string[] =
                         typeof project.tech_stack === "string"
                             ? project.tech_stack

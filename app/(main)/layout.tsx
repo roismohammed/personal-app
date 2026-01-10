@@ -10,7 +10,7 @@ export default function MainLayout({
   return (
     <div className=" text-gray-900 dark:text-gray-200">
       <Header01 />
-      <div className="bg-gray-50">
+      <div className="bg-gray-50 dark:bg-zinc-800">
         {children}
       </div>
       <Footer />

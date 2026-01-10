@@ -1,8 +1,8 @@
-import BlogSection from "@/app/(main)/server/blog/blog-section";
-import CallToAction from "@/app/(main)/server/callToAction";
-import HeroSection from "@/app/(main)/server/hero";
-import ProjectSection from "@/app/(main)/server/project/project-section";
-import ServiceSection from "@/app/(main)/server/service";
+import BlogSection from "@/app/(main)/serverHome/blog/blog-section";
+import CallToAction from "@/app/(main)/serverHome/callToAction";
+import HeroSection from "@/app/(main)/serverHome/hero";
+import ProjectSection from "@/app/(main)/serverHome/project/project-section";
+import ServiceSection from "@/app/(main)/serverHome/service";
 
 export default function Page() {
   return (

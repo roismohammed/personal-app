@@ -24,11 +24,12 @@ import {
   SheetDescription,
   SheetFooter,
 } from "@/components/ui/sheet";
-import client from "@/lib/client";
+// import client from "@/lib/client";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ProjectData } from "@/types";
 
 interface ProjectFormProps {
   initialData?: Partial<ProjectData>;
@@ -133,100 +134,99 @@ export default function ProjectForm({
   const projectId = initialData?.id ?? null;
 
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
 
-    try {
-      // Validasi
-      if (!formData.name.trim()) {
-        toast.error("Project name is required");
-        return;
-      }
+  //   try {
+  //     if (!formData.name.trim()) {
+  //       toast.error("Project name is required");
+  //       return;
+  //     }
 
-      if (!formData.description.trim()) {
-        toast.error("Description is required");
-        return;
-      }
+  //     if (!formData.description.trim()) {
+  //       toast.error("Description is required");
+  //       return;
+  //     }
 
-      const validTechStack = formData.tech_stack.filter((t: string) => t.trim());
-      if (validTechStack.length === 0) {
-        toast.error("At least one tech stack is required");
-        return;
-      }
+  //     const validTechStack = formData.tech_stack.filter((t: string) => t.trim());
+  //     if (validTechStack.length === 0) {
+  //       toast.error("At least one tech stack is required");
+  //       return;
+  //     }
 
-      const finalImageUrl = featuredImage || null;
+  //     const finalImageUrl = featuredImage || null;
 
-      const payload = {
-        name: formData.name.trim(),
-        status: formData.status.trim(),
-        description: formData.description.trim(),
-        image: finalImageUrl,
-        tech_stack: validTechStack,
-        link_demo: formData.link_demo.trim() || null,
-        link_github: formData.link_github.trim() || null,
-      };
+  //     const payload = {
+  //       name: formData.name.trim(),
+  //       status: formData.status.trim(),
+  //       description: formData.description.trim(),
+  //       image: finalImageUrl,
+  //       tech_stack: validTechStack,
+  //       link_demo: formData.link_demo.trim() || null,
+  //       link_github: formData.link_github.trim() || null,
+  //     };
 
-      let result;
+  //     let result;
 
-      // EDIT
-      if (projectId) {
-        result = await client
-          .from("projects")
-          .update(payload)
-          .eq("id", projectId)
-          .select();
 
-        if (result.error) {
-          toast.error(`Failed to update project: ${result.error.message}`);
-          return;
-        }
+  //     if (projectId) {
+  //       result = await client
+  //         .from("projects")
+  //         .update(payload)
+  //         .eq("id", projectId)
+  //         .select();
 
-        toast.success("Project updated successfully!");
-        router.push("/dashboard/projects");
-        setIsSheetOpen(false);
-        return;
-      }
+  //       if (result.error) {
+  //         toast.error(`Failed to update project: ${result.error.message}`);
+  //         return;
+  //       }
 
-      // CREATE
-      result = await client
-        .from("projects")
-        .insert([
-          {
-            ...payload,
-            created_at: new Date().toISOString(),
-          },
-        ])
-        .select();
+  //       toast.success("Project updated successfully!");
+  //       router.push("/dashboard/projects");
+  //       setIsSheetOpen(false);
+  //       return;
+  //     }
 
-      if (result.error) {
-        toast.error(`Failed to create project: ${result.error.message}`);
-        return;
-      }
+  
+  //     result = await client
+  //       .from("projects")
+  //       .insert([
+  //         {
+  //           ...payload,
+  //           created_at: new Date().toISOString(),
+  //         },
+  //       ])
+  //       .select();
 
-      toast.success("Project created successfully!");
-      router.push("/dashboard/projects");
-      setIsSheetOpen(false);
+  //     if (result.error) {
+  //       toast.error(`Failed to create project: ${result.error.message}`);
+  //       return;
+  //     }
 
-      // Reset
-      setFormData({
-        name: "",
-        status: "",
-        description: "",
-        tech_stack: [""],
-        link_demo: "",
-        link_github: "",
-      });
-      setFeaturedImage(null);
-      setImageFile(null);
+  //     toast.success("Project created successfully!");
+  //     router.push("/dashboard/projects");
+  //     setIsSheetOpen(false);
 
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      toast.error("An unexpected error occurred");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+
+  //     setFormData({
+  //       name: "",
+  //       status: "",
+  //       description: "",
+  //       tech_stack: [""],
+  //       link_demo: "",
+  //       link_github: "",
+  //     });
+  //     setFeaturedImage(null);
+  //     setImageFile(null);
+
+  //   } catch (error) {
+  //     console.error("Unexpected error:", error);
+  //     toast.error("An unexpected error occurred");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
 
 
   // Next button handler
@@ -275,7 +275,8 @@ export default function ProjectForm({
       </div>
 
       {/* FORM */}
-      <form id="project-form" onSubmit={handleSubmit} className="space-y-6">
+      {/* onSubmit={handleSubmit} */}
+      <form id="project-form"  className="space-y-6">
         {/* Project Details */}
         <div className="space-y-6 p-6 border border-gray-200 rounded-lg bg-white">
           <div className="flex items-center gap-2 mb-4">
