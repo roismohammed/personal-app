@@ -1,7 +1,4 @@
-"use client"
-
 import { motion, Variants } from "motion/react"
-import BlogCard from "./blog-card"
 import { PostData } from "@/types"
 import CardBlog from "@/components/cardBlog"
 

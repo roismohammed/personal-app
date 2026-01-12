@@ -1,5 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
+"use server"
 import { PostData } from "@/types";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function fetchPostBySlug(slug: string): Promise<PostData | null> {
   const supabase = await createClient()

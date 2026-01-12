@@ -1,23 +1,18 @@
+"use server"
 import CardBlog from "@/components/cardBlog"
 import { createClient } from "@/lib/supabase/server"
+import { PostData } from "@/types"
 export default async function ServerBlog() {
   const supabase = await createClient()
 
-  const { data: posts, error } = await supabase
-    .from("posts")
-    .select(`
+const { data: posts, error } = await supabase
+  .from("posts")
+  .select(`*,category:category (
       id,
-      title,
-      slug,
-      description,
-      image,
-      created_at,
-      category:category (
-        id,
-        name
-      )
-    `)
-    .order("created_at", { ascending: false })
+      name
+    )
+  `)
+  .order("created_at", { ascending: false })
 
   if (error) {
     return <p className="text-center text-red-500">Gagal memuat data</p>

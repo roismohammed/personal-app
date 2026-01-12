@@ -234,7 +234,7 @@ export default function ProjectForm({ initialData }: Props) {
                   onClick={() =>
                     setForm({
                       ...form,
-                      tech_stack: form.tech_stack.filter((_, x) => x !== i),
+                      tech_stack: form.tech_stack.filter((x:any) => x !== i),
                     })
                   }
                   className="shrink-0"

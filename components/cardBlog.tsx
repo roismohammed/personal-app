@@ -5,8 +5,10 @@ import { Button } from './ui/button';
 import Image from 'next/image';
 import { Eye } from 'lucide-react';
 import { PostData } from '@/types/index';
-
-export default function CardBlog({ posts }:{posts : PostData}) {
+interface PostsProps {
+    posts:PostData
+}
+export default function CardBlog({ posts }:PostsProps) {
     return (
         <div>
             <Link href={`/blog/${posts.slug}`} key={posts.id} prefetch={false}>

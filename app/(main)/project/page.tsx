@@ -3,7 +3,7 @@ import { GridPattern } from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import WrapperLayout from "@/components/wrapperLayout";
 import { Code } from "lucide-react";
-import ServerProject from "./partials/server-project";
+import ServerProject from "./partials/server-project"; 
 
 
 export default async function ProjectPage() {

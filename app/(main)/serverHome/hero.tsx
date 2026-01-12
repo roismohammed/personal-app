@@ -1,4 +1,3 @@
-"use client"
 import { TerminalDemo } from "@/components/terminal-demo";
 import { Highlighter } from "@/components/ui/highlighter";
 import { Button } from "@/components/ui/button";

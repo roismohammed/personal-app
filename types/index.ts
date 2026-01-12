@@ -15,8 +15,8 @@ export interface PostData {
     name: string;
   } | number;
   tags:string
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 }
 
 

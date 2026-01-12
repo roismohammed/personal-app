@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server"
-import { ProjectData } from "@/types"
 import BlogGridClient from "./blog-grid"
 
 export default async function BlogServer() {
@@ -15,5 +14,5 @@ export default async function BlogServer() {
     return <p className="text-center">Gagal memuat project</p>
   }
 
-  return <BlogGridClient posts={posts as ProjectData[]} />
+  return <BlogGridClient posts={posts } />
 }
