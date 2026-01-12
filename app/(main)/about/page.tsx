@@ -55,14 +55,10 @@ const AboutPage = () => {
                                             {personalInfo.title}
                                         </p>
 
-                                        <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-6">
+                                        <div className="flex flex-wrap gap-3 justify-center mb-6">
                                             <Button className="bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 cursor-pointer">
                                                 <Download className="h-4 w-4" />
                                                 Download CV
-                                            </Button>
-
-                                            <Button variant="outline" className="border border-slate-300 dark:text-gray-200 text-slate-700 px-6 py-3 rounded-lg hover:bg-slate-50 transition-colors">
-                                                Contact Me
                                             </Button>
                                         </div>
                                     </div>

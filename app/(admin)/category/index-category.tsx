@@ -79,7 +79,10 @@ export default function IndexCategory({ categories }: Props) {
 
               {/* ROUTE KE EDIT PAGE */}
               <DropdownMenuItem
-                onClick={() => router.push(`/category/edit/${row.original.id}`)}
+                onClick={() => {
+                  setEditingCategory(row.original)
+                  setOpen(true)
+                }}
               >
                 Edit
               </DropdownMenuItem>

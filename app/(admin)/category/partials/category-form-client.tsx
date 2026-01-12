@@ -16,10 +16,7 @@ interface Props {
   action: (formData: FormData) => Promise<void>;
 }
 
-export default function CategoryFormClient({
-  defaultValues,
-  action,
-}: Props) {
+export default function CategoryFormClient({defaultValues,action}: Props) {
   const [name, setName] = useState(defaultValues?.name || "");
   const [description, setDescription] = useState(
     defaultValues?.description || ""

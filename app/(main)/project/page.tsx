@@ -7,7 +7,6 @@ import ServerProject from "./partials/server-project";
 
 
 export default async function ProjectPage() {
-    // const projects = await fetchProject();
 
     return (
         <div>

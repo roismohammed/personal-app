@@ -1,569 +1,349 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import {
-  Code,
-  Upload,
-  X,
-  Save,
-  Loader2,
-  Edit,
-  Trash2,
-  Plus,
-} from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetFooter,
-} from "@/components/ui/sheet";
-// import client from "@/lib/client";
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
+import { Trash2, Plus, Upload, X } from "lucide-react";
 import Image from "next/image";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ProjectData } from "@/types";
+import { saveProject } from "./project-server";
+import SubmitButton from "./submit-button";
 
-interface ProjectFormProps {
-  initialData?: Partial<ProjectData>;
-  onSubmit?: (data: ProjectData) => Promise<void> | void;
-  submitText?: string;
-  isEditing?: boolean;
-  isLoading?: boolean;
+interface Props {
+  initialData?: any;
 }
 
-type FormData = {
-  name: string;
-  description: string;
-  tech_stack: string[];
-  status: string;
-  link_demo: string;
-  link_github: string;
-  image?: string;
-};
+export default function ProjectForm({ initialData }: Props) {
+  const fileRef = useRef<HTMLInputElement>(null);
 
-
-export default function ProjectForm({
-  initialData,
-  submitText = "Create Project",
-  isEditing = false,
-  isLoading = false,
-}: ProjectFormProps) {
-  const router = useRouter();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [featuredImage, setFeaturedImage] = useState<string | null>(
-    initialData?.image || null
-  );
-  const [, setImageFile] = useState<File | null>(null);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     name: initialData?.name || "",
     description: initialData?.description || "",
-    tech_stack: Array.isArray(initialData?.tech_stack)
-      ? initialData.tech_stack
-      : [""],
-    status: initialData?.status || "",
+    status: initialData?.status || "completed",
     link_demo: initialData?.link_demo || "",
     link_github: initialData?.link_github || "",
+    tech_stack: initialData?.tech_stack || [""],
   });
 
-  const handleChange = <K extends keyof FormData>(
-    key: K,
-    value: FormData[K]
-  ) => {
-    setFormData((prev) => ({ ...prev, [key]: value }));
+  const [image, setImage] = useState<string | null>(
+    initialData?.image || null
+  );
+
+  const handleTechChange = (i: number, val: string) => {
+    const t = [...form.tech_stack];
+    t[i] = val;
+    setForm({ ...form, tech_stack: t });
   };
 
-  // Tech Stack Handlers
-  const handleTechChange = (index: number, value: string) => {
-    const updatedTech = [...formData.tech_stack];
-    updatedTech[index] = value;
-    handleChange("tech_stack", updatedTech);
+  const removeImage = () => {
+    setImage(null);
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
   };
-
-  const handleAddTech = () => {
-    handleChange("tech_stack", [...formData.tech_stack, ""]);
-  };
-
-  const handleRemoveTech = (index: number) => {
-    const updatedTech = [...(formData.tech_stack || [])].filter((_, i) => i !== index);
-    handleChange("tech_stack", updatedTech.length > 0 ? updatedTech : [""]);
-  };
-
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (typeof window === "undefined") return;
+    const f = e.target.files?.[0];
+    if (!f) return;
 
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      toast.error("Please upload a valid image");
+    // Validasi file type
+    if (!f.type.startsWith("image/")) {
+      alert("Please select an image file");
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image must be under 5MB");
+    // Validasi file size (max 5MB)
+    if (f.size > 5 * 1024 * 1024) {
+      alert("Image size should be less than 5MB");
       return;
     }
 
-    setImageFile(file);
-
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      setFeaturedImage(ev.target?.result as string);
-    };
-    reader.readAsDataURL(file);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    const r = new FileReader();
+    r.onload = () => setImage(r.result as string);
+    r.readAsDataURL(f);
   };
-
-
-  const removeFeaturedImage = () => setFeaturedImage(null);
-  const projectId = initialData?.id ?? null;
-
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
-
-  //   try {
-  //     if (!formData.name.trim()) {
-  //       toast.error("Project name is required");
-  //       return;
-  //     }
-
-  //     if (!formData.description.trim()) {
-  //       toast.error("Description is required");
-  //       return;
-  //     }
-
-  //     const validTechStack = formData.tech_stack.filter((t: string) => t.trim());
-  //     if (validTechStack.length === 0) {
-  //       toast.error("At least one tech stack is required");
-  //       return;
-  //     }
-
-  //     const finalImageUrl = featuredImage || null;
-
-  //     const payload = {
-  //       name: formData.name.trim(),
-  //       status: formData.status.trim(),
-  //       description: formData.description.trim(),
-  //       image: finalImageUrl,
-  //       tech_stack: validTechStack,
-  //       link_demo: formData.link_demo.trim() || null,
-  //       link_github: formData.link_github.trim() || null,
-  //     };
-
-  //     let result;
-
-
-  //     if (projectId) {
-  //       result = await client
-  //         .from("projects")
-  //         .update(payload)
-  //         .eq("id", projectId)
-  //         .select();
-
-  //       if (result.error) {
-  //         toast.error(`Failed to update project: ${result.error.message}`);
-  //         return;
-  //       }
-
-  //       toast.success("Project updated successfully!");
-  //       router.push("/dashboard/projects");
-  //       setIsSheetOpen(false);
-  //       return;
-  //     }
-
-  
-  //     result = await client
-  //       .from("projects")
-  //       .insert([
-  //         {
-  //           ...payload,
-  //           created_at: new Date().toISOString(),
-  //         },
-  //       ])
-  //       .select();
-
-  //     if (result.error) {
-  //       toast.error(`Failed to create project: ${result.error.message}`);
-  //       return;
-  //     }
-
-  //     toast.success("Project created successfully!");
-  //     router.push("/dashboard/projects");
-  //     setIsSheetOpen(false);
-
-
-  //     setFormData({
-  //       name: "",
-  //       status: "",
-  //       description: "",
-  //       tech_stack: [""],
-  //       link_demo: "",
-  //       link_github: "",
-  //     });
-  //     setFeaturedImage(null);
-  //     setImageFile(null);
-
-  //   } catch (error) {
-  //     console.error("Unexpected error:", error);
-  //     toast.error("An unexpected error occurred");
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
-
-  // Next button handler
-  const handleNext = () => {
-    if (!formData.name.trim() || !formData.description.trim()) {
-      toast.error("Please fill in project name and description first");
-      return;
-    }
-
-    const validTech = formData.tech_stack.filter((t: string) => t.trim());
-    if (validTech.length === 0) {
-      toast.error("Please add at least one technology");
-      return;
-    }
-    setIsSheetOpen(true);
-  };
-
-
 
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-            {isEditing ? "Edit Project" : "Create New Project"}
-          </h1>
-          <p className="text-gray-600 mt-1 flex items-center gap-2">
-            <span
-              className={`w-1.5 h-1.5 rounded-full animate-pulse ${isEditing ? "bg-blue-500" : "bg-black"
-                }`}
-            />
-            {isEditing
-              ? "Update your project details"
-              : "Add a new project to your portfolio"}
+    <form action={saveProject} className="space-y-6 ">
+      <input
+        type="hidden"
+        name="tech_stack"
+        value={JSON.stringify(form.tech_stack.filter(Boolean))}
+      />
+      <input type="hidden" name="image" value={image ?? ""} />
+      {initialData?.id && (
+        <input type="hidden" name="id" value={initialData.id} />
+      )}
+
+      {/* Project Details Card */}
+      <div className="space-y-6 p-6 border border-gray-200 rounded-lg bg-white">
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold text-gray-900">
+            Project Information
+          </h2>
+          <p className="text-sm text-gray-600">
+            Enter the basic details of your project
           </p>
         </div>
 
-        <Button
-          type="button"
-          onClick={handleNext}
-          className="px-6 bg-black hover:bg-zinc-700 cursor-pointer text-white"
-        >
-          Next
-        </Button>
-      </div>
-
-      {/* FORM */}
-      {/* onSubmit={handleSubmit} */}
-      <form id="project-form"  className="space-y-6">
-        {/* Project Details */}
-        <div className="space-y-6 p-6 border border-gray-200 rounded-lg bg-white">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <Code className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900">
-                Project Details
-              </h2>
-              <p className="text-sm text-gray-600">
-                Enter the basic information about your project
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            {/* Project Name */}
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-base font-medium">
-                Project Name *
-              </Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-                placeholder="Enter project name..."
-                className="text-lg h-12"
-                required
-              />
-            </div>
-
-            {/* Description */}
-            <div className="space-y-2">
-              <Label htmlFor="description" className="text-base font-medium">
-                Description *
-              </Label>
-              <Textarea
-                id="description"
-                value={formData.description}
-                onChange={(e) => handleChange("description", e.target.value)}
-                placeholder="Describe your project..."
-                rows={4}
-                className="resize-none"
-                required
-              />
-            </div>
-          </div>
+        {/* Project Name */}
+        <div className="space-y-2">
+          <Label htmlFor="name" className="text-base font-medium">
+            Project Name *
+          </Label>
+          <Input
+            id="name"
+            name="name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            placeholder="My Awesome Project"
+            required
+            className="text-base"
+          />
         </div>
 
-        {/* Tech Stack */}
-        <div className="p-6 border border-gray-200 rounded-lg bg-white">
-          <div className="mb-4">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              Tech Stack *
-            </h2>
-            <p className="text-sm text-gray-600">
-              Technologies used in this project
-            </p>
-          </div>
+        {/* Description */}
+        <div className="space-y-2">
+          <Label htmlFor="description" className="text-base font-medium">
+            Description *
+          </Label>
+          <Textarea
+            id="description"
+            name="description"
+            value={form.description}
+            onChange={(e) =>
+              setForm({ ...form, description: e.target.value })
+            }
+            placeholder="Describe your project, its purpose, and key features..."
+            rows={5}
+            required
+            className="resize-none"
+          />
+          <p className="text-xs text-muted-foreground">
+            {form.description.length} characters
+          </p>
+        </div>
 
-          <div className="space-y-3">
-            {formData.tech_stack.map((tech: string, index: number) => (
-              <div key={index} className="flex gap-2">
-                <Input
-                  type="text"
-                  value={tech}
-                  placeholder={`Technology ${index + 1}`}
-                  onChange={(e) => handleTechChange(index, e.target.value)}
-                  className="flex-1"
-                />
+        {/* Status */}
+        <div className="space-y-2">
+          <Label htmlFor="status" className="text-base font-medium">
+            Project Status *
+          </Label>
+          <Select
+            value={form.status}
+            onValueChange={(val) => setForm({ ...form, status: val })}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="completed">✅ Completed</SelectItem>
+              <SelectItem value="in-progress">🔄 In Progress</SelectItem>
+              <SelectItem value="planned">📋 Planned</SelectItem>
+              <SelectItem value="archived">📦 Archived</SelectItem>
+            </SelectContent>
+          </Select>
+          <input type="hidden" name="status" value={form.status} />
+        </div>
+      </div>
+
+      {/* Links Card */}
+      <div className="space-y-6 p-6 border border-gray-200 rounded-lg bg-white">
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold text-gray-900">Links</h2>
+          <p className="text-sm text-gray-600">
+            Add links to your live demo and source code
+          </p>
+        </div>
+
+        {/* Demo Link */}
+        <div className="space-y-2">
+          <Label htmlFor="link_demo" className="text-base font-medium">
+            Demo Link
+          </Label>
+          <Input
+            id="link_demo"
+            name="link_demo"
+            type="url"
+            value={form.link_demo}
+            onChange={(e) => setForm({ ...form, link_demo: e.target.value })}
+            placeholder="https://your-project-demo.com"
+            className="text-base"
+          />
+          <p className="text-xs text-muted-foreground">
+            URL to your live project or demo
+          </p>
+        </div>
+
+        {/* GitHub Link */}
+        <div className="space-y-2">
+          <Label htmlFor="link_github" className="text-base font-medium">
+            GitHub Repository
+          </Label>
+          <Input
+            id="link_github"
+            name="link_github"
+            type="url"
+            value={form.link_github}
+            onChange={(e) =>
+              setForm({ ...form, link_github: e.target.value })
+            }
+            placeholder="https://github.com/username/repo"
+            className="text-base"
+          />
+          <p className="text-xs text-muted-foreground">
+            Link to your GitHub repository
+          </p>
+        </div>
+      </div>
+
+      {/* Tech Stack Card */}
+      <div className="space-y-6 p-6 border border-gray-200 rounded-lg bg-white">
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold text-gray-900">
+            Tech Stack *
+          </h2>
+          <p className="text-sm text-gray-600">
+            Add the technologies used in this project
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {form.tech_stack.map((t: string, i: number) => (
+            <div key={i} className="flex gap-2">
+              <Input
+                value={t}
+                onChange={(e) => handleTechChange(i, e.target.value)}
+                placeholder={`Technology ${i + 1} (e.g., React, Node.js)`}
+                className="flex-1"
+              />
+              {form.tech_stack.length > 1 && (
                 <Button
                   type="button"
                   variant="outline"
                   size="icon"
-                  onClick={() => handleRemoveTech(index)}
-                  disabled={formData.tech_stack.length === 1}
+                  onClick={() =>
+                    setForm({
+                      ...form,
+                      tech_stack: form.tech_stack.filter((_, x) => x !== i),
+                    })
+                  }
+                  className="shrink-0"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 size={16} />
                 </Button>
-              </div>
-            ))}
+              )}
+            </div>
+          ))}
 
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={handleAddTech}
-              className="w-full"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Technology
-            </Button>
-          </div>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() =>
+              setForm({ ...form, tech_stack: [...form.tech_stack, ""] })
+            }
+            className="w-full"
+          >
+            <Plus size={16} className="mr-2" /> Add Technology
+          </Button>
         </div>
 
-        {/* Sheet for Additional Settings */}
-        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-          <SheetContent
-            side="right"
-            className="px-0  max-h-screen overflow-y-auto"
-          >
-            <SheetHeader>
-              <SheetTitle>Project Settings</SheetTitle>
-              <SheetDescription>
-                Complete the project details before publishing
-              </SheetDescription>
-            </SheetHeader>
+        {/* Tech Stack Preview */}
+        {form.tech_stack.filter(Boolean).length > 0 && (
+          <div className="pt-4 border-t">
+            <p className="text-sm font-medium text-gray-700 mb-2">Preview:</p>
+            <div className="flex gap-2 flex-wrap">
+              {form.tech_stack.filter(Boolean).map((t: string, i: number) => (
+                <Badge key={i} variant="secondary" className="text-sm">
+                  {t}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
-            <div className="space-y-3 px-3">
-              {/* Featured Image */}
-              <div className="space-y-3">
-                <Label className="text-base font-medium">Project Image</Label>
-                <div>
-                  {featuredImage ? (
-                    <div className="relative group">
-                      <Image
-                        src={featuredImage}
-                        alt="Featured"
-                        width={600}
-                        height={400}
-                        className="w-full h-48 object-cover rounded-lg border border-gray-200"
-                      />
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="sm"
-                          onClick={removeFeaturedImage}
-                        >
-                          <X className="h-4 w-4 mr-2" />
-                          Remove
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 transition-all">
-                      <div className="flex flex-col items-center justify-center py-4">
-                        <Upload className="h-6 w-6 text-blue-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-700">
-                          Click to upload
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          PNG, JPG up to 5MB
-                        </p>
-                      </div>
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                      />
-                    </label>
-                  )}
-                </div>
-              </div>
+      {/* Image Upload Card */}
+      <div className="space-y-6 p-6 border border-gray-200 rounded-lg bg-white">
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold text-gray-900">
+            Project Image
+          </h2>
+          <p className="text-sm text-gray-600">
+            Upload a screenshot or preview of your project
+          </p>
+        </div>
 
-              {/* Demo Link */}
-              <div className="space-y-3">
-                <Label htmlFor="status" className="text-base font-medium">
-                  Status
-                </Label>
-
-                <Select
-                  value={formData.status}
-                  onValueChange={(value) => handleChange("status", value)}
+        <div>
+          {image ? (
+            <div className="relative group">
+              <Image
+                src={image}
+                alt="Project preview"
+                width={800}
+                height={400}
+                className="w-full h-64 object-cover rounded-lg border border-gray-200"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-3">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={removeImage}
                 >
-                  <SelectTrigger className="w-full" id="status">
-                    <SelectValue placeholder="Pilih status" />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    <SelectItem value="Completed">Completed</SelectItem>
-                    <SelectItem value="In progres">In progress</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-
-              {/* Demo Link */}
-              <div className="space-y-3">
-                <Label htmlFor="link_demo" className="text-base font-medium">
-                  Demo Link
-                </Label>
-                <Input
-                  id="link_demo"
-                  type="url"
-                  value={formData.link_demo}
-                  onChange={(e) => handleChange("link_demo", e.target.value)}
-                  placeholder="https://demo.example.com"
-                />
-              </div>
-
-              {/* GitHub Link */}
-              <div className="space-y-3">
-                <Label htmlFor="link_github" className="text-base font-medium">
-                  GitHub Repository
-                </Label>
-                <Input
-                  id="link_github"
-                  type="url"
-                  value={formData.link_github}
-                  onChange={(e) => handleChange("link_github", e.target.value)}
-                  placeholder="https://github.com/username/repo"
-                />
-              </div>
-
-              {/* Tech Stack Preview */}
-              <div className="space-y-3">
-                <Label className="text-base font-medium">
-                  Technologies ({formData.tech_stack.filter((t: string) => t.trim()).length})
-                </Label>
-                <div className="flex flex-wrap gap-2">
-                  {formData.tech_stack
-                    .filter((t: string) => t.trim())
-                    .map((tech: string, idx: number) => (
-                      <Badge key={idx} variant="secondary">
-                        {tech}
-                      </Badge>
-                    ))}
-                </div>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="space-y-3 p-4 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg border border-blue-200">
-                <Label className="text-base font-medium">Project Stats</Label>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Name Length</span>
-                    <span className="text-sm font-bold text-gray-900">
-                      {formData.name.length} chars
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Description</span>
-                    <span className="text-sm font-bold text-gray-900">
-                      {formData.description.length} chars
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Tech Stack Count
-                    </span>
-                    <span className="text-sm font-bold text-gray-900">
-                      {formData.tech_stack.filter((t: string) => t.trim()).length}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Mode</span>
-                    <Badge variant={isEditing ? "default" : "secondary"}>
-                      {isEditing ? "Editing" : "Creating"}
-                    </Badge>
-                  </div>
-                </div>
+                  <X className="h-4 w-4 mr-2" />
+                  Remove Image
+                </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => fileRef.current?.click()}
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  Change Image
+                </Button>
               </div>
             </div>
+          ) : (
+            <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 transition-all">
+              <div className="flex flex-col items-center justify-center py-8">
+                <Upload className="h-12 w-12 text-blue-600 mb-4" />
+                <p className="text-base font-medium text-gray-700">
+                  Click to upload project image
+                </p>
+                <p className="text-sm text-gray-500 mt-2">
+                  PNG, JPG, WebP up to 5MB
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  Recommended: 1200x630px
+                </p>
+              </div>
+              <input
+                ref={fileRef}
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+            </label>
+          )}
+        </div>
+      </div>
 
-            <SheetFooter >
-              <Button
-                type="submit"
-                form="project-form"
-                disabled={isLoading || isSubmitting}
-                className={`w-full ${isEditing
-                  ? "bg-blue-600 hover:bg-blue-700"
-                  : "bg-black hover:bg-zinc-800"
-                  }`}
-              >
-                {isLoading || isSubmitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    {isEditing ? "Updating..." : "Creating..."}
-                  </>
-                ) : (
-                  <>
-                    {isEditing ? (
-                      <Edit className="h-4 w-4 mr-2" />
-                    ) : (
-                      <Save className="h-4 w-4 mr-2" />
-                    )}
-                    {submitText}
-                  </>
-                )}
-              </Button>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
-      </form>
-    </div>
+      {/* Submit Button */}
+      <div className="flex justify-end pt-4">
+        <SubmitButton isEditing={!!initialData} />
+      </div>
+    </form>
   );
 }
