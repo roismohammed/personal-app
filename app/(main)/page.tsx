@@ -1,3 +1,5 @@
+
+
 import BlogSection from "@/app/(main)/serverHome/blog/blog-section";
 import CallToAction from "@/app/(main)/serverHome/callToAction";
 import HeroSection from "@/app/(main)/serverHome/hero";
