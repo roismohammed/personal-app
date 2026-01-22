@@ -1,4 +1,6 @@
 import WrapperLayout from "@/components/wrapperLayout";
+import MainLayout from "../layout";
+
 
 
 const experience = [
@@ -10,7 +12,7 @@ const experience = [
         achievements: ["Improved performance by 40%", "Mentored 3 junior developers"]
     },
     {
-        company: "PT Puspetindo - Magang",
+        company: "PT Puspetindo - Full-time",
         position: "Fullstuck Web Developer",
         period: "Agustus 2024 - Oktober 2024",
         description: "Developed responsive web applications and collaborated with design teams.",
@@ -19,7 +21,7 @@ const experience = [
     {
         company: "Rumah Sakit Mulia Hati - Remote Work",
         position: "Junior Developer",
-        period: "2019 - 2020",
+        period: "2025 - 2025",
         description: "Built and maintained web applications in a fast-paced startup environment.",
         achievements: ["Reduced load time by 60%", "Built MVP in 3 months"]
     }
@@ -27,7 +29,8 @@ const experience = [
 
 const IndexResume = () => {
     return (
-        <WrapperLayout>
+     <MainLayout>
+           <WrapperLayout>
             <div className="space-y-8 mt-26">
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-gray-200 mb-6">Work Experience</h3>
                 <div className="space-y-8">
@@ -50,14 +53,14 @@ const IndexResume = () => {
                                         {job.description}
                                     </p>
                                     <div className="flex flex-wrap gap-2">
-                                        {job.achievements.map((achievement, achIndex) => (
+                                        {/* {job.achievements.map((achievement, achIndex) => (
                                             <span
                                                 key={achIndex}
                                                 className="px-3 py-1 bg-blue-100 dak:bg-zinc-800 text-teal-700 dark:text-gray-200 rounded-full text-sm"
                                             >
                                                 {achievement}
                                             </span>
-                                        ))}
+                                        ))} */}
                                     </div>
                                 </div>
                             </div>
@@ -66,6 +69,7 @@ const IndexResume = () => {
                 </div>
             </div>
         </WrapperLayout>
+     </MainLayout>
     )
 }
 

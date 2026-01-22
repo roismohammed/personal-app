@@ -25,7 +25,6 @@ import { Button } from "@/components/ui/button";
 import { GridPattern } from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import WrapperLayout from "@/components/wrapperLayout";
-import ServerBlog from "./partials/server-blog";
 export const revalidate = 300;
 
 export default async function IndexBlog() {
@@ -197,7 +196,7 @@ export default async function IndexBlog() {
 
 
             <div>
-              <ServerBlog/>
+              {/* <ServerBlog/> */}
             </div>
 
           </main>

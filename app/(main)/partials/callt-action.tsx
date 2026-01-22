@@ -1,9 +1,9 @@
 
-import WrapperLayout from "../../../components/wrapperLayout";
-import Link from "next/link";
-import { Button } from "../../../components/ui/button";
-import { GridPattern } from "../../../components/ui/grid-pattern";
+import { Button } from "@/components/ui/button";
+import { GridPattern } from "@/components/ui/grid-pattern";
+import WrapperLayout from "@/components/wrapperLayout";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 export default function CallToAction() {
     return (
         <div  className="bg-gray-50 dark:bg-zinc-900">

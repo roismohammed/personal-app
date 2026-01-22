@@ -1,20 +1,18 @@
-
-
-import BlogSection from "@/app/(main)/serverHome/blog/blog-section";
-import CallToAction from "@/app/(main)/serverHome/callToAction";
-import HeroSection from "@/app/(main)/serverHome/hero";
-import ProjectSection from "@/app/(main)/serverHome/project/project-section";
-import ServiceSection from "@/app/(main)/serverHome/service";
+import ProjectSection from "./partials/project-section";
+import BlogSection from "./partials/blog-section";
+import HeroSection from "./partials/hero-sections";
+import ServiceSection from "./partials/service-section";
+import CallToAction from "./partials/callt-action";
 
 export default function Page() {
   return (
     <div>
       <div className="min-h-screen dark:from-zinc-900 dark:to-zinc-800 font-sans">
-        <HeroSection />
+        <HeroSection/>
         <ServiceSection />
         <ProjectSection />
-        <BlogSection />
-        <CallToAction />
+        <BlogSection/>
+        <CallToAction/>
       </div>
     </div>
   );

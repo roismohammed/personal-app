@@ -1,9 +1,10 @@
 "use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Code, Palette, Smartphone } from "lucide-react";
 import { motion, Variants } from 'motion/react';
-import WrapperLayout from "../../../components/wrapperLayout";
+import WrapperLayout from "@/components/wrapperLayout";
 
 export default function ServiceSection() {
 
@@ -15,7 +16,7 @@ export default function ServiceSection() {
             transition: {
                 duration: 0.6,
                 ease: "easeOut",
-                // staggerChildcren: 0.15,
+                // staggerChildren: 0.15,
             },
         },
     };
@@ -31,6 +32,7 @@ export default function ServiceSection() {
             },
         },
     };
+    
     return (
         <div>
             {/* Services Section */}
@@ -44,13 +46,13 @@ export default function ServiceSection() {
                         variants={containerVariants}
                         className="text-center mb-12">
                         <Badge variant="outline" className="mb-4">
-                            Layanan
+                            Services
                         </Badge>
                         <h2 className="text-3xl md:text-4xl font-bold tracking-tight dark:text-white">
-                            Apa yang Saya Tawarkan
+                            What I Offer
                         </h2>
                         <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-                            Solusi lengkap untuk kebutuhan pengembangan digital Anda
+                            Complete solutions for your digital development needs
                         </p>
                     </motion.div>
 
@@ -63,14 +65,14 @@ export default function ServiceSection() {
                     >
                         {/* Web Development */}
                         <motion.div variants={cardVariants}>
-                            <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-800/60">
+                            <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-700">
                                 <CardHeader>
                                     <div className="h-10 w-10 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-4">
                                         <Code className="text-blue-600 h-5 w-5" />
                                     </div>
-                                    <CardTitle>Pengembangan Web</CardTitle>
+                                    <CardTitle>Web Development</CardTitle>
                                     <CardDescription>
-                                        Website responsif dan aplikasi web modern dengan teknologi terbaru
+                                        Responsive websites and modern web applications with the latest technology
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
@@ -79,7 +81,7 @@ export default function ServiceSection() {
                                             <Check className="text-green-500 h-4 w-4 mr-2" /> React/Next.js
                                         </li>
                                         <li className="flex items-center">
-                                            <Check className="text-green-500 h-4 w-4 mr-2" /> Javascript
+                                            <Check className="text-green-500 h-4 w-4 mr-2" /> JavaScript
                                         </li>
                                         <li className="flex items-center">
                                             <Check className="text-green-500 h-4 w-4 mr-2" /> TypeScript
@@ -89,17 +91,17 @@ export default function ServiceSection() {
                             </Card>
                         </motion.div>
 
-                        {/* Mobile Development */}
+                        {/* Tools Used */}
                         <motion.div variants={cardVariants}>
-                            <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-800/60">
+                            <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-700">
                                 <CardHeader>
                                     <div className="h-10 w-10 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-4">
                                         <Smartphone className="text-purple-600 h-5 w-5" />
                                     </div>
 
-                                    <CardTitle>Tools yang Digunakan</CardTitle>
+                                    <CardTitle>Tools I Use</CardTitle>
                                     <CardDescription>
-                                        Teknologi dan tools utama dalam pengembangan aplikasi
+                                        Key technologies and tools in application development
                                     </CardDescription>
                                 </CardHeader>
 
@@ -112,7 +114,7 @@ export default function ServiceSection() {
 
                                         <li className="flex items-center">
                                             <Check className="text-green-500 h-4 w-4 mr-2" />
-                                            VScode
+                                            VSCode
                                         </li>
 
                                         <li className="flex items-center">
@@ -124,17 +126,16 @@ export default function ServiceSection() {
                             </Card>
                         </motion.div>
 
-
                         {/* UI Design */}
                         <motion.div variants={cardVariants}>
-                            <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-800/60">
+                            <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-700">
                                 <CardHeader>
                                     <div className="h-10 w-10 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center mb-4">
                                         <Palette className="text-green-600 h-5 w-5" />
                                     </div>
                                     <CardTitle>UI Design</CardTitle>
                                     <CardDescription>
-                                        Desain antarmuka modern dan konsisten untuk pengalaman pengguna yang baik
+                                        Modern and consistent interface designs for great user experience
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
