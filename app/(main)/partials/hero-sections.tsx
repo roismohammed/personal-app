@@ -41,7 +41,7 @@ export default function HeroSection() {
                         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                             <div className="flex-1 space-y-6">
                                 <Badge variant="secondary" className="px-3 py-1 text-sm bg-white/80 dark:bg-zinc-700 border border-teal-100">
-                                    Full-Stack Developer
+                                    Web Developer
                                 </Badge>
                                 <h1 className="text-4xl md:text-6xl font-bold geist tracking-tight text-zinc-800 dark:text-white">
                                     <Highlighter action="underline" color="#FF9800">

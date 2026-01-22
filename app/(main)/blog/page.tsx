@@ -1,35 +1,16 @@
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import {
-  ArrowRight,
-  BookOpen,
-  Calendar,
-  Search,
-  Tag,
-  TrendingUp,
-  User,
-} from "lucide-react";
+import { BookOpen, Search, Tag } from "lucide-react";
 import Image from "next/image";
 import potoProfile from "@/public/assets/images/roisbaru.jpeg";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
 import { GridPattern } from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import WrapperLayout from "@/components/wrapperLayout";
 export const revalidate = 300;
-
+import maintenence from "../../../public/assets/images/maintenence.png";
 export default async function IndexBlog() {
-  // const [featured, posts] = await Promise.all([fetchFeaturedPost(), fetchPosts(),]);
-
   const popularTags = [
     "React",
     "TypeScript",
@@ -63,7 +44,7 @@ export default async function IndexBlog() {
           className={cn(
             "pointer-events-none absolute inset-0 z-10 h-full w-full",
             "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
-            "opacity-50 dark:opacity-30"
+            "opacity-50 dark:opacity-30",
           )}
         />
 
@@ -71,9 +52,7 @@ export default async function IndexBlog() {
           <div className="container mx-auto px-4 py-16 text-center max-w-4xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 dark:bg-zinc-700/50 mb-6">
               <BookOpen className="h-4 w-4 text-teal-600" />
-              <span className="text-sm font-medium">
-                Development Blog
-              </span>
+              <span className="text-sm font-medium">Development Blog</span>
             </div>
 
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -98,7 +77,6 @@ export default async function IndexBlog() {
       {/* BODY */}
       <WrapperLayout>
         <div className="min-h-screen py-8 grid grid-cols-1 lg:grid-cols-4 gap-8 overflow-visible">
-
           {/* SIDEBAR */}
           <aside className="lg:sticky lg:top-34 self-start space-y-4">
             <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
@@ -117,7 +95,8 @@ export default async function IndexBlog() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm">
-                  Web developer yang selalu ingin berkembang dan mempelajari hal-hal baru.
+                  Web developer yang selalu ingin berkembang dan mempelajari
+                  hal-hal baru.
                 </p>
               </CardContent>
             </Card>
@@ -133,7 +112,7 @@ export default async function IndexBlog() {
                   <Badge key={tag} variant="outline">
                     {tag}
                   </Badge>
-              ))}
+                ))}
               </CardContent>
             </Card>
           </aside>
@@ -194,15 +173,35 @@ export default async function IndexBlog() {
               </Card>
             )} */}
 
-
-            <div>
-              {/* <ServerBlog/> */}
+            <div className="flex justify-center items-center">
+              <div className="relative w-full ">
+                <Image
+                  src={maintenence}
+                  alt="Website Under Maintenance"
+                  width={400}
+                  height={300}
+                  priority
+                  className="w-full h-auto object-contain"
+                  placeholder="blur"
+                />
+                <div className="mt-8 text-center space-y-4">
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100">
+                    We'll Be Back Soon!
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                    We're currently performing scheduled maintenance to improve
+                    your experience. Thank you for your patience.
+                  </p>
+                  <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-500">
+                    <span className="inline-block w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
+                    Estimated time: 2-3 hours
+                  </div>
+                </div>
+              </div>
             </div>
-
           </main>
         </div>
       </WrapperLayout>
-
     </div>
   );
 }

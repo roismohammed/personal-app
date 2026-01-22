@@ -30,11 +30,13 @@ import Link from "next/link";
 import logo from "@/public/assets/images/logo1.png";
 import Image from "next/image";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Home01Icon, InboxIcon, LicenseDraftIcon } from "@hugeicons/core-free-icons";
 const TopMenu = [
     {
         name: "Beranda",
         href: "/",
-        icon: <Home className="size-4 mr-2" />
+        icon: Home01Icon
     },
     {
         name: "Project",
@@ -43,7 +45,7 @@ const TopMenu = [
             {
                 title: "Project",
                 description: "Halaman untuk menceritakan amatar.",
-                icon: <Zap className="size-5 shrink-0" />,
+                icon: InboxIcon,
                 href: "/project",
             },
         ],
@@ -51,7 +53,7 @@ const TopMenu = [
     {
         name: "Blog",
         href: "/blog",
-        icon: <File className="size-4 mr-2" />
+        icon: LicenseDraftIcon
     },
 ];
 
@@ -90,14 +92,14 @@ export default function Header01() {
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []); // Tambah dependency array
+    }, []); 
 
     return (
         <div className="">
             <div className={`px-3 lg:px-0 ${stickyHeader ? "lg:px-0" : ""}`}>
                 <header
-                    className={`w-[94%] md:w-[96%] lg:w-full mx-auto py-5 bg-white border-none rounded-none border-border/40 dark:bg-zinc-900 backdrop-blur-md fixed z-50 transition-all duration-300 ${stickyHeader
-                        ? "fixed shadow-md top-4 lg:top-0 bg-white transition-all border-b dark:border-b dark:border-white duration-100 px-4 lg:px-0"
+                    className={`w-[94%] md:w-[96%] lg:w-full mx-auto py-5 bg-white border-b rounded-xl  lg:rounded-none border-border/40 dark:bg-zinc-900 backdrop-blur-md fixed z-50 transition-all duration-300 ${stickyHeader
+                        ? "fixed shadow-md top-4 lg:top-0 bg-white transition-all border-b dark:border-b dark:border-zinc-700 duration-100 px-4 lg:px-0"
                         : "top-3 lg:top-0 px-4 lg:px-0"
                         }`}
                 >
@@ -131,7 +133,7 @@ export default function Header01() {
                                                                                 href={item.href}
                                                                             >
                                                                                 <span className="transition-colors group-hover:text-primary">
-                                                                                    {item.icon}
+                                                                                   <HugeiconsIcon icon={item.icon} size={20}/>
                                                                                 </span>
                                                                                 <div>
                                                                                     <div className="text-sm font-semibold">
@@ -153,11 +155,11 @@ export default function Header01() {
                                                         <Link
                                                             className={cn(
                                                                 navigationMenuTriggerStyle(),
-                                                                "bg-transparent hover:bg-transparent hover:text-cyan-600 geist dark:text-gray-300 hover:dark:text-cyan-600 text-gray-500 focus:bg-transparent active:bg-transparent"
+                                                                "bg-transparent hover:bg-transparent hover:text-cyan-600 geist dark:text-gray-300 gap-1 hover:dark:text-cyan-600 text-gray-500 focus:bg-transparent active:bg-transparent"
                                                             )}
                                                             href={menu.href!}
                                                         >
-                                                            {menu.icon}
+                                                         <HugeiconsIcon icon={menu.icon} size={18}/>
                                                             {menu.name}
                                                         </Link>
                                                     </NavigationMenuItem>

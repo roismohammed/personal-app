@@ -1,5 +1,4 @@
 import WrapperLayout from "@/components/wrapperLayout";
-import MainLayout from "../layout";
 
 
 
@@ -29,7 +28,7 @@ const experience = [
 
 const IndexResume = () => {
     return (
-     <MainLayout>
+     <div>
            <WrapperLayout>
             <div className="space-y-8 mt-26">
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-gray-200 mb-6">Work Experience</h3>
@@ -69,7 +68,7 @@ const IndexResume = () => {
                 </div>
             </div>
         </WrapperLayout>
-     </MainLayout>
+     </div>
     )
 }
 
