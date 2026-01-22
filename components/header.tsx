@@ -114,9 +114,9 @@ export default function Header01() {
                                 <div className="flex items-center">
                                     <NavigationMenu className="relative z-[100]">
                                         <NavigationMenuList>
-                                            {TopMenu.map((menu, idx) =>
+                                            {TopMenu.map((menu, index) =>
                                                 menu.Dropdown ? (
-                                                    <NavigationMenuItem key={idx}>
+                                                    <NavigationMenuItem key={index}>
                                                         <NavigationMenuTrigger className="bg-transparent geist text-gray-500 dark:text-gray-300 hover:text-cyan-600 hover:bg-transparent focus:bg-transparent active:bg-transparent">
                                                             {menu.icon}
                                                             {menu.name}
@@ -151,7 +151,7 @@ export default function Header01() {
                                                         </NavigationMenuContent>
                                                     </NavigationMenuItem>
                                                 ) : (
-                                                    <NavigationMenuItem key={idx}>
+                                                    <NavigationMenuItem key={index}>
                                                         <Link
                                                             className={cn(
                                                                 navigationMenuTriggerStyle(),
@@ -222,10 +222,10 @@ export default function Header01() {
                                             </SheetTitle>
                                         </SheetHeader>
                                         <div className="flex flex-col">
-                                            {TopMenu.map((menu, idx) =>
+                                            {TopMenu.map((menu, index) =>
                                                 menu.Dropdown ? (
                                                     <Accordion
-                                                        key={idx}
+                                                        key={index}
                                                         type="single"
                                                         collapsible
                                                         className="w-full mb-1"
@@ -270,7 +270,7 @@ export default function Header01() {
                                                     </Accordion>
                                                 ) : (
                                                     <Link
-                                                        key={idx}
+                                                        key={index}
                                                         onClick={() => setOpen(false)}
                                                         href={menu.href!}
                                                         className="py-3 px-1 font-medium text-base border-b border-border/40 flex items-center gap-2"

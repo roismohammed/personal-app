@@ -1,4 +1,4 @@
-"use client";
+
 import { MapPin, Calendar, Download } from "lucide-react";
 import myImage from "@/public/assets/images/roisbaru.jpeg";
 import Image from "next/image";
@@ -15,6 +15,38 @@ import {
 import Link from "next/link";
 import WrapperLayout from "@/components/wrapperLayout";
 import GithubPage from "@/components/github";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "About | RoisDev",
+  description: "Tentang Muhammad Rois, Frontend & Fullstack Developer",
+};
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://roisdev.my.id",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About",
+          item: "https://roisdev.my.id/about",
+        },
+      ],
+    }),
+  }}
+/>
+
 
 const AboutPage = () => {
   const personalInfo = {
