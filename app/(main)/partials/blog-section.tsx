@@ -103,7 +103,7 @@ export default function BlogSection() {
 
         {/* View All Articles Button */}
         <div className="text-center mt-12">
-          <Link href="/posts">
+          <Link href="/blog">
             <Button
               variant="outline"
               className="gap-2 cursor-pointer dark:bg-zinc-700/50 dark:text-white"

@@ -4,31 +4,29 @@ import { Code, ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import WrapperLayout from "@/components/wrapperLayout";
-
-// Type definition for project data
+import kasirApp from '../../../public/assets/thumnail/kasir.png'
 interface ProjectData {
   id: number;
   name: string;
   description: string;
-  image: string;
+  image: StaticImageData | string;
   status: "completed" | "in_progress";
   tech_stack: string | string[];
   link_github: string;
   link_demo: string;
 }
 
-// Mock projects data - replace with actual data fetching
 const mockProjects: ProjectData[] = [
   {
     id: 1,
-    name: "E-Commerce Platform",
-    description: "A modern e-commerce platform with real-time inventory management and payment integration",
-    image: "/placeholder.png",
+    name: "Poin of Sales Platform",
+    description: "A modern POS platform with real-time inventory management and payment integration",
+    image:kasirApp,
     status: "completed",
-    tech_stack: "React, Next.js, TypeScript, Tailwind, Node.js",
+    tech_stack: "React, Next.js, TypeScript, Tailwinds, Adonis.js",
     link_github: "https://github.com",
     link_demo: "https://demo.com"
   },

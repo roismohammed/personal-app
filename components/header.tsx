@@ -35,7 +35,6 @@ import {
   Home01Icon,
   InboxIcon,
   LicenseDraftIcon,
-  UserCircleIcon,
 } from "@hugeicons/core-free-icons";
 const TopMenu = [
   {
@@ -45,7 +44,7 @@ const TopMenu = [
   },
   {
     name: "Project",
-    icon: UserCircleIcon,
+    icon: InboxIcon,
     Dropdown: [
       {
         title: "Project",
@@ -123,7 +122,7 @@ export default function Header01() {
                       {TopMenu.map((menu, index) =>
                         menu.Dropdown ? (
                           <NavigationMenuItem key={index}>
-                            <NavigationMenuTrigger className="bg-transparent geist text-gray-500 dark:text-gray-300 hover:text-cyan-600 hover:bg-transparent focus:bg-transparent active:bg-transparent">
+                            <NavigationMenuTrigger className="bg-transparent gap-1 geist text-gray-500 dark:text-gray-300 hover:text-cyan-600 hover:bg-transparent focus:bg-transparent active:bg-transparent">
                               <HugeiconsIcon icon={menu.icon} size={20} />
                               {menu.name}
                             </NavigationMenuTrigger>
@@ -134,7 +133,7 @@ export default function Header01() {
                                     <NavigationMenuLink asChild>
                                       <Link
                                         className={cn(
-                                          "flex flex-row select-none hover:bg-gray-50 hover:dark:bg-zinc-700 gap-3 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-cyan-600 focus:bg-transparent",
+                                          "flex flex-row select-none items-center hover:bg-gray-50 hover:dark:bg-zinc-700 gap-2 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-cyan-600 focus:bg-transparent",
                                         )}
                                         href={item.href}
                                       >
@@ -164,7 +163,7 @@ export default function Header01() {
                             <Link
                               className={cn(
                                 navigationMenuTriggerStyle(),
-                                "bg-transparent hover:bg-transparent hover:text-cyan-600 geist dark:text-gray-300 gap-1 hover:dark:text-cyan-600 text-gray-500 focus:bg-transparent active:bg-transparent",
+                                "bg-transparent hover:bg-transparent gap-2 hover:text-cyan-600 geist dark:text-gray-300 gap-1 hover:dark:text-cyan-600 text-gray-500 focus:bg-transparent active:bg-transparent",
                               )}
                               href={menu.href!}
                             >
