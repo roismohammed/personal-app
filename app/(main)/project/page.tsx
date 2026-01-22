@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import MainLayout from "../layout";
 import WrapperLayout from "@/components/wrapperLayout";
 
 // Type definition for project data
