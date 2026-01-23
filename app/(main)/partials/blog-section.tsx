@@ -1,15 +1,13 @@
-"use client"
-import CardBlog from "@/components/cardBlog"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import WrapperLayout from "@/components/wrapperLayout"
-import { PostData } from "@/types"
-import { motion, Variants } from "motion/react"
-import Link from "next/link"
-import {  useState } from "react"
-
-
-
+"use client";
+import CardBlog from "@/components/cardBlog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import WrapperLayout from "@/components/wrapperLayout";
+import { PostData } from "@/types";
+import { Wrench } from "lucide-react";
+import { motion, Variants } from "motion/react";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function BlogSection() {
   const [posts, setPosts] = useState<PostData[]>([]);
@@ -20,14 +18,14 @@ export default function BlogSection() {
       y: 0,
       transition: { duration: 0.6, ease: "easeOut" },
     },
-  }
+  };
 
   const gridContainerVariants: Variants = {
     hidden: {},
     visible: {
       transition: { staggerChildren: 0.15 },
     },
-  }
+  };
 
   const gridItemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
@@ -36,8 +34,7 @@ export default function BlogSection() {
       y: 0,
       transition: { duration: 0.5, ease: "easeOut" },
     },
-  }
-
+  };
 
   // easync function fetchData()  {
   //   const { data, error } = await supabase
@@ -51,7 +48,6 @@ export default function BlogSection() {
   //     setPosts(data);
   //   }
   // }
-
 
   // useEffect(() => {
   //   fetchData();
@@ -82,9 +78,21 @@ export default function BlogSection() {
 
         {/* Blog Grid */}
         {posts.length === 0 ? (
-          <p className="text-center text-muted-foreground">
-            No articles available
-          </p>
+          <div className="flex flex-col items-center justify-center  space-y-3">
+            <div className="h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
+              <Wrench className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+            </div>
+
+            <div className="text-center">
+              <h3 className="font-medium text-foreground">
+                Sedang Maintenance
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Konten artikel sedang diperbarui. Terima kasih atas kesabaran
+                Anda.
+              </p>
+            </div>
+          </div>
         ) : (
           <motion.div
             variants={gridContainerVariants}
@@ -115,5 +123,5 @@ export default function BlogSection() {
         </div>
       </WrapperLayout>
     </section>
-  )
+  );
 }

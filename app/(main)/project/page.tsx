@@ -1,13 +1,22 @@
 import { GridPattern } from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { Code, ArrowUpRight, Github, ExternalLink } from "lucide-react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import WrapperLayout from "@/components/wrapperLayout";
-import kasirApp from '../../../public/assets/thumnail/kasir.png'
+import kasirApp from "../../../public/assets/thumnail/kasir.png";
+import mobilePRofile from "../../../public/assets/thumnail/mobile-profile.png";
+import productDigital from "../../../public/assets/thumnail/freelancer-app.png";
 interface ProjectData {
   id: number;
   name: string;
@@ -23,32 +32,41 @@ const mockProjects: ProjectData[] = [
   {
     id: 1,
     name: "Poin of Sales Platform",
-    description: "A modern POS platform with real-time inventory management and payment integration",
-    image:kasirApp,
+    description:
+      "A modern POS platform with real-time inventory management and payment integration",
+    image: kasirApp,
     status: "completed",
     tech_stack: "React, Next.js, TypeScript, Tailwinds, Adonis.js",
     link_github: "https://github.com",
-    link_demo: "https://demo.com"
+    link_demo: "#",
   },
   {
     id: 2,
-    name: "Task Management App",
-    description: "Collaborative task management application with drag-and-drop functionality",
-    image: "/placeholder.png",
-    status: "in_progress",
-    tech_stack: ["React", "TypeScript", "Firebase", "shadcn/ui"],
-    link_github: "https://github.com",
-    link_demo: "https://demo.com"
+    name: "Profile Jual Beli Mobil",
+    description:
+      "Aplikasi web marketplace untuk jual beli mobil dengan antarmuka yang responsif dan manajemen profil pengguna yang lengkap",
+    image: mobilePRofile,
+    status: "completed",
+    tech_stack: ["React.js", "Inertia", "TypeScript", "Laravel", "shadcn/ui"],
+    link_github: "https://github.com/roismohammed",
+    link_demo: "https://mobiltuabogor.com",
   },
   {
     id: 3,
-    name: "Portfolio Website",
-    description: "Personal portfolio website with modern design and animations",
-    image: "/placeholder.png",
+    name: "Sales Product Digital",
+    description:
+      "Platform penjualan produk digital dengan sistem manajemen konten, pembayaran terintegrasi, dan dashboard analytics untuk melacak performa penjualan",
+    image: productDigital,
     status: "completed",
-    tech_stack: "Next.js, Framer Motion, Tailwind CSS",
-    link_github: "https://github.com",
-    link_demo: "https://demo.com"
+    tech_stack: [
+      "React.js",
+      "Inertia.js",
+      "Laravel",
+      "Tailwind CSS",
+      "Shdcn UI",
+    ],
+    link_github: "https://github.com/roismohammed",
+    link_demo: "#",
   },
   {
     id: 4,
@@ -58,7 +76,7 @@ const mockProjects: ProjectData[] = [
     status: "completed",
     tech_stack: "Vue.js, Chart.js, Weather API",
     link_github: "https://github.com",
-    link_demo: "https://demo.com"
+    link_demo: "https://demo.com",
   },
   {
     id: 5,
@@ -68,7 +86,7 @@ const mockProjects: ProjectData[] = [
     status: "in_progress",
     tech_stack: "React Native, Firebase, Redux",
     link_github: "https://github.com",
-    link_demo: "https://demo.com"
+    link_demo: "https://demo.com",
   },
   {
     id: 6,
@@ -78,8 +96,8 @@ const mockProjects: ProjectData[] = [
     status: "completed",
     tech_stack: "Socket.io, Express, MongoDB, React",
     link_github: "https://github.com",
-    link_demo: "https://demo.com"
-  }
+    link_demo: "https://demo.com",
+  },
 ];
 
 export default function ProjectPage() {
@@ -90,13 +108,19 @@ export default function ProjectPage() {
       <div className="bg-transparent relative rounded-lg border-none">
         <GridPattern
           squares={[
-            [4, 4], [5, 1], [8, 2], [5, 3],
-            [6, 6], [10, 10], [12, 15], [18, 10],
+            [4, 4],
+            [5, 1],
+            [8, 2],
+            [5, 3],
+            [6, 6],
+            [10, 10],
+            [12, 15],
+            [18, 10],
           ]}
           className={cn(
             "pointer-events-none absolute inset-0 z-10 h-full w-full",
             "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
-            "opacity-50 dark:opacity-30"
+            "opacity-50 dark:opacity-30",
           )}
         />
 
@@ -105,13 +129,18 @@ export default function ProjectPage() {
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 dark:bg-zinc-700/50 border border-blue-200 dark:border-teal-800 mb-6">
                 <Code className="h-4 w-4 text-cyan-700" />
-                <span className="text-sm font-medium text-teal-700 dark:text-blue-300">Portfolio Projects</span>
+                <span className="text-sm font-medium text-teal-700 dark:text-blue-300">
+                  Portfolio Projects
+                </span>
               </div>
 
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">Creative Projects</h1>
+              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                Creative Projects
+              </h1>
 
               <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-                A collection of my work spanning web development, mobile applications, and UI/UX design.
+                A collection of my work spanning web development, mobile
+                applications, and UI/UX design.
               </p>
             </div>
           </div>
@@ -125,42 +154,50 @@ export default function ProjectPage() {
               const techList: string[] =
                 typeof project.tech_stack === "string"
                   ? project.tech_stack
-                    .replace(/[\[\]"]/g, "")
-                    .split(",")
-                    .map((t: string) => t.trim())
-                    .filter(Boolean)
+                      .replace(/[\[\]"]/g, "")
+                      .split(",")
+                      .map((t: string) => t.trim())
+                      .filter(Boolean)
                   : Array.isArray(project.tech_stack)
-                  ? project.tech_stack.map((t: string) => String(t).trim()).filter(Boolean)
-                  : [];
+                    ? project.tech_stack
+                        .map((t: string) => String(t).trim())
+                        .filter(Boolean)
+                    : [];
 
               return (
                 <Card
                   key={project.id}
-                  className="group border pt-0 shadow-none hover:shadow-xl transition-all duration-500 overflow-hidden bg-white/80 dark:bg-zinc-700/50 flex flex-col"
+                  className="group border pt-0 cursor-pointer shadow-none hover:shadow-sm  transition-all duration-500 overflow-hidden bg-white/80 dark:bg-zinc-700/50 flex flex-col"
                 >
                   <div className="relative h-56 overflow-hidden">
                     <Image
                       src={project.image || "/placeholder.png"}
                       alt={project.name || "Project Image"}
                       fill
-                      className="object-cover transform scale-105 transition-transform duration-500 ease-out group-hover:scale-100"
+                      className="object-cover transform hover:scale-105 transition-transform duration-500 ease-out group-hover:scale-100"
                     />
                     <div className="absolute top-4 left-4 z-10">
                       <Badge
-                        variant={project.status === "completed" ? "default" : "secondary"}
+                        variant={
+                          project.status === "completed"
+                            ? "default"
+                            : "secondary"
+                        }
                         className={
                           project.status === "completed"
                             ? "bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
                             : "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300"
                         }
                       >
-                        {project.status === "completed" ? "Completed" : "In Progress"}
+                        {project.status === "completed"
+                          ? "Completed"
+                          : "In Progress"}
                       </Badge>
                     </div>
-                    <div className="absolute inset-0 bg-black/28 transition-opacity duration-500 ease-out group-hover:opacity-0 pointer-events-none" />
+                    <div className="absolute inset-0 hover:bg-black/28 transition-opacity duration-500 ease-out group-hover:opacity-0 pointer-events-none" />
                   </div>
 
-                  <CardHeader className="pb-3">
+                  <CardHeader>
                     <div className="flex items-center justify-between mb-2">
                       <CardTitle className="text-xl group-hover:text-cyan-700 dark:group-hover:text-cyan-400 transition-colors">
                         {project.name}
@@ -172,7 +209,7 @@ export default function ProjectPage() {
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="pb-2">
+                  <CardContent>
                     <div className="flex flex-wrap gap-2">
                       {techList.map((tech) => (
                         <Badge
@@ -186,9 +223,13 @@ export default function ProjectPage() {
                     </div>
                   </CardContent>
 
-                  <CardFooter className="pt-4 mt-auto">
+                  <CardFooter className=" mt-auto">
                     <div className="flex gap-2 w-full">
-                      <Link href={project.link_github || "#"} target="_blank" className="w-full">
+                      <Link
+                        href={project.link_github || "#"}
+                        target="_blank"
+                        className="w-full"
+                      >
                         <Button
                           size="sm"
                           variant="outline"
@@ -198,7 +239,11 @@ export default function ProjectPage() {
                         </Button>
                       </Link>
 
-                      <Link href={project.link_demo || "#"} target="_blank" className="w-full">
+                      <Link
+                        href={project.link_demo || "#"}
+                        target="_blank"
+                        className="w-full"
+                      >
                         <Button
                           size="sm"
                           className="flex bg-gradient-to-r cursor-pointer w-full from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white shadow-lg hover:shadow-xl transition-all"
