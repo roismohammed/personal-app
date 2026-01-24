@@ -1,0 +1,28 @@
+{
+  "services": "Services",
+  "what_i_offer": "What I Offer",
+  "services_desc": "Complete solutions for your digital development needs",
+
+  "web_dev": "Web Development",
+  "web_dev_desc": "Responsive websites and modern web applications with the latest technology",
+
+  "tools": "Tools I Use",
+  "tools_desc": "Key technologies and tools in application development",
+
+  "ui_design": "UI Design",
+  "ui_design_desc": "Modern and consistent interface designs for great user experience",
+  
+  "hero_badge": "Web Developer",
+
+  "hero_title_highlight": "Transforming",
+  "hero_title_middle": "Ideas Into",
+  "hero_title_gradient": "Digital Reality",
+
+  "hero_desc": "I help businesses and individuals build exceptional digital experiences with cutting-edge technology.",
+
+  "hero_cta_primary": "Start Project",
+  "hero_cta_secondary": "View Portfolio",
+
+  "hero_clients_count": "50+",
+  "hero_clients_label": "Satisfied Clients"
+}

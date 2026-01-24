@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { LanguageProvider } from "@/lib/language-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,36 +15,38 @@ const geistMono = Geist_Mono({
 });
 
 const geist = Geist({
-  subsets: ['latin'],
-  weight: '700',
-  variable: '--font-geist',
+  subsets: ["latin"],
+  weight: "700",
+  variable: "--font-geist",
 });
 
 export const metadata: Metadata = {
   title: "RoisDev | Frontend & Fullstack Developer",
-  description: "Halo! Saya Muhammad Rois, seorang junior Software Engineer & Web Developer yang ahli di React, Next.js, dan JavaScript.",
+  description:
+    "Halo! Saya Muhammad Rois, seorang junior Software Engineer & Web Developer yang ahli di React, Next.js, dan JavaScript.",
   icons: {
     icon: [
       {
-        media: '(prefers-color-scheme: light)',
-        url: '/favicon.jpeg',
-        href: '/favicon.jpeg',
+        media: "(prefers-color-scheme: light)",
+        url: "/favicon.jpeg",
+        href: "/favicon.jpeg",
       },
       {
-        media: '(prefers-color-scheme: dark)',
-        url: 'favicon.jpeg',
-        href: '/favicon.jpeg',
+        media: "(prefers-color-scheme: dark)",
+        url: "favicon.jpeg",
+        href: "/favicon.jpeg",
       },
     ],
   },
   openGraph: {
     title: "RoisDev | Muhammad Rois",
-    description: "Frontend & Fullstack Developer | React.js, Next.js, Tailwind CSS, Supabase",
+    description:
+      "Frontend & Fullstack Developer | React.js, Next.js, Tailwind CSS, Supabase",
     url: "https://roisdev.my.id",
     siteName: "RoisDev",
     images: [
       {
-        url: '/favicon.jpeg',
+        url: "/favicon.jpeg",
         width: 1200,
         height: 630,
         alt: "RoisDev Logo",
@@ -55,7 +58,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "RoisDev | Muhammad Rois",
-    description: "Frontend & Fullstack Developer | React.js, Next.js, Tailwind CSS, Supabase",
+    description:
+      "Frontend & Fullstack Developer | React.js, Next.js, Tailwind CSS, Supabase",
     creator: "@roismuhammed",
   },
 };
@@ -84,19 +88,27 @@ export default function RootLayout({
             }),
           }}
         />
-        <link rel="icon" href="/favicon.jpeg" media="(prefers-color-scheme: light)"></link>
-        <link rel="icon" href="/favicon.jpeg" media="(prefers-color-scheme: dark)"></link>
+        <link
+          rel="icon"
+          href="/favicon.jpeg"
+          media="(prefers-color-scheme: light)"
+        ></link>
+        <link
+          rel="icon"
+          href="/favicon.jpeg"
+          media="(prefers-color-scheme: dark)"
+        ></link>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${geist.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"           // pastikan ini light
-          enableSystem={true}           // tetap bisa mengikuti system jika mau
+          defaultTheme="light" // pastikan ini light
+          enableSystem={true} // tetap bisa mengikuti system jika mau
           disableTransitionOnChange={true}
         >
-          {children}
+           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

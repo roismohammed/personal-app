@@ -36,6 +36,7 @@ import {
   InboxIcon,
   LicenseDraftIcon,
 } from "@hugeicons/core-free-icons";
+import { LanguageSelect } from "./language-select";
 const TopMenu = [
   {
     name: "Beranda",
@@ -197,12 +198,8 @@ export default function Header01() {
                     >
                       About Me
                     </Button>
-                    {/* <ShimmerButton className="shadow-2xl">
-                                            <span className="text-center text-sm leading-none font-medium tracking-tight whitespace-pre-wrap text-white lg:text-lg dark:from-white dark:to-slate-900/10">
-                                                About me
-                                            </span>
-                                        </ShimmerButton> */}
                   </Link>
+                    <LanguageSelect />
                 </div>
               </div>
             </nav>

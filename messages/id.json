@@ -1,0 +1,28 @@
+{
+  "services": "Layanan",
+  "what_i_offer": "Apa yang Saya Tawarkan",
+  "services_desc": "Solusi lengkap untuk kebutuhan pengembangan digital Anda",
+
+  "web_dev": "Pengembangan Web",
+  "web_dev_desc": "Website responsif dan aplikasi web modern dengan teknologi terbaru",
+
+  "tools": "Alat yang Saya Gunakan",
+  "tools_desc": "Teknologi dan alat utama dalam pengembangan aplikasi",
+
+  "ui_design": "Desain UI",
+  "ui_design_desc": "Desain antarmuka modern dan konsisten untuk pengalaman pengguna yang baik",
+
+  "hero_badge": "Web Developer",
+
+  "hero_title_highlight": "Mengubah",
+  "hero_title_middle": "Ide Menjadi",
+  "hero_title_gradient": "Realitas Digital",
+
+  "hero_desc": "Saya membantu bisnis dan individu membangun pengalaman digital yang luar biasa dengan teknologi terkini.",
+
+  "hero_cta_primary": "Mulai Proyek",
+  "hero_cta_secondary": "Lihat Portofolio",
+
+  "hero_clients_count": "50+",
+  "hero_clients_label": "Klien Puas"
+}
