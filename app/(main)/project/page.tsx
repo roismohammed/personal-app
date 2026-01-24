@@ -1,3 +1,4 @@
+"use client";
 import { GridPattern } from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { Code, ArrowUpRight, Github, ExternalLink } from "lucide-react";
@@ -17,6 +18,7 @@ import WrapperLayout from "@/components/wrapperLayout";
 import kasirApp from "../../../public/assets/thumnail/kasir.png";
 import mobilePRofile from "../../../public/assets/thumnail/mobile-profile.png";
 import productDigital from "../../../public/assets/thumnail/freelancer-app.png";
+import { useLanguage } from "@/lib/language-context";
 interface ProjectData {
   id: number;
   name: string;
@@ -101,7 +103,8 @@ const mockProjects: ProjectData[] = [
 ];
 
 export default function ProjectPage() {
-  const projects = mockProjects; // Replace with actual data fetching
+  const { t } = useLanguage();
+  const projects = mockProjects;
 
   return (
     <div>
@@ -130,17 +133,16 @@ export default function ProjectPage() {
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 dark:bg-zinc-700/50 border border-blue-200 dark:border-teal-800 mb-6">
                 <Code className="h-4 w-4 text-cyan-700" />
                 <span className="text-sm font-medium text-teal-700 dark:text-blue-300">
-                  Portfolio Projects
+                  {t("portfolio_header_badge")}
                 </span>
               </div>
 
               <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                Creative Projects
+                {t("portfolio_header_title")}
               </h1>
 
               <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-                A collection of my work spanning web development, mobile
-                applications, and UI/UX design.
+                {t("portfolio_header_desc")}
               </p>
             </div>
           </div>

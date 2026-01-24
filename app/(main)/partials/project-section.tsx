@@ -17,6 +17,7 @@ import WrapperLayout from "@/components/wrapperLayout";
 import kasirApp from "../../../public/assets/thumnail/kasir.png";
 import mobilePRofile from "../../../public/assets/thumnail/mobile-profile.png";
 import productDigital from "../../../public/assets/thumnail/freelancer-app.png";
+import { useLanguage } from "@/lib/language-context";
 interface ProjectData {
   id: number;
   name: string;
@@ -71,6 +72,7 @@ const mockProjects: ProjectData[] = [
 ];
 
 export default function ProjectSection() {
+  const { t } = useLanguage();
   const containerVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
@@ -106,13 +108,15 @@ export default function ProjectSection() {
             className="text-center mb-12"
           >
             <Badge variant="outline" className="mb-4">
-              Portfolio
+              {t("portfolio_badge")}
             </Badge>
 
-            <h2 className="text-3xl md:text-4xl font-bold">Latest Projects</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">
+              {t("portfolio_title")}
+            </h2>
 
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Some of the best works I've completed for clients
+              {t("portfolio_desc")}
             </p>
           </motion.div>
 
@@ -235,7 +239,7 @@ export default function ProjectSection() {
           <div className="text-center mt-12">
             <Link href="/project">
               <Button variant="outline" className="cursor-pointer" size="lg">
-                View All Projects
+                {t("button_project")}
               </Button>
             </Link>
           </div>

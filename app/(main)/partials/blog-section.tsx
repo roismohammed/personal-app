@@ -8,9 +8,12 @@ import { Wrench } from "lucide-react";
 import { motion, Variants } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
+import { useLanguage } from "@/lib/language-context";
 
 export default function BlogSection() {
+  const { t } = useLanguage();
   const [posts, setPosts] = useState<PostData[]>([]);
+
   const headerVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
@@ -36,23 +39,6 @@ export default function BlogSection() {
     },
   };
 
-  // easync function fetchData()  {
-  //   const { data, error } = await supabase
-  //     .from("posts")
-  //     .select(` *,category:category (id,name)`)
-  //     .order("created_at", { ascending: false });
-
-  //   if (error) {
-  //     console.error("Error fetching posts:", error);
-  //   } else {
-  //     setPosts(data);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [])
-
   return (
     <section id="articles" className="mx-auto py-16 bg-white dark:bg-zinc-800">
       <WrapperLayout>
@@ -64,32 +50,31 @@ export default function BlogSection() {
           className="text-center mb-12"
         >
           <Badge variant="outline" className="mb-4">
-            Articles
+            {t("blog_badge")}
           </Badge>
 
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight dark:text-white">
-            Latest Coding Articles
+            {t("blog_title")}
           </h2>
 
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Latest tips, tricks and guides in the world of software development
+            {t("blog_desc")}
           </p>
         </motion.div>
 
-        {/* Blog Grid */}
+        {/* Blog Grid / Empty State */}
         {posts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center  space-y-3">
+          <div className="flex flex-col items-center justify-center space-y-3">
             <div className="h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
               <Wrench className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
             </div>
 
             <div className="text-center">
               <h3 className="font-medium text-foreground">
-                Sedang Maintenance
+                {t("blog_maintenance_title")}
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Konten artikel sedang diperbarui. Terima kasih atas kesabaran
-                Anda.
+                {t("blog_maintenance_desc")}
               </p>
             </div>
           </div>
@@ -117,7 +102,7 @@ export default function BlogSection() {
               className="gap-2 cursor-pointer dark:bg-zinc-700/50 dark:text-white"
               size="lg"
             >
-              View All Articles
+              {t("blog_view_all")}
             </Button>
           </Link>
         </div>

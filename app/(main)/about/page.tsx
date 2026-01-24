@@ -1,3 +1,4 @@
+"use client";
 
 import { MapPin, Calendar, Download } from "lucide-react";
 import myImage from "@/public/assets/images/roisbaru.jpeg";
@@ -15,40 +16,10 @@ import {
 import Link from "next/link";
 import WrapperLayout from "@/components/wrapperLayout";
 import GithubPage from "@/components/github";
-import { Metadata } from "next";
-
-
-export const metadata: Metadata = {
-  title: "About | RoisDev",
-  description: "Tentang Muhammad Rois, Frontend & Fullstack Developer",
-};
-
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://roisdev.my.id",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "About",
-          item: "https://roisdev.my.id/about",
-        },
-      ],
-    }),
-  }}
-/>
-
+import { useLanguage } from "@/lib/language-context";
 
 const AboutPage = () => {
+  const { t } = useLanguage();
   const personalInfo = {
     name: "Muhammad Rois",
     title: "Full-Stack Developer ",
@@ -86,7 +57,7 @@ const AboutPage = () => {
                       {personalInfo.name}
                     </h1>
                     <p className="text-xl text-center text-slate-600 dark:text-gray-500 mb-6">
-                      {personalInfo.title}
+                      {t("title")}
                     </p>
 
                     <div className="flex flex-wrap gap-3 justify-center mb-6">
@@ -97,7 +68,7 @@ const AboutPage = () => {
                         className="bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 cursor-pointer"
                       >
                         <Download className="h-4 w-4" />
-                        Download CV
+                          Download CV
                       </a>
                     </div>
                   </div>
@@ -107,13 +78,15 @@ const AboutPage = () => {
                 <div className="lg:col-span-3 space-y-6 mt-5 lg:mt-0">
                   <div>
                     <h2 className="text-2xl font-bold text-slate-900 dark:text-gray-200 mb-4">
-                      Hello! 👋
+                      {t("greeting")}
                     </h2>
+
                     <p className="text-lg text-slate-600 dark:text-gray-200 leading-relaxed mb-6">
-                      {personalInfo.bio}
+                      {t("bio")}
                     </p>
+
                     <p className="text-slate-600 text-lg leading-relaxed dark:text-gray-200">
-                      {personalInfo.longBio}
+                      {t("long_bio")}
                     </p>
                   </div>
                   <Link href="/resume">
@@ -127,12 +100,12 @@ const AboutPage = () => {
                         color="currentColor"
                         strokeWidth={1.5}
                       />
-                      My Resume
+                     {t("resume")}
                     </Button>
                   </Link>
                   <div className="mt-8">
                     <p className="text-xl font-bold text-slate-800 dark:text-gray-200 mb-4 z-10">
-                      Tech Stack
+                      {t("tech_stack")}
                     </p>
                     <div className="-mt-10">
                       <MarqueeDemo />
@@ -143,10 +116,10 @@ const AboutPage = () => {
 
                   {/* Contact Info */}
                   <p className="text-xl font-bold text-slate-800 dark:text-gray-200 mb-4 z-10">
-                    Lets Connect
+                {t("connect_title")}
                   </p>
                   <p className="text-md text-slate-600 dark:text-gray-200 leading-relaxed mb-6">
-                    Questions or collaborations? Reach out to me at{" "}
+                   {t("connect_desc")}{" "}
                     <a
                       href="mailto: id.roismohammed@gmail.com"
                       className="text-blue-600 hover:underline cursor-pointer"
@@ -163,7 +136,7 @@ const AboutPage = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-5 w-5 text-green-600" />
-                      <span>{personalInfo.experience} Experience</span>
+                 {personalInfo.experience} {t("experience")}
                     </div>
                   </div>
 
