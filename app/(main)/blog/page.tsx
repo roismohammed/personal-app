@@ -1,45 +1,32 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { BookOpen, Search, Tag } from "lucide-react";
-import Image from "next/image";
-import potoProfile from "@/public/assets/images/roisbaru.jpeg";
+// app/blog/page.tsx
+import { Suspense } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { BookOpen, Search, Tag } from "lucide-react"
+import Image from "next/image"
+import potoProfile from "@/public/assets/images/roisbaru.jpeg"
+import { GridPattern } from "@/components/ui/grid-pattern"
+import { cn } from "@/lib/utils"
+import WrapperLayout from "@/components/wrapperLayout"
+import BlogPosts from "./blogPost"
+import { Skeleton } from "@/components/ui/skeleton"
 
-import { GridPattern } from "@/components/ui/grid-pattern";
-import { cn } from "@/lib/utils";
-import WrapperLayout from "@/components/wrapperLayout";
-export const revalidate = 300;
-import maintenence from "../../../public/assets/images/maintenence.png";
-export default async function IndexBlog() {
+export const revalidate = 300
+
+export default function IndexBlog() {
   const popularTags = [
-    "React",
-    "TypeScript",
-    "NextJS",
-    "CSS",
-    "Node.js",
-    "Python",
-    "UX Design",
-    "Performance",
-    "Testing",
-    "DevOps",
-    "AI",
-    "Startup",
-  ];
+    "React", "TypeScript", "NextJS", "CSS", "Node.js", "Python",
+    "UX Design", "Performance", "Testing", "DevOps", "AI", "Startup",
+  ]
 
   return (
     <div>
-      {/* HEADER */}
       <div className="bg-transparent relative rounded-lg border-none">
         <GridPattern
           squares={[
-            [4, 4],
-            [5, 1],
-            [8, 2],
-            [5, 3],
-            [6, 6],
-            [10, 10],
-            [12, 15],
-            [18, 10],
+            [4, 4], [5, 1], [8, 2], [5, 3], [6, 6], 
+            [10, 10], [12, 15], [18, 10],
           ]}
           className={cn(
             "pointer-events-none absolute inset-0 z-10 h-full w-full",
@@ -77,7 +64,6 @@ export default async function IndexBlog() {
       {/* BODY */}
       <WrapperLayout>
         <div className="min-h-screen py-8 grid grid-cols-1 lg:grid-cols-4 gap-8 overflow-visible">
-          {/* SIDEBAR */}
           <aside className="lg:sticky lg:top-34 self-start space-y-4">
             <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
               <CardHeader className="flex items-center gap-3">
@@ -100,6 +86,7 @@ export default async function IndexBlog() {
                 </p>
               </CardContent>
             </Card>
+            
             <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-sm">
@@ -117,91 +104,35 @@ export default async function IndexBlog() {
             </Card>
           </aside>
 
-          {/* CONTENT */}
-          <main className="lg:col-span-3 space-y-10">
-            {/* {featured && (
-              <Card className="border shadow-none overflow-hidden bg-white/80 dark:bg-zinc-700/50 backdrop-blur-sm">
-                <CardHeader className="pb-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Badge
-                      variant="secondary"
-                      className="bg-blue-100 text-cyan-700 dark:bg-blue-900 dark:text-cyan-300"
-                    >
-                      {featured.category?.name ?? "-"}
-                    </Badge>
-
-                    <div className="flex items-center gap-1 text-xs text-orange-600 dark:text-orange-400">
-                      <TrendingUp className="h-3 w-3" />
-                      Trending
-                    </div>
-                  </div>
-
-                  <CardTitle className="text-2xl md:text-3xl leading-tight hover:text-teal-600 dark:hover:text-teal-700 transition-colors cursor-pointer">
-                    {featured.title}
-                  </CardTitle>
-
-                  <CardDescription className="text-lg leading-relaxed">
-                    {featured.description?.slice(0, 70)} ...
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="-mt-4">
-                  <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
-                    <div className="flex items-center gap-1">
-                      <User className="h-4 w-4" />
-                      Roisdev
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      {new Intl.DateTimeFormat("id-ID", {
-                        year: "numeric",
-                        month: "long",
-                        day: "2-digit",
-                      }).format(new Date(featured.created_at))}
-                    </div>
-                  </div>
-                </CardContent>
-
-                <CardFooter>
-                  <Link href={`/blog/${featured.slug}`}>
-                    <Button className="group bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700">
-                      Read Full Article
-                      <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-            )} */}
-
-            <div className="flex justify-center items-center">
-              <div className="relative w-full ">
-                <Image
-                  src={maintenence}
-                  alt="Website Under Maintenance"
-                  width={400}
-                  height={300}
-                  priority
-                  className="w-full h-auto object-contain"
-                  placeholder="blur"
-                />
-                <div className="mt-8 text-center space-y-4">
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100">
-                    We'll Be Back Soon!
-                  </h2>
-                  <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-                    We're currently performing scheduled maintenance to improve
-                    your experience. Thank you for your patience.
-                  </p>
-                  <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-500">
-                    <span className="inline-block w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
-                    Estimated time: 2-3 hours
-                  </div>
-                </div>
-              </div>
-            </div>
-          </main>
+          <Suspense fallback={<BlogPostsSkeleton />}>
+            <BlogPosts />
+          </Suspense>
         </div>
       </WrapperLayout>
     </div>
-  );
+  )
+}
+
+
+function BlogPostsSkeleton() {
+  return (
+    <main className="lg:col-span-3 space-y-6">
+      {[1, 2, 3].map((i) => (
+        <Card key={i}>
+          <CardHeader>
+            <Skeleton className="h-6 w-24 mb-3" />
+            <Skeleton className="h-8 w-3/4 mb-2" />
+            <Skeleton className="h-4 w-full mb-1" />
+            <Skeleton className="h-4 w-2/3" />
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-4">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-4 w-32" />
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </main>
+  )
 }

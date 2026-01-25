@@ -3,7 +3,7 @@
 import { useLanguage } from "@/lib/language-context";
 import { Globe, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 
 const languages = [
@@ -14,26 +14,15 @@ const languages = [
 export function LanguageSelect() {
   const { lang, setLang } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const selectedLanguage = languages.find((l) => l.value === lang);
-
-  if (!mounted) {
-    return (
-      <div className="w-[160px] h-10 bg-slate-100 rounded-lg animate-pulse" />
-    );
-  }
 
   return (
     <div className="relative">
       <Button
-           size="lg"
+        size="lg"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between gap-2 dark:bg-zinc-800 dark:border-gray-700 dark:text-gray-300 w-[84px] px-3 py-4 rounded-lg border border-zinc-400-200 bg-white hover:bg-slate-50 transition-colors"
+        className="flex items-center justify-between gap-2 dark:bg-zinc-800 dark:border-gray-700 dark:text-gray-300 w-[84px] px-3 py-4 rounded-lg border border-zinc-200 bg-white hover:bg-slate-50 transition-colors"
       >
         <div className="flex items-center gap-2">
           <Globe className="w-4 h-4 text-slate-500" />

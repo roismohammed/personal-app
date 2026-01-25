@@ -10,19 +10,19 @@ interface PostsProps {
 }
 export default function CardBlog({ posts }:PostsProps) {
     return (
-        <div>
+        <div key={posts.id}>
             <Link href={`/blog/${posts.slug}`} key={posts.id} prefetch={false}>
                 <Card
                     className="group py-0 cursor-pointer hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-700 overflow-hidden"
                 >
                     {/* Gambar */}
                     <div className="relative h-58 w-full overflow-hidden">
-                        <Image
+                        {/* <Image
                             src={posts.image ?? ""}
                             alt={posts.title}
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+                        /> */}
                     </div>
 
                     <CardHeader className="pb-3">

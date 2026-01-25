@@ -133,6 +133,7 @@ export default function Header01() {
                                   <li key={index} className="group">
                                     <NavigationMenuLink asChild>
                                       <Link
+                                      prefetch={true}
                                         className={cn(
                                           "flex flex-row select-none items-center hover:bg-gray-50 hover:dark:bg-zinc-700 gap-2 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-cyan-600 focus:bg-transparent",
                                         )}
@@ -162,6 +163,7 @@ export default function Header01() {
                         ) : (
                           <NavigationMenuItem key={index}>
                             <Link
+                            prefetch={true}
                               className={cn(
                                 navigationMenuTriggerStyle(),
                                 "bg-transparent hover:bg-transparent gap-2 hover:text-cyan-600 geist dark:text-gray-300 gap-1 hover:dark:text-cyan-600 text-gray-500 focus:bg-transparent active:bg-transparent",
@@ -190,7 +192,7 @@ export default function Header01() {
                   >
                     <AnimatedThemeToggler className="cursor-pointer  text-gray-500 dark:text-gray-200 h-5 w-5 flex justify-center items-center" />
                   </div>
-                  <Link href="/about">
+                  <Link href="/about" prefetch={true}>
                     <Button
                       className="relative bg-teal-700 hover:bg-teal-600 text-white hover:text-white overflow-hidden shadow-none cursor-pointer"
                       size="lg"
@@ -257,6 +259,7 @@ export default function Header01() {
                                 <div className="flex flex-col space-y-3">
                                   {menu.Dropdown.map((item, index) => (
                                     <Link
+                                    prefetch={true}
                                       onClick={() => setOpen(false)}
                                       key={index}
                                       className={cn(
@@ -286,6 +289,7 @@ export default function Header01() {
                           </Accordion>
                         ) : (
                           <Link
+                          prefetch={true}
                             key={index}
                             onClick={() => setOpen(false)}
                             href={menu.href!}
@@ -300,6 +304,7 @@ export default function Header01() {
                     <div className="border-t pt-4">
                       <div className="mt-2 flex flex-col gap-2">
                         <Link
+                        prefetch={true}
                           href="/about"
                           onClick={() => setOpen(false)}
                           className={buttonVariants({ variant: "outline" })}
