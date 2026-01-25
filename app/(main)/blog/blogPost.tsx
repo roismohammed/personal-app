@@ -8,8 +8,6 @@ import Image from "next/image"
 import maintenence from "../../../public/assets/images/maintenence.png"
 import { createClient } from "@supabase/supabase-js"
 import CardBlog from "@/components/cardBlog"
-import { PostData } from "@/types"
-
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!

@@ -1,86 +1,27 @@
+// app/admin/posts/create/page.tsx
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ColumnDef } from "@tanstack/react-table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
-import Image from "next/image";
-import { PostData } from "@/types";
-import PageTitle from "@/components/page-title";
+import WrapperLayout from '@/components/wrapperLayout'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import CreatePostForm from './partials/create-post-form'
 
-export default function IndexPost({ posts }: { posts: PostData[] }) {
-
-
-const columns: ColumnDef<PostData>[] = [
-  {
-    id: "image",
-    header: "Image",
-    cell: ({ row }) => (
-      <Image
-        src={row.original.image ?? "/placeholder.png"}
-        alt={row.original.title}
-        width={80}
-        height={56}
-        className="object-cover rounded-md"
-      />
-    ),
-  },
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: "slug",
-    header: "Slug",
-  },
-  {
-    accessorFn: (row) => row.category?.name ?? "-",
-    id: "category",
-    header: "Category",
-  },
-  {
-    id: "actions",
-    header: "Actions",
-    cell: ({ row }) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <MoreHorizontal className="h-5 w-5" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem asChild>
-            <Link href={`/posts/edit/${row.original.id}`}>Edit</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => alert(`Delete post ${row.original.id}`)}
-            className="text-red-600"
-          >
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
-  },
-];
-
+export default function CreatePostPage() {
   return (
-    <div className="">
-      <div className="flex justify-between items-center">
-        <PageTitle title="Posts" description="List of posts" />
-        <Link href="/posts/create">
-          <Button className="cursor-pointer">Tambah Artikel</Button>
-        </Link>
+    <WrapperLayout>
+      <div className="min-h-screen py-24">
+        <div className="max-w-4xl mx-auto px-4">
+          <Card className="border-none shadow-lg">
+            <CardHeader className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-t-lg">
+              <CardTitle className="text-3xl font-bold">Create New Post</CardTitle>
+              <CardDescription className="text-teal-50">
+                Write and publish your amazing content
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-8">
+              <CreatePostForm />
+            </CardContent>
+          </Card>
+        </div>
       </div>
-
-      <div className="-mt-6">
-        {/* <DataTable columns={columns} data={posts} /> */}
-      </div>
-    </div>
-  );
+    </WrapperLayout>
+  )
 }

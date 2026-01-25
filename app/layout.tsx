@@ -1,3 +1,4 @@
+import React from "react"
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -21,9 +22,20 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://roisdev.my.id"),
   title: "RoisDev | Frontend & Fullstack Developer",
   description:
     "Halo! Saya Muhammad Rois, seorang junior Software Engineer & Web Developer yang ahli di React, Next.js, dan JavaScript.",
+  keywords: [
+    "frontend developer",
+    "fullstack developer",
+    "React.js",
+    "Next.js",
+    "JavaScript",
+    "Web Developer",
+  ],
+  authors: [{ name: "Muhammad Rois" }],
+  creator: "Muhammad Rois",
   icons: {
     icon: [
       {
@@ -33,34 +45,36 @@ export const metadata: Metadata = {
       },
       {
         media: "(prefers-color-scheme: dark)",
-        url: "favicon.jpeg",
+        url: "/favicon.jpeg",
         href: "/favicon.jpeg",
       },
     ],
   },
   openGraph: {
-    title: "RoisDev | Muhammad Rois",
+    type: "website",
+    locale: "id_ID",
+    url: "https://roisdev.my.id",
+    title: "RoisDev | Frontend & Fullstack Developer",
     description:
       "Frontend & Fullstack Developer | React.js, Next.js, Tailwind CSS, Supabase",
-    url: "https://roisdev.my.id",
     siteName: "RoisDev",
     images: [
       {
-        url: "/favicon.jpeg",
+       url: "/favicon.jpeg",
         width: 1200,
         height: 630,
-        alt: "RoisDev Logo",
+        alt: "RoisDev - Muhammad Rois Frontend & Fullstack Developer",
+        type: "image/jpeg",
       },
     ],
-    locale: "id_ID",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "RoisDev | Muhammad Rois",
+    title: "RoisDev | Frontend & Fullstack Developer",
     description:
       "Frontend & Fullstack Developer | React.js, Next.js, Tailwind CSS, Supabase",
     creator: "@roismuhammed",
+    images: ["/roisdev-og-image.jpg"],
   },
 };
 
@@ -77,13 +91,13 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              name: "Roisdev",
+              name: "Muhammad Rois",
               url: "https://roisdev.my.id",
               sameAs: [
                 "https://www.linkedin.com/in/roismuhammed",
                 "https://github.com/roismuhammed",
               ],
-              jobTitle: "Software Engineer",
+              jobTitle: "Frontend & Fullstack Developer",
               worksFor: { "@type": "Organization", name: "RoisDev" },
             }),
           }}
@@ -92,23 +106,23 @@ export default function RootLayout({
           rel="icon"
           href="/favicon.jpeg"
           media="(prefers-color-scheme: light)"
-        ></link>
+        />
         <link
           rel="icon"
           href="/favicon.jpeg"
           media="(prefers-color-scheme: dark)"
-        ></link>
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${geist.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light" // pastikan ini light
-          enableSystem={true} // tetap bisa mengikuti system jika mau
+          defaultTheme="light"
+          enableSystem={true}
           disableTransitionOnChange={true}
         >
-           <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
