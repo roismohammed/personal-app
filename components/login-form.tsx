@@ -16,7 +16,8 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "@/public/assets/images/logo1.png"
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
+
 export async function LoginForm({
   className,
   ...props

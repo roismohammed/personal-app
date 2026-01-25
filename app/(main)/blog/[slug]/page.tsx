@@ -3,17 +3,18 @@ import { Suspense } from "react"
 import { Metadata } from "next"
 import PostDetailContent from "./postDetailContent"
 import PostDetailSkeleton from "./postDetailSkeleton"
-import { createClient } from "@supabase/supabase-js"
+import { createSupabaseServerClient } from "@/lib/supabase/client"
+
 export const revalidate = 300
 
 type Props = {
   params: Promise<{ slug: string }> 
 }
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+
 export async function generateStaticParams() {
+
+  const supabase = createSupabaseServerClient()
+
   const { data: posts } = await supabase
     .from('posts')
     .select('slug')
@@ -26,12 +27,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params 
-
-  const { createClient } = await import("@supabase/supabase-js")
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const supabase = createSupabaseServerClient()
 
   const { data: post } = await supabase
     .from('posts')
