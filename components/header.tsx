@@ -190,7 +190,7 @@ export default function Header01() {
     px-1.5 py-1
   "
 >
-  {/* Theme Toggle */}
+
   <button
     className="
       flex h-9 w-10 cursor-pointer transition-all items-center justify-center
