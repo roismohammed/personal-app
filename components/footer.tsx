@@ -1,4 +1,3 @@
-import React from 'react'
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Github01Icon, InstagramIcon, Linkedin01Icon, TiktokIcon } from '@hugeicons/core-free-icons';
 import WrapperLayout from './wrapperLayout';
@@ -7,7 +6,7 @@ export default function Footer() {
     return (
         <div>
             {/* Footer */}
-            <footer className="bg-zinc-800 text-zinc-200 py-12">
+            <footer className="bg-zinc-800 dark:border-t darl:border text-zinc-200 py-12">
                 <WrapperLayout>
                     <div className="container mx-auto px-4">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">

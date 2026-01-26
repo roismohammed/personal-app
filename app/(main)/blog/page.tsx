@@ -36,7 +36,7 @@ export default function IndexBlog() {
         />
 
         <div className="relative overflow-hidden pt-14 bg-white dark:bg-zinc-900 border-b">
-          <div className="container mx-auto px-4 py-16 text-center max-w-4xl">
+          <div className="container mx-auto px-4 py-12 text-center max-w-4xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 dark:bg-zinc-700/50 mb-6">
               <BookOpen className="h-4 w-4 text-teal-600" />
               <span className="text-sm font-medium">Development Blog</span>
@@ -64,7 +64,7 @@ export default function IndexBlog() {
       {/* BODY */}
       <WrapperLayout>
         <div className="min-h-screen py-8 grid grid-cols-1 lg:grid-cols-4 gap-8 overflow-visible">
-          <aside className="lg:sticky lg:top-34 self-start space-y-4">
+          <aside className="lg:sticky lg:top-28 self-start space-y-4">
             <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
               <CardHeader className="flex items-center gap-3">
                 <Image

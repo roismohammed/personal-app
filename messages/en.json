@@ -1,65 +1,65 @@
 {
-  "services": "Services",
-  "what_i_offer": "What I Offer",
-  "services_desc": "Complete solutions for your digital development needs",
+    "services": "Services",
+    "what_i_offer": "What I Offer",
+    "services_desc": "Complete solutions for your digital development needs",
 
-  "web_dev": "Web Development",
-  "web_dev_desc": "Responsive websites and modern web applications with the latest technology",
+    "web_dev": "Web Development",
+    "web_dev_desc": "Responsive websites and modern web applications with the latest technology",
 
-  "tools": "Tools I Use",
-  "tools_desc": "Key technologies and tools in application development",
+    "tools": "Tools I Use",
+    "tools_desc": "Key technologies and tools in application development",
 
-  "ui_design": "UI Design",
-  "ui_design_desc": "Modern and consistent interface designs for great user experience",
+    "ui_design": "UI Design",
+    "ui_design_desc": "Modern and consistent interface designs for great user experience",
 
-  "hero_badge": "Web Developer",
+    "hero_badge": "Web Developer",
 
-  "hero_title_highlight": "Transforming",
-  "hero_title_middle": "Ideas Into",
-  "hero_title_gradient": "Digital Reality",
+    "hero_title_highlight": "Transforming",
+    "hero_title_middle": "Ideas Into",
+    "hero_title_gradient": "Digital Reality",
 
-  "hero_desc": "I help businesses and individuals build exceptional digital experiences with cutting-edge technology.",
+    "hero_desc": "I help businesses and individuals build exceptional digital experiences with cutting-edge technology.",
 
-  "hero_cta_primary": "Start Project",
-  "hero_cta_secondary": "View Portfolio",
+    "hero_cta_primary": "Start Project",
+    "hero_cta_secondary": "View Portfolio",
 
-  "hero_clients_count": "50+",
-  "hero_clients_label": "Satisfied Clients",
+    "hero_clients_count": "10+",
+    "hero_clients_label": "Satisfied Clients",
 
-  "portfolio_badge": "Portfolio",
-  "portfolio_title": "Latest Projects",
-  "portfolio_desc": "Some of the best works I've completed for clients",
-  "button_project": "View all project",
+    "portfolio_badge": "Portfolio",
+    "portfolio_title": "Latest Projects",
+    "portfolio_desc": "Some of the best works I've completed for clients",
+    "button_project": "View all project",
 
-  "blog_badge": "Articles",
-  "blog_title": "Latest Coding Articles",
-  "blog_desc": "Latest tips, tricks and guides in the world of software development",
+    "blog_badge": "Articles",
+    "blog_title": "Latest Coding Articles",
+    "blog_desc": "Latest tips, tricks and guides in the world of software development",
 
-  "blog_maintenance_title": "Under Maintenance",
-  "blog_maintenance_desc": "Article content is being updated. Thank you for your patience.",
+    "blog_maintenance_title": "Under Maintenance",
+    "blog_maintenance_desc": "Article content is being updated. Thank you for your patience.",
 
-  "blog_view_all": "View All Articles",
+    "blog_view_all": "View All Articles",
 
-  "cta_title": "Ready to Start Your Project?",
-  "cta_desc": "Let’s collaborate to create digital solutions tailored to your business needs.",
-  "cta_primary": "Contact Me",
-  "cta_secondary": "View CV",
+    "cta_title": "Ready to Start Your Project?",
+    "cta_desc": "Let’s collaborate to create digital solutions tailored to your business needs.",
+    "cta_primary": "Contact Me",
+    "cta_secondary": "View CV",
 
-  "portfolio_header_badge": "Portfolio Projects",
-  "portfolio_header_title": "Creative Projects",
-  "portfolio_header_desc": "A collection of my work spanning web development, mobile applications, and UI/UX design.",
+    "portfolio_header_badge": "Portfolio Projects",
+    "portfolio_header_title": "Creative Projects",
+    "portfolio_header_desc": "A collection of my work spanning web development, mobile applications, and UI/UX design.",
 
-  "title": "Full-Stack Developer",
-  "download_cv": "Download CV",
+    "title": "Full-Stack Developer",
+    "download_cv": "Download CV",
 
-  "greeting": "Hello! 👋",
-  "bio": "I'm passionate about creating digital experiences that are not only visually appealing but also functional, accessible, and user-centered. I believe in the power of clean code and thoughtful design to solve real-world problems.",
-  "long_bio": "With over 2 years of experience in web development and design, I've had the privilege of working with startups and established companies to bring their digital visions to life. My journey began with a curiosity about how websites work, and it has evolved into a passion for creating seamless, intuitive user experiences.",
+    "greeting": "Hello! 👋",
+    "bio": "I'm passionate about creating digital experiences that are not only visually appealing but also functional, accessible, and user-centered. I believe in the power of clean code and thoughtful design to solve real-world problems.",
+    "long_bio": "With over 2 years of experience in web development and design, I've had the privilege of working with startups and established companies to bring their digital visions to life. My journey began with a curiosity about how websites work, and it has evolved into a passion for creating seamless, intuitive user experiences.",
 
-  "resume": "My Resume",
-  "tech_stack": "Tech Stack",
+    "resume": "My Resume",
+    "tech_stack": "Tech Stack",
 
-  "connect_title": "Let's Connect",
-  "connect_desc": "Questions or collaborations? Reach out to me at",
-  "experience": "Experience"
+    "connect_title": "Let's Connect",
+    "connect_desc": "Questions or collaborations? Reach out to me at",
+    "experience": "Experience"
 }

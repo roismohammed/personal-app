@@ -128,7 +128,7 @@ export default function ProjectPage() {
         />
 
         <div className="relative pt-14 overflow-hidden bg-white dark:bg-zinc-900 border-b border-slate-200 dark:border-none">
-          <div className="relative container mx-auto px-4 py-16">
+          <div className="relative container mx-auto px-4 py-12">
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 dark:bg-zinc-700/50 border border-blue-200 dark:border-teal-800 mb-6">
                 <Code className="h-4 w-4 text-cyan-700" />

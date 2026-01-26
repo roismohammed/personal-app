@@ -4,7 +4,6 @@ import { useLanguage } from "@/lib/language-context";
 import { Globe, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Button } from "./ui/button";
 
 const languages = [
   { value: "id", label: "ID" },
@@ -19,46 +18,59 @@ export function LanguageSelect() {
 
   return (
     <div className="relative">
-      <Button
-        size="lg"
+      {/* Trigger */}
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between gap-2 dark:bg-zinc-800 dark:border-gray-700 dark:text-gray-300 w-[84px] px-3 py-4 rounded-lg border border-zinc-200 bg-white hover:bg-slate-50 transition-colors"
+        className="
+          flex items-center gap-1.5
+          h-9 px-2 cursor-pointer
+          rounded-md
+          border border-zinc-200 dark:border-zinc-700
+          bg-white dark:bg-zinc-800
+          text-zinc-700 dark:text-zinc-200
+          hover:bg-zinc-100 dark:hover:bg-zinc-700
+          transition-colors
+        "
       >
-        <div className="flex items-center gap-2">
-          <Globe className="w-4 h-4 text-slate-500" />
-          <span className="text-sm font-medium text-slate-800 dark:text-gray-200">
-            {selectedLanguage?.label}
-          </span>
-        </div>
-        <div
+        <Globe className="h-3.5 w-3.5 opacity-70" />
+        <span className="text-[11px] font-medium">
+          {selectedLanguage?.label}
+        </span>
+        <svg
           className={cn(
-            "transform transition-transform",
-            isOpen ? "rotate-180" : "rotate-0",
+            "h-3 w-3 opacity-60 transition-transform",
+            isOpen && "rotate-180",
           )}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <svg
-            className="w-4 h-4 text-slate-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </div>
-      </Button>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
 
+      {/* Dropdown */}
       {isOpen && (
         <>
           <div
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute z-50 mt-1 w-auto bg-white dark:bg-zinc-800 rounded-lg border border-slate-200 shadow-lg overflow-hidden animate-in fade-in-0 zoom-in-95">
+          <div
+            className="
+              absolute z-50 mt-1 min-w-[72px]
+              rounded-md
+              border border-zinc-200 dark:border-zinc-700
+              bg-white dark:bg-zinc-800
+              shadow-md
+              animate-in fade-in-0 zoom-in-95
+            "
+          >
             {languages.map((language) => (
               <button
                 key={language.value}
@@ -67,15 +79,16 @@ export function LanguageSelect() {
                   setIsOpen(false);
                 }}
                 className={cn(
-                  "flex items-center justify-between w-full px-3 py-2.5 text-left hover:bg-slate-50 transition-colors",
-                  lang === language.value && "bg-blue-50 text-blue-700",
+                  "flex items-center justify-between w-full px-2 py-1.5",
+                  "text-[11px] font-medium",
+                  "hover:bg-zinc-100 dark:hover:bg-zinc-700",
+                  lang === language.value &&
+                    "text-teal-600 dark:text-teal-400",
                 )}
               >
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">{language.label}</span>
-                </div>
+                {language.label}
                 {lang === language.value && (
-                  <Check className="w-4 h-4 text-blue-600" />
+                  <Check className="h-3 w-3" />
                 )}
               </button>
             ))}

@@ -85,12 +85,12 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
 
   return (
     <div>
-      <section className="relative w-full h-[270px] md:h-[520px] overflow-hidden">
+      <section className="relative w-full h-[270px] lg:h-[400px] overflow-hidden">
         <Image src={thumnail} alt="" fill priority className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
 
         <WrapperLayout>
-          <div className="relative z-10  mx-auto h-auto flex flex-col justify-end  mt-30 lg:mt-70 pb-12">
+          <div className="relative z-10  mx-auto h-auto flex flex-col justify-end  mt-30 lg:mt-40 pb-12">
             <div className="space-y-4 text-white">
               <div className="flex items-center gap-3 text-sm text-white/80">
                 <Badge variant="secondary">Article</Badge>

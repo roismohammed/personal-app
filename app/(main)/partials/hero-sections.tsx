@@ -41,9 +41,9 @@ export default function HeroSection() {
         />
 
         <WrapperLayout>
-          <section id="home" className="mx-auto mt-10 py-16 md:py-36">
+          <section id="home" className="mx-auto mt-7 py-16 md:py-36">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex-1 space-y-6">
+              <div className="flex-1 space-y-4">
                 <Badge
                   variant="secondary"
                   className="px-3 py-1 text-sm bg-white/80 dark:bg-zinc-700 border border-teal-100"

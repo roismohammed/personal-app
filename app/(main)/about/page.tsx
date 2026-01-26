@@ -37,9 +37,9 @@ const AboutPage = () => {
 
       <section className="relative py-20 pt-36 bg-gray-100 dark:bg-zinc-800 ">
         <div className="absolute inset-0 "></div>
-        <div className=" mx-auto lg:px-4 relative">
+        <div className=" mx-auto lg:px-0 relative">
           <WrapperLayout>
-            <div className="px-0 lg:px-14 mx-auto">
+            <div className="px-0 lg:px-0 mx-auto">
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-4  ">
                 <div className="lg:col-span-1 flex lg:sticky lg:top-30 self-start flex-col items-center lg:items-start">
                   <div className="relative mb-8">
@@ -52,7 +52,7 @@ const AboutPage = () => {
                     </div>
                   </div>
 
-                  <div className="text-center lg:text-left">
+                  <div className="pl-4">
                     <h1 className="text-3xl text-center font-bold text-slate-900 dark:text-gray-200 mb-2">
                       {personalInfo.name}
                     </h1>
