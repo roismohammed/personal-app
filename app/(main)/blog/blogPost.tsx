@@ -21,8 +21,12 @@ async function getPosts() {
       title, 
       slug, 
       description, 
-      created_at
-    `) 
+      created_at,
+      image,
+      category:category_id (
+      name
+    )
+    `)
     .order('created_at', { ascending: false })
     .limit(20)
 
@@ -37,7 +41,7 @@ async function getPosts() {
 export default async function BlogPosts() {
   const posts = await getPosts()
   const featured = posts[0]
-  const otherPosts = posts.slice(1)
+  const otherPosts = posts
 
   return (
     <main className="lg:col-span-3 space-y-10">
@@ -95,8 +99,8 @@ export default async function BlogPosts() {
       {/* Post List */}
       {otherPosts.length > 0 ? (
         <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
-          {otherPosts.map((post:any) => (
-           <CardBlog posts={post}/>
+          {otherPosts.map((post: any) => (
+            <CardBlog posts={post} />
           ))}
         </div>
       ) : (
