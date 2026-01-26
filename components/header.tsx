@@ -103,7 +103,7 @@ export default function Header01() {
     <div className="">
       <div className={`px-3 lg:px-0 ${stickyHeader ? "lg:px-0" : ""}`}>
         <header
-          className={`w-[94%] md:w-[96%] lg:w-full mx-auto py-5 bg-white border-b rounded-xl  lg:rounded-none border-border/40 dark:bg-zinc-900 backdrop-blur-md fixed z-50 transition-all duration-300 ${
+          className={`w-[94%] md:w-[96%] lg:w-full mx-auto py-4 bg-white border-b rounded-xl  lg:rounded-none border-border/40 dark:bg-zinc-900 backdrop-blur-md fixed z-50 transition-all duration-300 ${
             stickyHeader
               ? "fixed shadow-md top-4 lg:top-0 bg-white transition-all border-b dark:border-b dark:border-zinc-700 duration-100 px-4 lg:px-0"
               : "top-3 lg:top-0 px-4 lg:px-0"

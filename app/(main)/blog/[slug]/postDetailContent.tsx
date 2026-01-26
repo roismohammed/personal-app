@@ -1,236 +1,444 @@
-// app/blog/[slug]/PostDetailContent.tsx
-import { notFound } from "next/navigation"
-import Image from "next/image"
-import Link from "next/link"
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import potoProfile from "@/public/assets/images/roisbaru.jpeg"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Input } from "@/components/ui/input"
-import WrapperLayout from "@/components/wrapperLayout"
-import ShareButtons from "./share-button"
-import { ArrowLeft } from "lucide-react"
-import { createClient } from "@supabase/supabase-js"
-
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import potoProfile from "@/public/assets/images/roisbaru.jpeg";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import WrapperLayout from "@/components/wrapperLayout";
+import { createClient } from "@supabase/supabase-js";
+import thumnail from "../../../../public/assets/images/bg-artikel.png";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Clipboard,
+  Facebook,
+  InstagramFreeIcons,
+  Linkedin,
+  Message,
+  TiktokFreeIcons,
+  TwitterFreeIcons,
+  Youtube,
+} from "@hugeicons/core-free-icons";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+);
 
 const staticTags = [
-  "ChatGPT", "AI Tools", "Next.js", "Supabase",
-  "Web Development", "RoisDev",
-]
+  "ChatGPT",
+  "AI Tools",
+  "Next.js",
+  "Supabase",
+  "Web Development",
+  "RoisDev",
+];
 
 async function fetchPostBySlug(slug: string) {
   try {
     const { data: post, error } = await supabase
-      .from('posts')
-      .select('id, title, slug, description, content, created_at')
-      .eq('slug', slug)
-      .single()
+      .from("posts")
+      .select("id, title, slug, description, content, created_at")
+      .eq("slug", slug)
+      .single();
 
     if (error) {
-      console.error('❌ Supabase Error:', error)
-      return null
+      console.error("❌ Supabase Error:", error);
+      return null;
     }
 
     if (!post) {
-      console.log('⚠️ No post found for slug:', slug)
-      return null
+      console.log("⚠️ No post found for slug:", slug);
+      return null;
     }
 
-    return post
+    return post;
   } catch (err) {
-    console.error('❌ Catch error:', err)
-    return null
+    console.error("❌ Catch error:", err);
+    return null;
   }
 }
 
 export default async function PostDetailContent({ slug }: { slug: string }) {
-  const post = await fetchPostBySlug(slug)
+  const post = await fetchPostBySlug(slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
-  const baseUrl = "https://roisdev.my.id"
-  const postUrl = `${baseUrl}/blog/${post.slug}`
+  const baseUrl = "https://roisdev.my.id";
+  const postUrl = `${baseUrl}/blog/${post.slug}`;
 
   const formattedDate = new Intl.DateTimeFormat("id-ID", {
     year: "numeric",
     month: "long",
     day: "2-digit",
-  }).format(new Date(post.created_at))
+  }).format(new Date(post.created_at));
 
   return (
-    <WrapperLayout>
-      <div className="mx-auto pt-28 py-10">
-        <div className="grid gap-10 lg:grid-cols-[260px_1fr]">
-          {/* SIDEBAR KIRI */}
-          <aside className="space-y-4 lg:sticky lg:top-32 self-start">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-3 px-5 py-3 rounded-lg hover:text-gray-500 transition"
-              prefetch={true}
-            >
-              <ArrowLeft size={18} />
-              <span className="text-base font-semibold">Back</span>
-            </Link>
+    <div>
+      <section className="relative w-full h-[270px] md:h-[520px] overflow-hidden">
+        <Image src={thumnail} alt="" fill priority className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
 
-            <Card className="shadow-none mt-3 hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
-              <CardHeader className="flex items-center gap-3">
-                <Image
-                  src={potoProfile}
-                  alt="Foto Penulis"
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                />
-                <div>
-                  <CardTitle className="text-lg">RoisDev</CardTitle>
-                  <small className="-mt-2">Web Developer</small>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm mt-2 text-gray-500">
-                  Web developer yang selalu ingin berkembang dan mempelajari hal-hal baru.
-                </p>
-              </CardContent>
-            </Card>
-
-            <div className="border rounded-xl p-5 hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
-              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                Tags
-              </h2>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {staticTags.map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
-                    #{tag}
-                  </Badge>
-                ))}
+        <WrapperLayout>
+          <div className="relative z-10  mx-auto h-auto flex flex-col justify-end  mt-30 lg:mt-70 pb-12">
+            <div className="space-y-4 text-white">
+              <div className="flex items-center gap-3 text-sm text-white/80">
+                <Badge variant="secondary">Article</Badge>
+                <span>{formattedDate}</span>
+                <span>• 12 menit baca</span>
               </div>
+
+              <h1 className="text-[20px] md:text-5xl font-extrabold leading-tight">
+                {post.title}
+              </h1>
             </div>
-          </aside>
+            <Breadcrumb className="mt-2">
+              <BreadcrumbList>
+                <BreadcrumbItem className="text-white">
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem className="text-white">
+                  <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem className="text-white">
+                  <BreadcrumbPage>Blog-detail</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </WrapperLayout>
+      </section>
 
-          {/* CONTENT ARTIKEL */}
-          <article className="-mt-8 lg:mt-0 space-y-8">
-            <header className="space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <Badge variant="secondary">Article</Badge>
-                  <span>{formattedDate}</span>
+      <WrapperLayout>
+        <div className="mx-auto pt- py-10">
+          <div className="grid gap-10  lg:grid-cols-[260px_1fr]">
+            <aside className="space-y-4 lg:sticky lg:top-26 self-start">
+              <Card className="shadow-none mt-3 hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+                <CardHeader className="flex items-center gap-3">
+                  <Image
+                    src={potoProfile}
+                    alt="Foto Penulis"
+                    width={48}
+                    height={48}
+                    className="rounded-full"
+                  />
+                  <div>
+                    <CardTitle className="text-lg ">RoisDev</CardTitle>
+                    <p className="-mt-1 text-sm text-gray-500">Web Developer</p>
+                  </div>
+                </CardHeader>
+
+                <CardContent>
+                  <p className="text-sm mt-2 text-gray-500">
+                    Web developer yang selalu ingin berkembang dan mempelajari
+                    hal-hal baru.
+                  </p>
+
+                  <div className="mt-4 flex items-center gap-4">
+                    <a
+                      href="https://instagram.com/username"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-500 hover:text-pink-500 transition"
+                      aria-label="Instagram"
+                    >
+                      <HugeiconsIcon icon={InstagramFreeIcons} size={18} />
+                    </a>
+
+                    <a
+                      href="https://tiktok.com/@username"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-500 hover:text-black dark:hover:text-white transition"
+                      aria-label="TikTok"
+                    >
+                      <HugeiconsIcon icon={TiktokFreeIcons} size={18} />
+                    </a>
+
+                    <a
+                      href="https://youtube.com/@username"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-500 hover:text-red-500 transition"
+                      aria-label="YouTube"
+                    >
+                      <HugeiconsIcon icon={Youtube} size={18} />
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="border rounded-xl p-5 hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                  Tags
+                </h2>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {staticTags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">
+                      #{tag}
+                    </Badge>
+                  ))}
                 </div>
-
-                {/* <ShareButtons title={post.title} url={postUrl} /> */}
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-bold">{post.title}</h1>
+              <Card className="shadow-none hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-base">Bagikan Artikel</CardTitle>
+                </CardHeader>
 
-              {post.description && (
-                <p className="text-lg text-muted-foreground">{post.description}</p>
-              )}
-            </header>
+                <CardContent className="space-y-4 ">
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${postUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-blue-500 hover:text-white transition"
+                      aria-label="Bagikan ke Facebook"
+                    >
+                      <HugeiconsIcon icon={Facebook} size={16} />
+                    </a>
 
-            {/* CONTENT HTML */}
-            <div
-              className="
+                    <a
+                      href={`https://twitter.com/intent/tweet?url=${postUrl}&text=${post.title}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-sky-500 hover:text-white transition"
+                      aria-label="Bagikan ke Twitter"
+                    >
+                      <HugeiconsIcon icon={TwitterFreeIcons} size={16} />
+                    </a>
+
+                    <a
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-blue-700 hover:text-white transition"
+                      aria-label="Bagikan ke LinkedIn"
+                    >
+                      <HugeiconsIcon icon={Linkedin} size={16} />
+                    </a>
+
+                    <a
+                      href={`https://api.whatsapp.com/send?text=${post.title} ${postUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-green-500 hover:text-white transition"
+                      aria-label="Bagikan ke WhatsApp"
+                    >
+                      <HugeiconsIcon icon={Message} size={16} />
+                    </a>
+                  </div>
+                  <button
+                    // onClick={() => navigator.clipboard.writeText(postUrl)}
+                    className="flex items-center gap-2 w-full justify-center rounded-lg border py-2 text-sm text-gray-600 hover:bg-gray-100 dark:hover:bg-zinc-600 transition"
+                  >
+                    <HugeiconsIcon icon={Clipboard} size={16} />
+                    Salin Link
+                  </button>
+                </CardContent>
+              </Card>
+            </aside>
+
+            <article className="-mt-20 lg:-mt-0 space-y-8">
+              <div
+                className="
                 prose max-w-none
                 prose-slate dark:prose-invert
                 leading-relaxed tracking-normal text-[15.5px]
-                
+
                 [&_h1]:text-2xl [&_h1]:md:text-5xl [&_h1]:font-extrabold
-                [&_h1]:text-slate-800 [&_h1]:dark:text-slate-100
+                [&_h1]:text-muted-foreground [&_h1]:dark:text-slate-100
                 [&_h1]:mt-8 [&_h1]:mb-4
 
                 [&_h2]:text-xl [&_h2]:font-bold
-                [&_h2]:text-slate-800 [&_h2]:dark:text-slate-200
+                [&_h2]:text-muted-foreground [&_h2]:dark:text-gray-200
                 [&_h2]:mt-8 [&_h2]:mb-3
 
                 [&_h3]:text-xl [&_h3]:font-semibold
-                [&_h3]:text-slate-700 [&_h3]:dark:text-slate-300
+                [&_h3]:text-gray-600 [&_h3]:dark:text-gray-300
                 [&_h3]:mt-6 [&_h3]:mb-2
 
                 [&_p]:text-[16px]
-                [&_p]:text-slate-700 [&_p]:dark:text-slate-300
-                [&_p]:mb-4
+                [&_p]:text-gray-500 [&_p]:dark:text-slate-300
+                [&_p]:mb-2
 
                 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-3
-                [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-3
+                [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-2
                 [&_li]:mb-1.5
-                [&_li]:text-slate-700 [&_li]:dark:text-slate-300
+                [&_li]:text-muted-foreground [&_li]:dark:text-slate-300
 
                 [&_strong]:text-slate-900 [&_strong]:dark:text-white
                 [&_strong]:font-semibold
 
                 [&_img]:rounded-xl [&_img]:shadow [&_img]:my-6
               "
-              dangerouslySetInnerHTML={{ __html: post.content || "" }}
-            />
+                dangerouslySetInnerHTML={{ __html: post.content || "" }}
+              />
 
-            {/* COMMENT SECTION */}
-            <section className="mt-16 space-y-6">
-              <h2 className="text-xl font-semibold">Tinggalkan Komentar</h2>
-              <form className="space-y-4">
-                <Input placeholder="Nama kamu" className="max-w-md" />
-                <Textarea
-                  placeholder="Tulis komentar kamu di sini..."
-                  rows={4}
-                  className="max-w-2xl"
-                />
-                <Button type="submit">Kirim Komentar</Button>
-              </form>
-              <p className="text-sm text-muted-foreground">
-                Komentar akan tampil setelah dimoderasi.
-              </p>
-            </section>
-          </article>
+              {/* COMMENT SECTION */}
+              <section className="mt-16 space-y-6">
+                <h2 className="text-xl font-semibold">Tinggalkan Komentar</h2>
+                <form className="space-y-4">
+                  <Input placeholder="Nama kamu" className="max-w-md" />
+                  <Textarea
+                    placeholder="Tulis komentar kamu di sini..."
+                    rows={4}
+                    className="max-w-2xl"
+                  />
+                  <Button type="submit">Kirim Komentar</Button>
+                </form>
+                <p className="text-sm text-muted-foreground">
+                  Komentar akan tampil setelah dimoderasi.
+                </p>
+              </section>
+            </article>
 
-          {/* SIDEBAR MOBILE */}
-          <aside className="space-y-4">
-            <div className="block lg:hidden">
-              <Card className="border shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
-                <CardHeader className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border">
+            {/* SIDEBAR MOBILE */}
+            <aside className="space-y-4">
+              <div className="block lg:hidden">
+                <Card className="shadow-none mt-3  bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+                  <CardHeader className="flex items-center gap-3">
                     <Image
                       src={potoProfile}
                       alt="Foto Penulis"
                       width={48}
                       height={48}
-                      className="object-cover"
+                      className="rounded-full"
                     />
-                  </div>
-                  <div>
-                    <CardTitle className="text-lg font-semibold dark:text-white">
-                      RoisDev
-                    </CardTitle>
-                    <small className="text-gray-500 -mt-3">Web Developer</small>
-                  </div>
+                    <div>
+                      <CardTitle className="text-lg ">RoisDev</CardTitle>
+                      <p className="-mt-1 text-sm text-gray-500">
+                        Web Developer
+                      </p>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent>
+                    <p className="text-sm mt-2 text-gray-500">
+                      Web developer yang selalu ingin berkembang dan mempelajari
+                      hal-hal baru.
+                    </p>
+
+                    <div className="mt-4 flex items-center gap-4">
+                      <a
+                        href="https://instagram.com/username"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-pink-500 transition"
+                        aria-label="Instagram"
+                      >
+                        <HugeiconsIcon icon={InstagramFreeIcons} size={18} />
+                      </a>
+
+                      <a
+                        href="https://tiktok.com/@username"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-black dark:hover:text-white transition"
+                        aria-label="TikTok"
+                      >
+                        <HugeiconsIcon icon={TiktokFreeIcons} size={18} />
+                      </a>
+
+                      <a
+                        href="https://youtube.com/@username"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-red-500 transition"
+                        aria-label="YouTube"
+                      >
+                        <HugeiconsIcon icon={Youtube} size={18} />
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="border rounded-xl p-5 bg-white dark:bg-zinc-700/50 backdrop-blur-sm block lg:hidden">
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                  Tags
+                </h2>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {staticTags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">
+                      #{tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <Card className="shadow-none block lg:hidden bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-base">Bagikan Artikel</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-slate-600 -mt-2 dark:text-slate-400 leading-relaxed">
-                    Web developer yang selalu ingin berkembang dan belajar hal-hal baru.
-                  </p>
+
+                <CardContent className="space-y-4 ">
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${postUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-blue-500 hover:text-white transition"
+                      aria-label="Bagikan ke Facebook"
+                    >
+                      <HugeiconsIcon icon={Facebook} size={16} />
+                    </a>
+
+                    <a
+                      href={`https://twitter.com/intent/tweet?url=${postUrl}&text=${post.title}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-sky-500 hover:text-white transition"
+                      aria-label="Bagikan ke Twitter"
+                    >
+                      <HugeiconsIcon icon={TwitterFreeIcons} size={16} />
+                    </a>
+
+                    <a
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-blue-700 hover:text-white transition"
+                      aria-label="Bagikan ke LinkedIn"
+                    >
+                      <HugeiconsIcon icon={Linkedin} size={16} />
+                    </a>
+
+                    <a
+                      href={`https://api.whatsapp.com/send?text=${post.title} ${postUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-green-500 hover:text-white transition"
+                      aria-label="Bagikan ke WhatsApp"
+                    >
+                      <HugeiconsIcon icon={Message} size={16} />
+                    </a>
+                  </div>
+                  <button
+                    // onClick={() => navigator.clipboard.writeText(postUrl)}
+                    className="flex items-center gap-2 w-full justify-center rounded-lg border py-2 text-sm text-gray-600 hover:bg-gray-100 dark:hover:bg-zinc-600 transition"
+                  >
+                    <HugeiconsIcon icon={Clipboard} size={16} />
+                    Salin Link
+                  </button>
                 </CardContent>
               </Card>
-            </div>
-
-            <div className="border rounded-xl p-5 bg-white dark:bg-zinc-700/50 backdrop-blur-sm block lg:hidden">
-              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                Tags
-              </h2>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {staticTags.map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
-                    #{tag}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          </aside>
+            </aside>
+          </div>
         </div>
-      </div>
-    </WrapperLayout>
-  )
+      </WrapperLayout>
+    </div>
+  );
 }

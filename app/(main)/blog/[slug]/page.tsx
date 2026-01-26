@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { Metadata } from "next"
 import PostDetailContent from "./postDetailContent"
 import PostDetailSkeleton from "./postDetailSkeleton"
-import { createSupabaseServerClient } from "@/lib/supabase/client"
+import { createClient } from "@supabase/supabase-js" // ✅ Import langsung
 
 export const revalidate = 300
 
@@ -12,8 +12,11 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-
-  const supabase = createSupabaseServerClient()
+  // ✅ Create client langsung di sini
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   const { data: posts } = await supabase
     .from('posts')
@@ -27,11 +30,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params 
-  const supabase = createSupabaseServerClient()
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   const { data: post } = await supabase
     .from('posts')
-    .select('title, description, image')
+    .select('title, description') 
     .eq('slug', slug)
     .single()
 
@@ -42,11 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const baseUrl = "https://roisdev.my.id"
-  const imageUrl = post.image
-    ? post.image.startsWith("http")
-      ? post.image
-      : `${baseUrl}${post.image}`
-    : `${baseUrl}/og-default.jpg`
+  const imageUrl = `${baseUrl}/og-default.jpg`
 
   return {
     title: post.title,
