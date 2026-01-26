@@ -151,241 +151,238 @@ export default function PostForm() {
 
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6  mx-auto p-6">
-      {/* Title */}
-      <div className="space-y-2">
-        <Label htmlFor="title">
-          Title <span className="text-red-500">*</span>
-        </Label>
-        <Input
-          id="title"
-          placeholder="Enter post title..."
-          value={title}
-          onChange={(e) => handleTitleChange(e.target.value)}
-          required
-          className="text-lg"
-        />
+    <form onSubmit={handleSubmit} className="space-y-6  flex gap-4 w-full ">
+
+      <div className='space-y-6'>
+        <div className="space-y-2">
+          <Label htmlFor="title">
+            Title <span className="text-red-500">*</span>
+          </Label>
+          <Input
+            id="title"
+            placeholder="Enter post title..."
+            value={title}
+            onChange={(e) => handleTitleChange(e.target.value)}
+            required
+            className="text-lg"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>Featured Image (Optional)</Label>
+
+          {!image ? (
+            <label className="cursor-pointer">
+              <Card className="border-2 border-dashed hover:border-teal-500 transition-colors">
+                <div className="p-12 text-center">
+                  <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                  <p className="text-sm font-medium mb-1">
+                    {uploading ? 'Uploading...' : 'Click to upload image'}
+                  </p>
+                  <p className="text-xs text-gray-500">PNG, JPG up to 2MB</p>
+                </div>
+              </Card>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="hidden"
+              />
+            </label>
+          ) : (
+            <Card>
+              <div className="relative w-full h-64">
+                <Image
+                  src={image}
+                  alt="Preview"
+                  fill
+                  className="object-cover rounded-t-lg"
+                />
+              </div>
+              <div className="p-4 flex justify-between items-center bg-gray-50 dark:bg-gray-900">
+                <p className="text-sm text-gray-600 dark:text-gray-400 truncate flex-1">
+                  {image.split('/').pop()}
+                </p>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleRemoveImage}
+                  className="ml-4"
+                >
+                  <X className="h-4 w-4 mr-1" />
+                  Remove
+                </Button>
+              </div>
+            </Card>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label>
+            Content <span className="text-red-500">*</span>
+          </Label>
+
+          {!editorLoaded && (
+            <Card className="p-8 text-center border-dashed">
+              <Loader2 className="h-8 w-8 animate-spin mx-auto mb-2 text-teal-600" />
+              <p className="text-sm text-gray-500">Loading editor...</p>
+            </Card>
+          )}
+
+          <div className={`border rounded-lg overflow-hidden ${!editorLoaded ? 'hidden' : ''}`}>
+            <Editor
+              apiKey="858j7u18k8wb7pt41w5urjfpeusf47tsp1fjysx244w7pz1h"
+              onInit={(evt, editor) => {
+                editorRef.current = editor
+                setEditorLoaded(true)
+              }}
+              value={content}
+              onEditorChange={(newContent) => setContent(newContent)}
+              init={{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                  'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                  'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+                ],
+                toolbar:
+                  'undo redo | blocks | ' +
+                  'bold italic forecolor | alignleft aligncenter ' +
+                  'alignright alignjustify | bullist numlist outdent indent | ' +
+                  'removeformat | code | help',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; }',
+                placeholder: 'Write your content here...'
+              }}
+            />
+          </div>
+          <p className="text-xs text-gray-500">
+            Content length: {content.replace(/<[^>]*>/g, '').length} characters
+          </p>
+        </div>
+
+
+
+        <div className="flex gap-4 pt-6 border-t">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push('/blog')}
+            className="flex-1"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            disabled={saving || !title || !content}
+            className="flex-1 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700"
+          >
+            {saving ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Publishing...
+              </>
+            ) : (
+              <>
+                <Save className="h-4 w-4 mr-2" />
+                Publish Post
+              </>
+            )}
+          </Button>
+        </div>
+
       </div>
 
-      {/* Slug */}
-      <div className="space-y-2">
-        <Label htmlFor="slug">
-          Slug <span className="text-sm text-gray-500">(Auto-generated)</span>
-        </Label>
-        <Input
-          id="slug"
-          placeholder="post-slug"
-          value={slug}
-          onChange={(e) => setSlug(e.target.value)}
-          required
-          className="font-mono text-sm bg-gray-50 dark:bg-gray-900"
-        />
-        <p className="text-xs text-gray-500">
-          URL: /blog/{slug || 'your-slug'}
-        </p>
-      </div>
+      <div className='space-y-4'>
+        <div className="space-y-2">
+          <Label htmlFor="slug">
+            Slug <span className="text-sm text-gray-500">(Auto-generated)</span>
+          </Label>
+          <Input
+            id="slug"
+            placeholder="post-slug"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
+            required
+            className="font-mono text-sm bg-gray-50 dark:bg-gray-900"
+          />
+          <p className="text-xs text-gray-500">
+            URL: /blog/{slug || 'your-slug'}
+          </p>
+        </div>
 
-      {/* Description */}
-      <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
-        <Textarea
-          id="description"
-          placeholder="Brief description of your post..."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={3}
-          className="resize-none"
-        />
-        <p className="text-xs text-gray-500">
-          {description.length} characters
-        </p>
-      </div>
+        <div className="space-y-2">
+          <Label htmlFor="description">Description</Label>
+          <Textarea
+            id="description"
+            placeholder="Brief description of your post..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            rows={3}
+            className="resize-none"
+          />
+          <p className="text-xs text-gray-500">
+            {description.length} characters
+          </p>
+        </div>
 
-      {/* Tags */}
-      <div className="space-y-2">
-        <Label htmlFor="tags">Tags (Optional)</Label>
-        <Input
-          id="tags"
-          placeholder="e.g., coding, javascript, tutorial"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-        />
-        <p className="text-xs text-gray-500">
-          Separate tags with commas
-        </p>
-      </div>
+        <div className="space-y-2">
+          <Label htmlFor="tags">Tags (Optional)</Label>
+          <Input
+            id="tags"
+            placeholder="e.g., coding, javascript, tutorial"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+          />
+          <p className="text-xs text-gray-500">
+            Separate tags with commas
+          </p>
+        </div>
 
-      {/* Category ID */}
-      {/* Category */}
-      <div className="space-y-2">
-        <Label htmlFor="categoryId">Category</Label>
+        <div className="space-y-2">
+          <Label htmlFor="categoryId">Category</Label>
 
-        <select
-          id="categoryId"
-          value={categoryId}
-          onChange={(e) => setCategoryId(e.target.value)}
-          className="
+          <select
+            id="categoryId"
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+            className="
       w-full rounded-md border border-input bg-background px-3 py-2 text-sm
       focus:outline-none focus:ring-2 focus:ring-teal-500
     "
-        >
-          <option value="">Pilih Category</option>
+          >
+            <option value="">Pilih Category</option>
 
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
 
-        <p className="text-xs text-gray-500">
-          Select category for this post
-        </p>
-      </div>
-
-
-      {/* Featured Image */}
-      <div className="space-y-2">
-        <Label>Featured Image (Optional)</Label>
-
-        {!image ? (
-          <label className="cursor-pointer">
-            <Card className="border-2 border-dashed hover:border-teal-500 transition-colors">
-              <div className="p-12 text-center">
-                <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                <p className="text-sm font-medium mb-1">
-                  {uploading ? 'Uploading...' : 'Click to upload image'}
-                </p>
-                <p className="text-xs text-gray-500">PNG, JPG up to 2MB</p>
-              </div>
-            </Card>
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              disabled={uploading}
-              className="hidden"
-            />
-          </label>
-        ) : (
-          <Card>
-            <div className="relative w-full h-64">
-              <Image
-                src={image}
-                alt="Preview"
-                fill
-                className="object-cover rounded-t-lg"
-              />
-            </div>
-            <div className="p-4 flex justify-between items-center bg-gray-50 dark:bg-gray-900">
-              <p className="text-sm text-gray-600 dark:text-gray-400 truncate flex-1">
-                {image.split('/').pop()}
-              </p>
-              <Button
-                type="button"
-                variant="destructive"
-                size="sm"
-                onClick={handleRemoveImage}
-                className="ml-4"
-              >
-                <X className="h-4 w-4 mr-1" />
-                Remove
-              </Button>
-            </div>
-          </Card>
-        )}
-      </div>
-
-      {/* Content (TinyMCE) */}
-      <div className="space-y-2">
-        <Label>
-          Content <span className="text-red-500">*</span>
-        </Label>
-
-        {/* ✅ Loading placeholder sebelum editor ready */}
-        {!editorLoaded && (
-          <Card className="p-8 text-center border-dashed">
-            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-2 text-teal-600" />
-            <p className="text-sm text-gray-500">Loading editor...</p>
-          </Card>
-        )}
-
-        <div className={`border rounded-lg overflow-hidden ${!editorLoaded ? 'hidden' : ''}`}>
-          <Editor
-            apiKey="858j7u18k8wb7pt41w5urjfpeusf47tsp1fjysx244w7pz1h"
-            onInit={(evt, editor) => {
-              editorRef.current = editor
-              setEditorLoaded(true) // ✅ Editor sudah ready
-            }}
-            value={content}
-            onEditorChange={(newContent) => setContent(newContent)}
-            init={{
-              height: 500,
-              menubar: false,
-              plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
-              ],
-              toolbar:
-                'undo redo | blocks | ' +
-                'bold italic forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | code | help',
-              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; }',
-              placeholder: 'Write your content here...'
-            }}
-          />
+          <p className="text-xs text-gray-500">
+            Select category for this post
+          </p>
         </div>
-        <p className="text-xs text-gray-500">
-          Content length: {content.replace(/<[^>]*>/g, '').length} characters
-        </p>
+
+        <Card className="p-4 bg-gray-50 dark:bg-gray-900">
+          <div className="space-y-1 text-xs font-mono">
+            <p><strong>Title:</strong> {title || '(empty)'}</p>
+            <p><strong>Slug:</strong> {slug || '(empty)'}</p>
+            <p><strong>Description:</strong> {description.length} chars</p>
+            <p><strong>Tags:</strong> {tags || '(empty)'}</p>
+            <p><strong>Category ID:</strong> {categoryId || '(empty)'}</p>
+            <p><strong>Content:</strong> {content.replace(/<[^>]*>/g, '').length} chars</p>
+            <p><strong>Image:</strong> {image ? '✅ URL (Storage)' : '❌ No image'}</p>
+            {image && (
+              <p className="truncate"><strong>URL:</strong> {image}</p>
+            )}
+          </div>
+        </Card>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex gap-4 pt-6 border-t">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.push('/blog')}
-          className="flex-1"
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          disabled={saving || !title || !content}
-          className="flex-1 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700"
-        >
-          {saving ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Publishing...
-            </>
-          ) : (
-            <>
-              <Save className="h-4 w-4 mr-2" />
-              Publish Post
-            </>
-          )}
-        </Button>
-      </div>
-
-      {/* Debug Info */}
-      <Card className="p-4 bg-gray-50 dark:bg-gray-900">
-        <div className="space-y-1 text-xs font-mono">
-          <p><strong>Title:</strong> {title || '(empty)'}</p>
-          <p><strong>Slug:</strong> {slug || '(empty)'}</p>
-          <p><strong>Description:</strong> {description.length} chars</p>
-          <p><strong>Tags:</strong> {tags || '(empty)'}</p>
-          <p><strong>Category ID:</strong> {categoryId || '(empty)'}</p>
-          <p><strong>Content:</strong> {content.replace(/<[^>]*>/g, '').length} chars</p>
-          <p><strong>Image:</strong> {image ? '✅ URL (Storage)' : '❌ No image'}</p>
-          {image && (
-            <p className="truncate"><strong>URL:</strong> {image}</p>
-          )}
-        </div>
-      </Card>
     </form>
   )
 }
