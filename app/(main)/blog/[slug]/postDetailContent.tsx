@@ -28,6 +28,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { CopyLinkButton } from "@/components/copy-button";
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -240,13 +241,8 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                       <HugeiconsIcon icon={Message} size={16} />
                     </a>
                   </div>
-                  <button
-                    // onClick={() => navigator.clipboard.writeText(postUrl)}
-                    className="flex items-center gap-2 w-full justify-center rounded-lg border py-2 text-sm text-gray-600 hover:bg-gray-100 dark:hover:bg-zinc-600 transition"
-                  >
-                    <HugeiconsIcon icon={Clipboard} size={16} />
-                    Salin Link
-                  </button>
+                <CopyLinkButton url={`https://roisdev.my/blog/${post.slug}`} />
+
                 </CardContent>
               </Card>
             </aside>

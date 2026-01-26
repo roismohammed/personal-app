@@ -3,12 +3,11 @@ import { Badge } from './ui/badge';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import Image from 'next/image';
-import { Eye } from 'lucide-react';
 import { PostData } from '@/types/index';
 interface PostsProps {
-    posts:PostData
+    posts: PostData
 }
-export default function CardBlog({ posts }:PostsProps) {
+export default function CardBlog({ posts }: PostsProps) {
     return (
         <div key={posts.id}>
             <Link href={`/blog/${posts.slug}`} key={posts.id} prefetch={false}>
@@ -17,12 +16,12 @@ export default function CardBlog({ posts }:PostsProps) {
                 >
                     {/* Gambar */}
                     <div className="relative h-58 w-full overflow-hidden">
-                        {/* <Image
+                        <Image
                             src={posts.image ?? ""}
                             alt={posts.title}
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        /> */}
+                        />
                     </div>
 
                     <CardHeader className="pb-3">
@@ -34,11 +33,13 @@ export default function CardBlog({ posts }:PostsProps) {
                                 {posts.category?.name ?? "-"}
                             </Badge>
 
-                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                                <Eye className="h-3.5 w-3.5" />
-                                <span className="font-medium">1.000</span>
-                                <span>views</span>
-                            </div>
+                            <span className='text-sm text-muted-foreground'>
+                                {new Intl.DateTimeFormat("id-ID", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "2-digit",
+                                }).format(new Date(posts.created_at))}
+                            </span>
                         </div>
 
                         <CardTitle className="text-lg group-hover:text-teal-600 transition-colors">
@@ -54,11 +55,7 @@ export default function CardBlog({ posts }:PostsProps) {
 
                         <div className="flex justify-between items-center text-sm text-muted-foreground">
                             <span>
-                                {new Intl.DateTimeFormat("id-ID", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "2-digit",
-                                }).format(new Date(posts.created_at))}
+                              Roisdev
                             </span>
 
                             <Button variant="ghost" size="sm" className="h-8 px-3 cursor-pointer">
