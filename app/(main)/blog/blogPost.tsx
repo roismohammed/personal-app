@@ -54,8 +54,10 @@ export default async function BlogPosts() {
               </Badge>
 
               <div className="flex items-center gap-1 text-xs text-orange-600 dark:text-orange-400">
-                <TrendingUp className="h-3 w-3" />
-                Trending
+                <Link href={`/blog/${featured.slug}`} className="flex gap-1">
+                  <TrendingUp className="h-3 w-3" />
+                  Trending
+                </Link>
               </div>
             </div>
 
@@ -87,7 +89,7 @@ export default async function BlogPosts() {
 
           <CardFooter>
             <Link href={`/blog/${featured.slug}`}>
-              <Button className="group bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700">
+              <Button className="group bg-gradient-to-r cursor-pointer from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700">
                 Read Full Article
                 <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>

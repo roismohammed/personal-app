@@ -29,10 +29,20 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { CopyLinkButton } from "@/components/copy-button";
+import { Metadata } from "next";
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 );
+interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  image: string | null;
+  created_at: string;
+}
 
 const staticTags = [
   "ChatGPT",
@@ -43,7 +53,7 @@ const staticTags = [
   "RoisDev",
 ];
 
-async function fetchPostBySlug(slug: string) {
+async function fetchPostBySlug(slug: string): Promise<Post | null> {
   try {
     const { data: post, error } = await supabase
       .from("posts")
@@ -61,12 +71,60 @@ async function fetchPostBySlug(slug: string) {
       return null;
     }
 
-    return post;
+    return post as Post;
   } catch (err) {
     console.error("❌ Catch error:", err);
     return null;
   }
 }
+
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: { slug: string } 
+}): Promise<Metadata> {
+  const post = await fetchPostBySlug(params.slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found - RoisDev',
+    };
+  }
+
+  const baseUrl = "https://roisdev.my.id";
+  const postUrl = `${baseUrl}/blog/${post.slug}`;
+  
+  const ogImage = post.image || `${baseUrl}/assets/images/bg-artikel.png`;
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: postUrl,
+      siteName: 'RoisDev Blog',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        }
+      ],
+      locale: 'id_ID',
+      type: 'article',
+      publishedTime: post.created_at,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      images: [ogImage],
+    },
+  };
+}
+
 
 export default async function PostDetailContent({ slug }: { slug: string }) {
   const post = await fetchPostBySlug(slug);
