@@ -144,7 +144,7 @@ export default function ProjectSection() {
                 return (
                   <Card
                     key={project.id}
-                    className="group border pt-0 cursor-pointer shadow-none hover:shadow-sm  transition-all duration-500 overflow-hidden bg-white/80 dark:bg-zinc-700/50 flex flex-col"
+                    className="group border pt-0 cursor-pointer shadow-none hover:shadow-sm rounded-3xl transition-all duration-500 overflow-hidden bg-white/80 dark:bg-zinc-700/50 flex flex-col"
                   >
                     <div className="relative h-56 overflow-hidden">
                       <Image

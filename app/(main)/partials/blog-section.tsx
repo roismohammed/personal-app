@@ -3,16 +3,58 @@ import CardBlog from "@/components/cardBlog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import WrapperLayout from "@/components/wrapperLayout";
-import { PostData } from "@/types";
-import { Wrench } from "lucide-react";
+import { Wrench, Loader2 } from "lucide-react";
 import { motion, Variants } from "motion/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react"; 
 import { useLanguage } from "@/lib/language-context";
+import { createClient } from "@supabase/supabase-js";
 
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+interface Post {
+  id: string | number;
+  title: string;
+  slug: string;
+  description: string;
+  created_at: string;
+  image: string;
+  category: { name: string } | { name: string }[];
+}
 export default function BlogSection() {
   const { t } = useLanguage();
-  const [posts, setPosts] = useState<PostData[]>([]);
+const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('posts')
+          .select(`
+            id, 
+            title, 
+            slug, 
+            description, 
+            created_at,
+            image,
+            category:category_id (name)
+          `)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        if (error) throw error;
+        setPosts(data);
+      } catch (error) {
+        console.error('Supabase error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const headerVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
@@ -62,13 +104,17 @@ export default function BlogSection() {
           </p>
         </motion.div>
 
-        {/* Blog Grid / Empty State */}
-        {posts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center space-y-3">
+        {/* 3. Logic Tampilan: Loading -> Empty -> Grid */}
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-teal-500" />
+            <p className="text-sm text-muted-foreground mt-2">Fetching articles...</p>
+          </div>
+        ) : posts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center space-y-3 py-10">
             <div className="h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
               <Wrench className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
             </div>
-
             <div className="text-center">
               <h3 className="font-medium text-foreground">
                 {t("blog_maintenance_title")}
@@ -94,7 +140,6 @@ export default function BlogSection() {
           </motion.div>
         )}
 
-        {/* View All Articles Button */}
         <div className="text-center mt-12">
           <Link href="/blog">
             <Button

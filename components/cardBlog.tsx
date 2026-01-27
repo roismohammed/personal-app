@@ -4,15 +4,27 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import Image from 'next/image';
 import { PostData } from '@/types/index';
-interface PostsProps {
-    posts: PostData
+export interface Post {
+  id: string | number;
+  title: string;
+  slug: string;
+  description: string;
+  created_at: string;
+  image: string | null;
+  category: any;
 }
-export default function CardBlog({ posts }: PostsProps) {
+
+interface CardBlogProps {
+  posts: Post;
+}
+
+
+export default function CardBlog({ posts }: CardBlogProps) {
     return (
         <div key={posts.id}>
             <Link href={`/blog/${posts.slug}`} key={posts.id} prefetch={false}>
                 <Card
-                    className="group py-0 cursor-pointer hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-700 overflow-hidden"
+                    className="group py-0 cursor-pointer hover:shadow-lg rounded-3xl transition-all duration-300 border-0 dark:bg-zinc-700 overflow-hidden"
                 >
                     {/* Gambar */}
                     <div className="relative h-58 w-full overflow-hidden">

@@ -70,36 +70,7 @@ const mockProjects: ProjectData[] = [
     link_github: "https://github.com/roismohammed",
     link_demo: "#",
   },
-  {
-    id: 4,
-    name: "Weather Dashboard",
-    description: "Real-time weather dashboard with multiple location support",
-    image: "/placeholder.png",
-    status: "completed",
-    tech_stack: "Vue.js, Chart.js, Weather API",
-    link_github: "https://github.com",
-    link_demo: "https://demo.com",
-  },
-  {
-    id: 5,
-    name: "Fitness Tracker",
-    description: "Mobile app for tracking workouts and nutrition plans",
-    image: "/placeholder.png",
-    status: "in_progress",
-    tech_stack: "React Native, Firebase, Redux",
-    link_github: "https://github.com",
-    link_demo: "https://demo.com",
-  },
-  {
-    id: 6,
-    name: "Chat Application",
-    description: "Real-time chat application with video call functionality",
-    image: "/placeholder.png",
-    status: "completed",
-    tech_stack: "Socket.io, Express, MongoDB, React",
-    link_github: "https://github.com",
-    link_demo: "https://demo.com",
-  },
+
 ];
 
 export default function ProjectPage() {
@@ -169,7 +140,7 @@ export default function ProjectPage() {
               return (
                 <Card
                   key={project.id}
-                  className="group border pt-0 cursor-pointer shadow-none hover:shadow-sm  transition-all duration-500 overflow-hidden bg-white/80 dark:bg-zinc-700/50 flex flex-col"
+                  className="group border pt-0 cursor-pointer shadow-none hover:shadow-sm  rounded-3xl transition-all duration-500 overflow-hidden bg-white/80 dark:bg-zinc-700/50 flex flex-col"
                 >
                   <div className="relative h-56 overflow-hidden">
                     <Image

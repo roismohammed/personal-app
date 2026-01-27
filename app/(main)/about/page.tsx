@@ -17,15 +17,14 @@ import Link from "next/link";
 import WrapperLayout from "@/components/wrapperLayout";
 import GithubPage from "@/components/github";
 import { useLanguage } from "@/lib/language-context";
-
 const AboutPage = () => {
   const { t } = useLanguage();
   const personalInfo = {
     name: "Muhammad Rois",
     title: "Full-Stack Developer ",
-    location: "San Francisco, CA",
-    email: "oliver@scott.dev",
-    experience: "5+ Years",
+    location: "Jawa Timur , Indonesia",
+    email: "id.roismohammed@gmail.com",
+    experience: "2+ Years",
     bio: "I'm passionate about creating digital experiences that are not only visually appealing but also functional, accessible, and user-centered. I believe in the power of clean code and thoughtful design to solve real-world problems.",
     longBio:
       "With over 5 years of experience in web development and design, I've had the privilege of working with startups and established companies to bring their digital visions to life. My journey began with a curiosity about how websites work, and it has evolved into a passion for creating seamless, intuitive user experiences.",
@@ -62,13 +61,14 @@ const AboutPage = () => {
 
                     <div className="flex flex-wrap gap-3 justify-center mb-6">
                       <a
-                        href="../../../public/assets/mycv"
+                        href="/assets/mycv.pdf" 
+                        download="mycv.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 cursor-pointer"
                       >
                         <Download className="h-4 w-4" />
-                          Download CV
+                        Download CV
                       </a>
                     </div>
                   </div>
@@ -100,7 +100,7 @@ const AboutPage = () => {
                         color="currentColor"
                         strokeWidth={1.5}
                       />
-                     {t("resume")}
+                      {t("resume")}
                     </Button>
                   </Link>
                   <div className="mt-8">
@@ -116,10 +116,10 @@ const AboutPage = () => {
 
                   {/* Contact Info */}
                   <p className="text-xl font-bold text-slate-800 dark:text-gray-200 mb-4 z-10">
-                {t("connect_title")}
+                    {t("connect_title")}
                   </p>
                   <p className="text-md text-slate-600 dark:text-gray-200 leading-relaxed mb-6">
-                   {t("connect_desc")}{" "}
+                    {t("connect_desc")}{" "}
                     <a
                       href="mailto: id.roismohammed@gmail.com"
                       className="text-blue-600 hover:underline cursor-pointer"
@@ -136,7 +136,7 @@ const AboutPage = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-5 w-5 text-green-600" />
-                 {personalInfo.experience} {t("experience")}
+                      {personalInfo.experience} {t("experience")}
                     </div>
                   </div>
 

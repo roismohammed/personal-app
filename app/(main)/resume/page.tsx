@@ -1,66 +1,86 @@
 import WrapperLayout from "@/components/wrapperLayout";
-
-
+import { Briefcase, Calendar } from "lucide-react";
 
 const experience = [
     {
-        company: "PT Jadi Mudah Nusantara - Remote Work",
+        company: "PT Jadi Mudah Nusantara",
+        location: "Remote",
         position: "Front-End Web Developer",
-        period: "Oktober 2024 - November 2024",
-        description: "Leading development of web applications using modern technologies and best practices.",
-        achievements: ["Improved performance by 40%", "Mentored 3 junior developers"]
+        period: "Oct 2024 - Nov 2024",
+        description: "Developed a digital wedding invitation landing page, focusing on high performance and visual aesthetics.",
+        tech_stack: ["JavaScript", "Framer Motion", "AOS", "Tailwind CSS"],
     },
     {
-        company: "PT Puspetindo - Full-time",
-        position: "Fullstuck Web Developer",
-        period: "Agustus 2024 - Oktober 2024",
-        description: "Developed responsive web applications and collaborated with design teams.",
-        achievements: ["Delivered 15+ projects", "Implemented design system"]
+        company: "PT Puspetindo",
+        location: "Full-time",
+        position: "Fullstack Web Developer",
+        period: "Aug 2024 - Oct 2024",
+        description: "Built responsive CMS web applications and collaborated with design teams for UI/UX implementation while maintaining effective teamwork.",
+        tech_stack: ["React.js", "AdonisJS", "Inertia", "Tailwind CSS"],
     },
     {
-        company: "Rumah Sakit Mulia Hati - Remote Work",
+        company: "Mulia Hati Hospital",
+        location: "Remote",
         position: "Junior Developer",
-        period: "2025 - 2025",
-        description: "Built and maintained web applications in a fast-paced startup environment.",
-        achievements: ["Reduced load time by 60%", "Built MVP in 3 months"]
+        period: "Apr 2025 - May 2025",
+        tech_stack: ["React.js", "Inertia.js", "Laravel", "Tailwind CSS", "Shadcn UI"],
+        description: "Developed a modern hospital company profile website with a clean and professional design.",
     }
 ];
-
 const IndexResume = () => {
     return (
-     <div>
-           <WrapperLayout>
-            <div className="space-y-8 mt-26">
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-gray-200 mb-6">Work Experience</h3>
-                <div className="space-y-8">
+        <WrapperLayout>
+            <div className="mt-10 mx-auto py-20">
+                <div className="flex items-center gap-4 mb-12">
+                    <div className="h-10 w-2 bg-teal-500 rounded-full"></div>
+                    <h3 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        Work Experience
+                    </h3>
+                </div>
+
+                <div className="relative space-y-2">
+                    {/* Line Timeline */}
+                    <div className="absolute left-4 md:left-[18px] top-2 bottom-2 w-0.5 bg-slate-200 dark:bg-zinc-700"></div>
+
                     {experience.map((job, index) => (
-                        <div key={index} className="flex gap-6 group dark:bg-zinc-800">
-                            <div className="flex flex-col items-center">
-                                <div className="w-4 h-4 bg-teal-500 rounded-full mt-2"></div>
-                                <div className="w-0.5 h-full bg-slate-200 group-last:h-0"></div>
-                            </div>
-                            <div className="flex-1 pb-8 group-last:pb-0">
-                                <div className="bg-slate-50 dark:bg-zinc-700 rounded-xl p-6 hover:shadow-md transition-shadow">
-                                    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                                        <h4 className="text-xl font-semibold text-slate-900 dark:text-gray-200">{job.position}</h4>
-                                        <span className="text-teal-600 dark:text-gray-200 font-medium">{job.period}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-slate-600 mb-3">
-                                        <span className="font-medium dark:text-gray-200">{job.company}</span>
-                                    </div>
-                                    <p className="text-slate-600 dark:text-gray-200 mb-4 leading-relaxed">
-                                        {job.description}
-                                    </p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {/* {job.achievements.map((achievement, achIndex) => (
-                                            <span
-                                                key={achIndex}
-                                                className="px-3 py-1 bg-blue-100 dak:bg-zinc-800 text-teal-700 dark:text-gray-200 rounded-full text-sm"
-                                            >
-                                                {achievement}
+                        <div key={index} className="relative pl-12 pb-12 group">
+                            {/* Dot Timeline */}
+                            <div className="absolute left-0 top-2 w-9 h-9 bg-white dark:bg-zinc-900 border-4 border-teal-500 rounded-full z-10 group-hover:scale-125 transition-transform duration-300 shadow-sm"></div>
+
+                            <div className="bg-white dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-2xl p-6 md:p-8 hover:border-teal-500/50 transition-all duration-300 backdrop-blur-sm">
+                                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                                    <div>
+                                        <h4 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+                                            {job.position}
+                                        </h4>
+                                        <div className="flex flex-wrap items-center gap-4 mt-2 text-slate-500 dark:text-zinc-400 text-sm">
+                                            <span className="flex items-center gap-1.5 font-medium">
+                                                <Briefcase className="w-4 h-4" /> {job.company}
                                             </span>
-                                        ))} */}
+                                            <span className="flex items-center gap-1.5">
+                                                <Calendar className="w-4 h-4" /> {job.period}
+                                            </span>
+                                            <span className="flex items-center gap-1.5 px-2 py-0.5 bg-slate-100 dark:bg-zinc-700 rounded text-[10px] uppercase tracking-wider font-bold">
+                                                {job.location}
+                                            </span>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <p className="text-slate-600 dark:text-zinc-300 leading-relaxed mb-6">
+                                    {job.description}
+                                </p>
+
+                                {/* Tech Stack Badges */}
+                                <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100 dark:border-zinc-700">
+                                    {job.tech_stack.map((tech, techIndex) => (
+                                        <span
+                                            key={techIndex}
+                                            className="px-3 py-1 bg-teal-50 dark:bg-teal-500/10 text-teal-700 dark:text-teal-400 border border-teal-100 dark:border-teal-500/20 rounded-lg text-xs font-semibold"
+                                        >
+                                            {tech}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -68,8 +88,7 @@ const IndexResume = () => {
                 </div>
             </div>
         </WrapperLayout>
-     </div>
-    )
-}
+    );
+};
 
-export default IndexResume
+export default IndexResume;

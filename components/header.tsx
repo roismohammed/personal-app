@@ -50,7 +50,7 @@ const TopMenu = [
     Dropdown: [
       {
         title: "Project",
-        description: "Halaman untuk menceritakan amatar.",
+        description: "All my project.",
         icon: InboxIcon,
         href: "/project",
       },
