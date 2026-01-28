@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://roisdev.my.id"),
   title: "RoisDev | Frontend & Fullstack Developer",
   description: "Halo! Saya Muhammad Rois, seorang junior Software Engineer & Web Developer yang ahli di React, Next.js, dan JavaScript.",
-  keywords: ["frontend developer", "fullstack developer", "React.js", "Next.js", "JavaScript", "Web Developer"],
+  keywords: ["Roisdev" ,"Muhammad Rois","frontend developer", "fullstack developer", "React.js", "Next.js", "JavaScript", "Web Developer"],
   authors: [{ name: "Muhammad Rois" }],
   creator: "Muhammad Rois",
   icons: {
