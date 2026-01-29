@@ -1,16 +1,10 @@
-import React from 'react';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
-  BookOpen, 
   CheckCircle2, 
   ArrowRight, 
-  Users, 
   Star, 
-  Layout, 
-  Layers, 
-  Globe 
 } from "lucide-react";
 import WrapperLayout from '@/components/wrapperLayout';
 
