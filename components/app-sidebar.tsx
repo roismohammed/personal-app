@@ -67,6 +67,22 @@ const data = {
         },
       ],
     },
+      {
+      title: "Ebooks",
+      url: "/ebooks",
+      icon: Task01Icon,
+      isActive: true,
+      items: [
+        {
+          title: "cover",
+          url: "/ebooks",
+        },
+        {
+          title: "chapter",
+          url: "/category",
+        },
+      ],
+    },
     {
       title: "Project",
       url: "#",
