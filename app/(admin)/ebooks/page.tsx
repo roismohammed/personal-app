@@ -53,7 +53,7 @@ const AdminDashboard = () => {
             <p className="text-slate-500 font-medium text-sm uppercase tracking-widest">Management System • RoisDev</p>
           </div>
           <div className="flex gap-3">
-           <Link href={'/admin/ebooks/create'}>
+           <Link href={'/ebooks/create'}>
              <Button className="rounded-full bg-teal-700 hover:bg-teal-800 h-12 px-6 font-bold shadow-lg shadow-teal-900/20 transition-all active:scale-95">
               <Plus size={18} className="mr-2" /> Tambah E-Book
             </Button>

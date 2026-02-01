@@ -134,7 +134,6 @@ export default function BookForm({ ebookId }: BookFormProps) {
             };
 
             if (isEditMode) {
-                // ✅ MODE UPDATE
                 const { error } = await supabase
                     .from('ebooks')
                     .update(ebookData)
@@ -143,7 +142,6 @@ export default function BookForm({ ebookId }: BookFormProps) {
                 if (error) throw error;
                 toast.success("E-Book berhasil diperbarui!");
             } else {
-                // ✅ MODE CREATE
                 const { error } = await supabase
                     .from('ebooks')
                     .insert([{
@@ -155,7 +153,6 @@ export default function BookForm({ ebookId }: BookFormProps) {
                 toast.success("E-Book berhasil diterbitkan!");
             }
 
-            // Reset form jika mode create
             if (!isEditMode) {
                 setFormData({
                     title: '',
@@ -170,8 +167,7 @@ export default function BookForm({ ebookId }: BookFormProps) {
                 const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
                 if (fileInput) fileInput.value = '';
             } else {
-                // Redirect ke dashboard setelah edit
-                router.push('/admin/ebooks');
+                router.push('/ebooks');
             }
 
         } catch (error: any) {
@@ -194,7 +190,7 @@ export default function BookForm({ ebookId }: BookFormProps) {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 bg-white p-10 rounded-[3rem] border border-slate-100 shadow-lg">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 bg-white p-10 rounded-[3rem] border border-slate-100 shadow-none">
             <header className="border-b pb-6 flex justify-between items-end">
                 <div>
                     <div className="flex items-center gap-3 mb-2">
@@ -328,7 +324,7 @@ export default function BookForm({ ebookId }: BookFormProps) {
             <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-teal-700 hover:bg-teal-800 h-16 font-black rounded-full text-lg shadow-lg shadow-teal-900/20 transition-all active:scale-95 gap-3"
+                className="w-full bg-teal-700 hover:bg-teal-800 h-16 font-black rounded-full text-lg shadow-lgnone shadow-none cursor-pointer transition-all active:scale-95 gap-3"
             >
                 {loading ? <Loader2 className="animate-spin" /> : null}
                 {loading 

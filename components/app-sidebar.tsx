@@ -79,7 +79,7 @@ const data = {
         },
         {
           title: "chapter",
-          url: "/category",
+          url: "/chapter",
         },
       ],
     },
