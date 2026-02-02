@@ -9,6 +9,7 @@ import { ImageIcon, Loader2, Video, Tag, Type, ArrowLeft } from "lucide-react";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const createClient = () => {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -17,7 +18,7 @@ const createClient = () => {
 };
 
 interface BookFormProps {
-    ebookId?: string; 
+    ebookId?: string;
 }
 
 export default function BookForm({ ebookId }: BookFormProps) {
@@ -31,8 +32,10 @@ export default function BookForm({ ebookId }: BookFormProps) {
         slug: '',
         description: '',
         category: '',
-        video_url: ''
+        cover: '',
+        status:''
     });
+    const [status,setStatus] =useState('draft')
 
     const isEditMode = !!ebookId;
 
@@ -60,7 +63,8 @@ export default function BookForm({ ebookId }: BookFormProps) {
                     slug: data.slug || '',
                     description: data.description || '',
                     category: data.category || '',
-                    video_url: data.video_url || ''
+                    cover: data.cover || '',
+                    status: data.status || ''
                 });
                 setExistingCoverUrl(data.cover_url || '');
             }
@@ -117,11 +121,11 @@ export default function BookForm({ ebookId }: BookFormProps) {
 
         try {
             const supabase = createClient();
-            let coverUrl = existingCoverUrl;
-            
+            let cover = existingCoverUrl;
+
             // Upload cover baru jika ada
             if (coverFile) {
-                coverUrl = await uploadCoverImage(coverFile);
+                cover = await uploadCoverImage(coverFile);
             }
 
             const ebookData = {
@@ -129,8 +133,8 @@ export default function BookForm({ ebookId }: BookFormProps) {
                 slug: formData.slug,
                 description: formData.description,
                 category: formData.category,
-                cover_url: coverUrl,
-                video_url: formData.video_url,
+                cover: cover,
+                status:status
             };
 
             if (isEditMode) {
@@ -159,11 +163,12 @@ export default function BookForm({ ebookId }: BookFormProps) {
                     slug: '',
                     description: '',
                     category: '',
-                    video_url: ''
+                    cover: '',
+                    status:''
                 });
                 setCoverFile(null);
                 setExistingCoverUrl('');
-                
+
                 const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
                 if (fileInput) fileInput.value = '';
             } else {
@@ -257,16 +262,21 @@ export default function BookForm({ ebookId }: BookFormProps) {
                     </div>
                     <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-teal-700 flex items-center gap-2">
-                            <Video size={14} /> Link Video Demo Utama
+                            <Video size={14} /> Status
                         </label>
-                        <Input
-                            name="video_url"
-                            value={formData.video_url}
-                            onChange={handleInputChange}
-                            placeholder="https://youtube.com/..."
-                            className="h-12 rounded-2xl border-slate-100 bg-slate-50/50"
-                        />
+
+                        <Select value={status} onValueChange={setStatus}>
+                            <SelectTrigger className="py-6 bg-slate-50  w-full  rounded-xl">
+                                <SelectValue placeholder="Pilih status" />
+                            </SelectTrigger>
+
+                            <SelectContent>
+                                <SelectItem value="draft">Draft</SelectItem>
+                                <SelectItem value="publish">Publish</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
+
                 </div>
             </div>
 
@@ -285,7 +295,7 @@ export default function BookForm({ ebookId }: BookFormProps) {
                 <label className="text-[10px] font-black uppercase tracking-widest text-teal-700">
                     Sampul E-Book (Cover) {isEditMode && existingCoverUrl && '— Ganti cover (opsional)'}
                 </label>
-                
+
                 {/* Preview cover yang sudah ada */}
                 {isEditMode && existingCoverUrl && !coverFile && (
                     <div className="mb-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
@@ -327,8 +337,8 @@ export default function BookForm({ ebookId }: BookFormProps) {
                 className="w-full bg-teal-700 hover:bg-teal-800 h-16 font-black rounded-full text-lg shadow-lgnone shadow-none cursor-pointer transition-all active:scale-95 gap-3"
             >
                 {loading ? <Loader2 className="animate-spin" /> : null}
-                {loading 
-                    ? (isEditMode ? "MEMPERBARUI..." : "MENERBITKAN...") 
+                {loading
+                    ? (isEditMode ? "MEMPERBARUI..." : "MENERBITKAN...")
                     : (isEditMode ? "UPDATE E-BOOK SEKARANG" : "TERBITKAN E-BOOK SEKARANG")
                 }
             </Button>

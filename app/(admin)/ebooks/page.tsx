@@ -109,7 +109,7 @@ const AdminDashboard = () => {
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-16 bg-slate-100 rounded-lg overflow-hidden relative border border-slate-100 flex items-center justify-center">
                           {ebook.cover_url ? (
-                            <img src={ebook.cover_url} alt={ebook.title} className="object-cover w-full h-full" />
+                            <img src={ebook.cover} alt={ebook.title} className="object-cover w-full h-full" />
                           ) : (
                             <Book className="text-slate-300" size={20} />
                           )}
