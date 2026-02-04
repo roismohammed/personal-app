@@ -1,347 +1,277 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
-import { ImageIcon, Loader2, Video, Tag, Type, ArrowLeft } from "lucide-react";
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@supabase/supabase-js'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Card } from '@/components/ui/card'
+import { 
+  Upload, X, Loader2, Save, Plus, Trash2, 
+  CheckCircle2, Zap, Globe, ShieldCheck, List 
+} from 'lucide-react'
+import Image from 'next/image'
+import dynamic from 'next/dynamic'
 
-const createClient = () => {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    return createSupabaseClient(supabaseUrl, supabaseAnonKey);
-};
+const Editor = dynamic(
+  () => import('@tinymce/tinymce-react').then((mod) => mod.Editor),
+  { ssr: false }
+)
 
-interface BookFormProps {
-    ebookId?: string;
-}
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
-export default function BookForm({ ebookId }: BookFormProps) {
-    const router = useRouter();
-    const [loading, setLoading] = useState(false);
-    const [fetchingData, setFetchingData] = useState(false);
-    const [coverFile, setCoverFile] = useState<File | null>(null);
-    const [existingCoverUrl, setExistingCoverUrl] = useState<string>('');
-    const [formData, setFormData] = useState({
-        title: '',
-        slug: '',
-        description: '',
-        category: '',
-        cover: '',
-        status:''
-    });
-    const [status,setStatus] =useState('draft')
+export default function PostForm() {
+  const router = useRouter()
+  const editorRef = useRef<any>(null)
+  
+  // Basic States
+  const [categories, setCategories] = useState<any[]>([])
+  const [title, setTitle] = useState('')
+  const [slug, setSlug] = useState('')
+  const [description, setDescription] = useState('')
+  const [content, setContent] = useState('')
+  const [image, setImage] = useState('')
+  const [categoryId, setCategoryId] = useState('')
 
-    const isEditMode = !!ebookId;
+  // 1. Category Badge & Basic Benefits
+  const [categoryBadge, setCategoryBadge] = useState('Coding')
+  const [benefits, setBenefits] = useState<string[]>([''])
 
-    useEffect(() => {
-        if (ebookId) {
-            fetchEbookData();
-        }
-    }, [ebookId]);
+  // 2. Premium Benefits (Mengapa E-book Ini?)
+  const [premiumBenefits, setPremiumBenefits] = useState([
+    { title: '', desc: '', icon: 'Globe' }
+  ])
 
-    const fetchEbookData = async () => {
-        setFetchingData(true);
-        try {
-            const supabase = createClient();
-            const { data, error } = await supabase
-                .from('ebooks')
-                .select('*')
-                .eq('id', ebookId)
-                .single();
+  // 3. Tech Stack (Powered By)
+  const [tools, setTools] = useState([{ name: '', icon: '' }])
 
-            if (error) throw error;
+  // 4. Curriculum (Kurikulum Terstruktur)
+  const [curriculum, setCurriculum] = useState([
+    { title: '', items: [''] }
+  ])
 
-            if (data) {
-                setFormData({
-                    title: data.title || '',
-                    slug: data.slug || '',
-                    description: data.description || '',
-                    category: data.category || '',
-                    cover: data.cover || '',
-                    status: data.status || ''
-                });
-                setExistingCoverUrl(data.cover_url || '');
-            }
-        } catch (error: any) {
-            console.error('Error fetching ebook:', error);
-            toast.error("Gagal memuat data e-book");
-        } finally {
-            setFetchingData(false);
-        }
-    };
+  const [uploading, setUploading] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [editorLoaded, setEditorLoaded] = useState(false)
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+  // --- Handlers for Curriculum (Nested Array) ---
+  const addCurriculumSection = () => setCurriculum([...curriculum, { title: '', items: [''] }])
+  const removeCurriculumSection = (idx: number) => setCurriculum(curriculum.filter((_, i) => i !== idx))
+  
+  const updateCurriculumTitle = (idx: number, val: string) => {
+    const newCur = [...curriculum]
+    newCur[idx].title = val
+    setCurriculum(newCur)
+  }
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            if (file.size > 2 * 1024 * 1024) {
-                toast.error("Ukuran file terlalu besar. Maksimal 2MB");
-                return;
-            }
-            setCoverFile(file);
-            toast.success("File cover siap diunggah");
-        }
-    };
+  const addCurriculumItem = (idx: number) => {
+    const newCur = [...curriculum]
+    newCur[idx].items.push('')
+    setCurriculum(newCur)
+  }
 
-    const uploadCoverImage = async (file: File) => {
-        const supabase = createClient();
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-        const filePath = `covers/${fileName}`;
+  const updateCurriculumItem = (cIdx: number, iIdx: number, val: string) => {
+    const newCur = [...curriculum]
+    newCur[cIdx].items[iIdx] = val
+    setCurriculum(newCur)
+  }
 
-        const { data, error } = await supabase.storage
-            .from('ebook-image')
-            .upload(filePath, file);
+  // --- Handlers for Premium Benefits ---
+  const addPremium = () => setPremiumBenefits([...premiumBenefits, { title: '', desc: '', icon: 'Zap' }])
+  const updatePremium = (idx: number, field: string, val: string) => {
+    const newPrem = [...premiumBenefits] as any
+    newPrem[idx][field] = val
+    setPremiumBenefits(newPrem)
+  }
 
-        if (error) throw error;
+  // ... (Keep handleTitleChange, handleImageUpload, fetchCategories dari kode sebelumnya)
+  const generateSlug = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+  const handleTitleChange = (value: string) => { setTitle(value); setSlug(generateSlug(value)) }
 
-        const { data: { publicUrl } } = supabase.storage
-            .from('ebook-image')
-            .getPublicUrl(filePath);
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploading(true)
+      const file = e.target.files?.[0]
+      if (!file) return
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${Date.now()}.${fileExt}`
+      const { error } = await supabase.storage.from('blog-images').upload(fileName, file)
+      if (error) throw error
+      const { data: { publicUrl } } = supabase.storage.from('blog-images').getPublicUrl(fileName)
+      setImage(publicUrl)
+    } catch (error) { alert('Upload failed') } finally { setUploading(false) }
+  }
 
-        return publicUrl;
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSaving(true)
+    try {
+      const { error } = await supabase.from('posts').insert({
+        title, slug, description, content, image,
+        category_id: categoryId ? parseInt(categoryId) : null,
+        category_badge: categoryBadge,
+        benefits: benefits.filter(b => b !== ''),
+        premium_benefits: premiumBenefits,
+        tools: tools,
+        curriculum: curriculum
+      })
+      if (error) throw error
+      alert('Post Created!')
+      router.push('/blog')
+    } catch (err) { console.error(err); alert('Error saving data') } finally { setSaving(false) }
+  }
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+  return (
+    <form onSubmit={handleSubmit} className="max-w-7xl mx-auto p-6 flex flex-col lg:flex-row gap-8 bg-white dark:bg-zinc-950">
+      
+      <div className="flex-1 space-y-10">
+        <section className="space-y-4">
+          <Input 
+            value={title} 
+            onChange={(e) => handleTitleChange(e.target.value)} 
+            placeholder="Judul E-book..." 
+            className="text-3xl font-black h-20 border-none bg-slate-50 dark:bg-zinc-900 focus-visible:ring-teal-500"
+          />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+             <div className="space-y-2">
+                <Label>Manfaat Singkat (Hero)</Label>
+                {benefits.map((b, i) => (
+                  <div key={i} className="flex gap-2">
+                    <Input value={b} onChange={(e) => {
+                       const n = [...benefits]; n[i] = e.target.value; setBenefits(n)
+                    }} placeholder="Point manfaat..." />
+                    <Button type="button" variant="ghost" size="icon" onClick={() => setBenefits(benefits.filter((_,ix)=>ix!==i))}><X size={14}/></Button>
+                  </div>
+                ))}
+                <Button type="button" variant="outline" size="sm" onClick={() => setBenefits([...benefits, ''])} className="w-full text-[10px] uppercase font-bold tracking-widest"><Plus size={12}/> Tambah Point</Button>
+             </div>
 
-        try {
-            const supabase = createClient();
-            let cover = existingCoverUrl;
-
-            // Upload cover baru jika ada
-            if (coverFile) {
-                cover = await uploadCoverImage(coverFile);
-            }
-
-            const ebookData = {
-                title: formData.title,
-                slug: formData.slug,
-                description: formData.description,
-                category: formData.category,
-                cover: cover,
-                status:status
-            };
-
-            if (isEditMode) {
-                const { error } = await supabase
-                    .from('ebooks')
-                    .update(ebookData)
-                    .eq('id', ebookId);
-
-                if (error) throw error;
-                toast.success("E-Book berhasil diperbarui!");
-            } else {
-                const { error } = await supabase
-                    .from('ebooks')
-                    .insert([{
-                        ...ebookData,
-                        created_at: new Date().toISOString()
-                    }]);
-
-                if (error) throw error;
-                toast.success("E-Book berhasil diterbitkan!");
-            }
-
-            if (!isEditMode) {
-                setFormData({
-                    title: '',
-                    slug: '',
-                    description: '',
-                    category: '',
-                    cover: '',
-                    status:''
-                });
-                setCoverFile(null);
-                setExistingCoverUrl('');
-
-                const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-                if (fileInput) fileInput.value = '';
-            } else {
-                router.push('/ebooks');
-            }
-
-        } catch (error: any) {
-            console.error('Error submitting form:', error);
-            toast.error(error.message || `Gagal ${isEditMode ? 'memperbarui' : 'menerbitkan'} e-book`);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    if (fetchingData) {
-        return (
-            <div className="max-w-4xl mx-auto flex items-center justify-center min-h-[400px]">
-                <div className="text-center">
-                    <Loader2 className="animate-spin mx-auto text-teal-700 mb-4" size={48} />
-                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Memuat Data...</p>
-                </div>
-            </div>
-        );
-    }
-
-    return (
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 bg-white p-10 rounded-[3rem] border border-slate-100 shadow-none">
-            <header className="border-b pb-6 flex justify-between items-end">
-                <div>
-                    <div className="flex items-center gap-3 mb-2">
-                        <Link href="/admin/ebooks">
-                            <Button type="button" variant="ghost" size="icon" className="rounded-xl">
-                                <ArrowLeft size={18} />
-                            </Button>
-                        </Link>
-                        <h3 className="text-2xl font-black text-zinc-900 tracking-tighter uppercase italic">
-                            {isEditMode ? 'Edit E-Book' : 'Tambah E-Book Baru'}
-                        </h3>
-                    </div>
-                    <p className="text-slate-400 text-xs font-bold uppercase tracking-widest ml-14">
-                        {isEditMode ? 'Update Informasi E-Book' : 'Registrasi Judul & Metadata Utama'}
-                    </p>
-                </div>
-                <div className={`${isEditMode ? 'bg-amber-50 text-amber-700' : 'bg-teal-50 text-teal-700'} px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest`}>
-                    {isEditMode ? 'Edit Mode' : 'Create Mode'}
-                </div>
-            </header>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-teal-700 flex items-center gap-2">
-                            <Type size={14} /> Judul E-Book
-                        </label>
-                        <Input
-                            name="title"
-                            value={formData.title}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Mastering Next.js 15"
-                            className="h-12 rounded-2xl border-slate-100 bg-slate-50/50"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-teal-700 flex items-center gap-2">
-                            <Tag size={14} /> Slug URL
-                        </label>
-                        <Input
-                            name="slug"
-                            value={formData.slug}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="mastering-nextjs-15"
-                            className="h-12 rounded-2xl border-slate-100 bg-slate-50/50"
-                        />
-                    </div>
-                </div>
-
-                <div className="space-y-4">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-teal-700 flex items-center gap-2">
-                            <Tag size={14} /> Kategori
-                        </label>
-                        <Input
-                            name="category"
-                            value={formData.category}
-                            onChange={handleInputChange}
-                            placeholder="Coding / Design"
-                            className="h-12 rounded-2xl border-slate-100 bg-slate-50/50"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-teal-700 flex items-center gap-2">
-                            <Video size={14} /> Status
-                        </label>
-
-                        <Select value={status} onValueChange={setStatus}>
-                            <SelectTrigger className="py-6 bg-slate-50  w-full  rounded-xl">
-                                <SelectValue placeholder="Pilih status" />
-                            </SelectTrigger>
-
-                            <SelectContent>
-                                <SelectItem value="draft">Draft</SelectItem>
-                                <SelectItem value="publish">Publish</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-
-                </div>
-            </div>
-
-            <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-teal-700">Deskripsi Singkat</label>
-                <Textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    placeholder="Jelaskan secara singkat apa yang dipelajari dalam e-book ini..."
-                    className="min-h-[120px] rounded-[2rem] border-slate-100 bg-slate-50/50 p-6"
-                />
-            </div>
-
-            <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-teal-700">
-                    Sampul E-Book (Cover) {isEditMode && existingCoverUrl && '— Ganti cover (opsional)'}
-                </label>
-
-                {/* Preview cover yang sudah ada */}
-                {isEditMode && existingCoverUrl && !coverFile && (
-                    <div className="mb-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                        <p className="text-xs font-bold text-slate-500 mb-2">Cover Saat Ini:</p>
-                        <img src={existingCoverUrl} alt="Current cover" className="w-32 h-40 object-cover rounded-lg" />
-                    </div>
+             <div className="border-2 border-dashed rounded-3xl flex items-center justify-center bg-slate-50 dark:bg-zinc-900 overflow-hidden relative min-h-[200px]">
+                {image ? (
+                  <Image src={image} alt="Preview" fill className="object-cover" />
+                ) : (
+                  <label className="text-center cursor-pointer p-4">
+                    <Upload className="mx-auto text-slate-400 mb-2" />
+                    <span className="text-xs font-bold uppercase text-slate-500">Upload Cover</span>
+                    <input type="file" className="hidden" onChange={handleImageUpload} />
+                  </label>
                 )}
+             </div>
+          </div>
+        </section>
 
-                <div className="relative group cursor-pointer">
-                    <div className="flex flex-col items-center justify-center gap-4 p-10 border-2 border-dashed border-slate-200 rounded-[2.5rem] bg-slate-50/50 transition-all group-hover:bg-teal-50 group-hover:border-teal-200">
-                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm text-teal-600 group-hover:scale-110 transition-transform">
-                            <ImageIcon size={28} />
-                        </div>
-                        <div className="text-center">
-                            <p className="text-sm font-bold text-zinc-800">
-                                {isEditMode ? 'Klik untuk ganti cover' : 'Klik untuk upload gambar cover'}
-                            </p>
-                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight mt-1">Format: JPG, PNG, WEBP (Maks 2MB)</p>
-                        </div>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            className="absolute inset-0 opacity-0 cursor-pointer"
-                        />
-                    </div>
-                    {coverFile && (
-                        <div className="mt-4 flex items-center gap-2 text-teal-600 bg-teal-50 w-fit px-4 py-2 rounded-full border border-teal-100">
-                            <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">{coverFile.name} siap diunggah</span>
-                        </div>
-                    )}
+        <section className="p-8 bg-teal-50/50 dark:bg-teal-900/10 rounded-[3rem] border border-teal-100 dark:border-teal-900/30 space-y-6">
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl font-black italic flex items-center gap-2"><Globe className="text-teal-600"/> Mengapa E-book Ini?</h3>
+            <Button type="button" variant="subtle" size="sm" onClick={addPremium} className="bg-white">Tambah Card</Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {premiumBenefits.map((item, i) => (
+              <Card key={i} className="p-4 space-y-3 relative">
+                <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2 text-red-400" onClick={() => setPremiumBenefits(premiumBenefits.filter((_,ix)=>ix!==i))}><Trash2 size={14}/></Button>
+                <div className="flex gap-2">
+                   <Input placeholder="Icon (Lucide Name)" value={item.icon} onChange={(e) => updatePremium(i, 'icon', e.target.value)} className="w-1/3 text-xs" />
+                   <Input placeholder="Title Card" value={item.title} onChange={(e) => updatePremium(i, 'title', e.target.value)} className="font-bold" />
                 </div>
-            </div>
+                <Textarea placeholder="Deskripsi singkat card..." value={item.desc} onChange={(e) => updatePremium(i, 'desc', e.target.value)} className="text-xs h-20" />
+              </Card>
+            ))}
+          </div>
+        </section>
 
-            <Button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-teal-700 hover:bg-teal-800 h-16 font-black rounded-full text-lg shadow-lgnone shadow-none cursor-pointer transition-all active:scale-95 gap-3"
-            >
-                {loading ? <Loader2 className="animate-spin" /> : null}
-                {loading
-                    ? (isEditMode ? "MEMPERBARUI..." : "MENERBITKAN...")
-                    : (isEditMode ? "UPDATE E-BOOK SEKARANG" : "TERBITKAN E-BOOK SEKARANG")
-                }
-            </Button>
-        </form>
-    );
+        <section className="space-y-6">
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl font-black italic flex items-center gap-2"><List className="text-teal-600"/> Kurikulum Terstruktur</h3>
+            <Button type="button" variant="outline" size="sm" onClick={addCurriculumSection}><Plus size={16}/> Tambah Modul</Button>
+          </div>
+          <div className="space-y-4">
+            {curriculum.map((section, sIdx) => (
+              <Card key={sIdx} className="p-6 rounded-[2rem] border-2">
+                <div className="flex gap-4 mb-4">
+                  <div className="w-10 h-10 bg-teal-700 rounded-lg flex items-center justify-center text-white font-bold">0{sIdx+1}</div>
+                  <Input value={section.title} onChange={(e) => updateCurriculumTitle(sIdx, e.target.value)} placeholder="Nama Modul (contoh: Fundamental Next.js)" className="font-bold text-lg" />
+                  <Button type="button" variant="ghost" onClick={() => removeCurriculumSection(sIdx)}><X/></Button>
+                </div>
+                <div className="pl-14 space-y-2">
+                  <Label className="text-[10px] uppercase font-bold text-slate-400">Daftar Materi:</Label>
+                  {section.items.map((item, iIdx) => (
+                    <div key={iIdx} className="flex gap-2">
+                      <Zap size={14} className="mt-3 text-teal-500" />
+                      <Input value={item} onChange={(e) => updateCurriculumItem(sIdx, iIdx, e.target.value)} placeholder="Nama Materi..." className="h-8 text-sm" />
+                      <Button type="button" variant="ghost" size="icon" onClick={() => {
+                        const n = [...curriculum]; n[sIdx].items = n[sIdx].items.filter((_,x)=>x!==iIdx); setCurriculum(n)
+                      }}><Trash2 size={12}/></Button>
+                    </div>
+                  ))}
+                  <Button type="button" variant="ghost" size="sm" onClick={() => addCurriculumItem(sIdx)} className="text-xs text-teal-600 font-bold">+ Tambah Materi</Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <div className="space-y-2">
+          <Label className="font-bold italic uppercase tracking-widest text-xs">Detail Deskripsi / Bio Author</Label>
+          <div className="border rounded-3xl overflow-hidden">
+            <Editor
+              apiKey="858j7u18k8wb7pt41w5urjfpeusf47tsp1fjysx244w7pz1h"
+              value={content}
+              onEditorChange={(c) => setContent(c)}
+              init={{ height: 300, menubar: false, plugins: ['lists', 'link'], toolbar: 'bold italic bullist numlist' }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full lg:w-80 space-y-6">
+        <Card className="p-6 sticky top-10 space-y-6 border-t-4 border-t-teal-600">
+          <div className="space-y-4">
+             <div>
+                <Label className="text-[10px] font-bold uppercase">Badge Kategori</Label>
+                <Input value={categoryBadge} onChange={(e) => setCategoryBadge(e.target.value)} className="font-bold uppercase text-teal-700" />
+             </div>
+             <div>
+                <Label className="text-[10px] font-bold uppercase">URL Slug</Label>
+                <Input value={slug} onChange={(e) => setSlug(e.target.value)} className="font-mono text-xs bg-slate-50" />
+             </div>
+             <div>
+                <Label className="text-[10px] font-bold uppercase">Meta Description</Label>
+                <Textarea value={description} onChange={(e) => setDescription(e.target.value)} className="text-xs resize-none" rows={4} />
+             </div>
+          </div>
+
+          <div className="space-y-4 pt-4 border-t">
+            <Label className="text-[10px] font-bold uppercase">Tech Stack Icons</Label>
+            {tools.map((t, i) => (
+              <div key={i} className="flex gap-1 items-center">
+                <Input value={t.icon} onChange={(e) => {
+                  const n = [...tools]; n[i].icon = e.target.value; setTools(n)
+                }} placeholder="🚀" className="w-12 text-center" />
+                <Input value={t.name} onChange={(e) => {
+                  const n = [...tools]; n[i].name = e.target.value; setTools(n)
+                }} placeholder="Next.js" className="text-xs" />
+                <Button type="button" variant="ghost" size="icon" onClick={() => setTools(tools.filter((_,x)=>x!==i))}><X size={14}/></Button>
+              </div>
+            ))}
+            <Button type="button" variant="outline" size="sm" onClick={() => setTools([...tools, {name:'', icon:''}])} className="w-full text-[10px]">Tambah Tech</Button>
+          </div>
+
+          <Button 
+            type="submit" 
+            className="w-full h-14 bg-teal-700 hover:bg-teal-800 text-white font-black uppercase tracking-widest rounded-2xl"
+            disabled={saving}
+          >
+            {saving ? <Loader2 className="animate-spin" /> : <Save className="mr-2"/>}
+            PUBLISH EBOOK
+          </Button>
+        </Card>
+      </div>
+    </form>
+  )
 }
