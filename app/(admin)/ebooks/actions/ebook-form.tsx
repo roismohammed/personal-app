@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import { Button } from '@/components/ui/button'
@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card } from '@/components/ui/card'
 import { 
   Upload, X, Loader2, Save, Plus, Trash2, 
-  CheckCircle2, Zap, Globe, ShieldCheck, List 
+  Zap, Globe, List 
 } from 'lucide-react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -29,7 +29,6 @@ export default function PostForm() {
   const router = useRouter()
   const editorRef = useRef<any>(null)
   
-  // Basic States
   const [categories, setCategories] = useState<any[]>([])
   const [title, setTitle] = useState('')
   const [slug, setSlug] = useState('')
@@ -38,28 +37,23 @@ export default function PostForm() {
   const [image, setImage] = useState('')
   const [categoryId, setCategoryId] = useState('')
 
-  // 1. Category Badge & Basic Benefits
   const [categoryBadge, setCategoryBadge] = useState('Coding')
   const [benefits, setBenefits] = useState<string[]>([''])
 
-  // 2. Premium Benefits (Mengapa E-book Ini?)
   const [premiumBenefits, setPremiumBenefits] = useState([
     { title: '', desc: '', icon: 'Globe' }
   ])
 
-  // 3. Tech Stack (Powered By)
   const [tools, setTools] = useState([{ name: '', icon: '' }])
 
-  // 4. Curriculum (Kurikulum Terstruktur)
   const [curriculum, setCurriculum] = useState([
     { title: '', items: [''] }
   ])
 
   const [uploading, setUploading] = useState(false)
   const [saving, setSaving] = useState(false)
-  const [editorLoaded, setEditorLoaded] = useState(false)
 
-  // --- Handlers for Curriculum (Nested Array) ---
+
   const addCurriculumSection = () => setCurriculum([...curriculum, { title: '', items: [''] }])
   const removeCurriculumSection = (idx: number) => setCurriculum(curriculum.filter((_, i) => i !== idx))
   
@@ -81,7 +75,6 @@ export default function PostForm() {
     setCurriculum(newCur)
   }
 
-  // --- Handlers for Premium Benefits ---
   const addPremium = () => setPremiumBenefits([...premiumBenefits, { title: '', desc: '', icon: 'Zap' }])
   const updatePremium = (idx: number, field: string, val: string) => {
     const newPrem = [...premiumBenefits] as any
@@ -89,7 +82,6 @@ export default function PostForm() {
     setPremiumBenefits(newPrem)
   }
 
-  // ... (Keep handleTitleChange, handleImageUpload, fetchCategories dari kode sebelumnya)
   const generateSlug = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
   const handleTitleChange = (value: string) => { setTitle(value); setSlug(generateSlug(value)) }
 
@@ -169,7 +161,7 @@ export default function PostForm() {
         <section className="p-8 bg-teal-50/50 dark:bg-teal-900/10 rounded-[3rem] border border-teal-100 dark:border-teal-900/30 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-black italic flex items-center gap-2"><Globe className="text-teal-600"/> Mengapa E-book Ini?</h3>
-            <Button type="button" variant="subtle" size="sm" onClick={addPremium} className="bg-white">Tambah Card</Button>
+            <Button type="button" variant="default" size="sm" onClick={addPremium} className="bg-white">Tambah Card</Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {premiumBenefits.map((item, i) => (

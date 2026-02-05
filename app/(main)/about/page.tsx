@@ -32,7 +32,6 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen dark:bg-zinc-800">
-      {/* Hero Section */}
 
       <section className="relative py-20 pt-36 bg-gray-100 dark:bg-zinc-800 ">
         <div className="absolute inset-0 "></div>
