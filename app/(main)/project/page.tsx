@@ -18,6 +18,8 @@ import WrapperLayout from "@/components/wrapperLayout";
 import kasirApp from "../../../public/assets/thumnail/kasir.png";
 import mobilePRofile from "../../../public/assets/thumnail/mobile-profile.png";
 import productDigital from "../../../public/assets/thumnail/freelancer-app.png";
+import streamora from "../../../public/assets/thumnail/Streamora Filem.png";
+
 import { useLanguage } from "@/lib/language-context";
 interface ProjectData {
   id: number;
@@ -69,6 +71,22 @@ const mockProjects: ProjectData[] = [
     ],
     link_github: "https://github.com/roismohammed",
     link_demo: "#",
+  },
+    {
+    id: 4,
+    name: "Streamora | Platform Video",
+    description:
+      "Platform film digital untuk streaming dan eksplorasi konten video dengan antarmuka yang cepat dan user-friendly.",
+    image: streamora,
+    status: "completed",
+    tech_stack: [
+      "Next.js",
+      "Api Dramabox",
+      "Tailwind CSS",
+      "Shdcn UI",
+    ],
+    link_github: "https://github.com/roismohammed",
+    link_demo: "https://streamora-cx6q.vercel.app/",
   },
 
 ];
