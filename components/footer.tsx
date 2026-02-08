@@ -75,15 +75,11 @@ export default function Footer() {
                                 <ul className="space-y-3">
                                     <li className="flex items-center space-x-3">
                                         <i className="fas fa-envelope text-blue-500"></i>
-                                        <span className="text-zinc-400">hello@roisdev.com</span>
-                                    </li>
-                                    <li className="flex items-center space-x-3">
-                                        <i className="fas fa-phone text-green-500"></i>
-                                        <span className="text-zinc-400">+62 812-3456-7890</span>
+                                        <span className="text-zinc-400">id.roismohammed@gmail.com</span>
                                     </li>
                                     <li className="flex items-center space-x-3">
                                         <i className="fas fa-map-marker-alt text-red-500"></i>
-                                        <span className="text-zinc-400">Jakarta, Indonesia</span>
+                                        <span className="text-zinc-400">Jawa Timur, Indonesia</span>
                                     </li>
                                 </ul>
                             </div>
