@@ -5,12 +5,10 @@ import WrapperLayout from './wrapperLayout';
 export default function Footer() {
     return (
         <div>
-            {/* Footer */}
             <footer className="bg-zinc-800 dark:border-t darl:border text-zinc-200 py-12">
                 <WrapperLayout>
                     <div className="container mx-auto px-4">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                            {/* Brand Section */}
                             <div className="md:col-span-2">
                                 <div className="flex items-center space-x-2 mb-4">
                                     <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
@@ -57,7 +55,6 @@ export default function Footer() {
                                 </div>
                             </div>
 
-                            {/* Quick Links */}
                             <div>
                                 <h3 className="font-semibold text-white mb-4">Tautan Cepat</h3>
                                 <ul className="space-y-2">
@@ -69,7 +66,7 @@ export default function Footer() {
                                 </ul>
                             </div>
 
-                            {/* Contact Info */}
+
                             <div>
                                 <h3 className="font-semibold text-white mb-4">Kontak</h3>
                                 <ul className="space-y-3">
@@ -85,7 +82,6 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        {/* Bottom Bar */}
                         <div className="pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center">
                             <div className="text-zinc-400 text-sm mb-4 md:mb-0">
                                 © {new Date().getFullYear()} RoisDev. All rights reserved.
