@@ -54,7 +54,7 @@ const AboutPage = () => {
                     <h1 className="text-3xl text-center font-bold text-slate-900 dark:text-gray-200 mb-2">
                       {personalInfo.name}
                     </h1>
-                    <p className="text-xl text-center text-slate-600 dark:text-gray-500 mb-6">
+                    <p className="text-lg text-center text-slate-600 dark:text-gray-500 mb-6">
                       {t("title")}
                     </p>
 
@@ -64,7 +64,7 @@ const AboutPage = () => {
                         download="mycv.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 cursor-pointer"
+                        className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 cursor-pointer"
                       >
                         <Download className="h-4 w-4" />
                         Download CV
@@ -100,6 +100,20 @@ const AboutPage = () => {
                         strokeWidth={1.5}
                       />
                       {t("resume")}
+                    </Button>
+                  </Link>
+                  <Link href="/sertificate" className="mx-2">
+                    <Button
+                      variant="outline"
+                      className="cursor-pointer dark:text-gray-200"
+                    >
+                      <HugeiconsIcon
+                        icon={File01Icon}
+                        size={24}
+                        color="currentColor"
+                        strokeWidth={1.5}
+                      />
+                      {t("sertificate")}
                     </Button>
                   </Link>
                   <div className="mt-8">

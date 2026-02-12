@@ -8,17 +8,13 @@ import ReactCourse from '../../../public/assets/sertificate/bwa-course.png'
 import perusahaan from '../../../public/assets/sertificate/pt-jadi-mudah.png'
 import juara from '../../../public/assets/sertificate/juara.jpeg'
 import lks from '../../../public/assets/sertificate/lks.jpeg'
+import codepolitan from '../../../public/assets/sertificate/codepolitan-course.png'
+
 
 
 
 const certificates = [
-    {
-        title: "English Course",
-        issuer: "English For Everyone",
-        date: "Januari 2026",
-        category: "Course",
-        image: englishCourse.src
-    },
+
     {
         title: "Fulstack Developer",
         issuer: "BuildWithAngga Course",
@@ -33,6 +29,13 @@ const certificates = [
         category: "Working",
         image: perusahaan.src
     },
+    {
+        title: "Bangun Website dengan AI Assist dan Deploy Instan Secure di EdgeOne",
+        issuer: "CodePolitan",
+        date: "February 2026",
+        category: "Bootcamp",
+        image: codepolitan.src
+    },
      {
         title: "Champion",
         issuer: "Universitas Trunojoyo Madura",
@@ -46,6 +49,13 @@ const certificates = [
         date: "February 2025",
         category: "Champion",
         image: lks.src
+    },
+      {
+        title: "English Course",
+        issuer: "English For Everyone",
+        date: "Januari 2026",
+        category: "Course",
+        image: englishCourse.src
     },
 ];
 
