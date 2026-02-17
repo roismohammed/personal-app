@@ -13,7 +13,6 @@ export default function Page() {
         <ServiceSection />
         <ProjectSection />
         <BlogSection/>
-        {/* <TestimonialMarquee/> */}
         <CallToAction/>
       </div>
     </div>
