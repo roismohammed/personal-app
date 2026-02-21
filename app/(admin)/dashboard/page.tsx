@@ -11,7 +11,6 @@ const DashboardPage = () => {
   
   return (
     <div className="space-y-6">
-      {/* Header dengan gradient */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
           Dashboard
@@ -21,7 +20,6 @@ const DashboardPage = () => {
         </p>
       </div>
 
-      {/* Cards statistik dengan icon */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card className="relative overflow-hidden border-l-4 border-l-blue-500 hover:shadow-lg transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -79,9 +77,7 @@ const DashboardPage = () => {
         </Card>
       </div>
 
-      {/* Dua kolom dengan layout yang lebih menarik */}
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Aktivitas Terbaru - Lebar 2/3 */}
         <Card className="lg:col-span-2 border shadow-sm hover:shadow-md transition-shadow duration-300">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center text-lg">
@@ -137,7 +133,6 @@ const DashboardPage = () => {
           </CardContent>
         </Card>
 
-        {/* Info Sistem dan Quick Stats - Lebar 1/3 */}
         <div className="space-y-6">
           <Card className="border shadow-sm hover:shadow-md transition-shadow duration-300">
             <CardHeader className="pb-3">
