@@ -1,11 +1,11 @@
-// app/blog/page.tsx
+
 import { Suspense } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { BookOpen, Search, Tag } from "lucide-react"
 import Image from "next/image"
-import potoProfile from "@/public/assets/images/roisbaru.jpeg"
+import potoProfile from "@/public/assets/images/roisdev.jpeg"
 import { GridPattern } from "@/components/ui/grid-pattern"
 import { cn } from "@/lib/utils"
 import WrapperLayout from "@/components/wrapperLayout"
@@ -61,7 +61,6 @@ export default function IndexBlog() {
         </div>
       </div>
 
-      {/* BODY */}
       <WrapperLayout>
         <div className="min-h-screen py-8 grid grid-cols-1 lg:grid-cols-4 gap-8 overflow-visible">
           <aside className="lg:sticky lg:top-28 self-start space-y-4">
