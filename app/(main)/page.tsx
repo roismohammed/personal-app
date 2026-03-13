@@ -4,6 +4,7 @@ import HeroSection from "./partials/hero-sections";
 import ServiceSection from "./partials/service-section";
 import CallToAction from "./partials/callt-action";
 import TestimonialMarquee from "@/components/testimonial";
+import CodingQAPage from "@/components/faq";
 
 export default function Page() {
   return (
@@ -14,6 +15,7 @@ export default function Page() {
         <ProjectSection />
         <BlogSection/>
         <CallToAction/>
+        <CodingQAPage/>
       </div>
     </div>
   );
