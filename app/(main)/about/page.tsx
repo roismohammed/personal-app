@@ -19,11 +19,7 @@ import GithubPage from "@/components/github";
 import { useLanguage } from "@/lib/language-context";
 import { Metadata } from "next";
 
-  // app/about/page.tsx
-export const metadata: Metadata = {
-  title: "About Me | RoisDev",
-  description: "Muhammad Rois - Frontend & Fullstack Developer...",
-}
+
 
 const AboutPage = () => {
   const { t } = useLanguage();

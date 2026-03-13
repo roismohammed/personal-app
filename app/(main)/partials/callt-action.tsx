@@ -6,64 +6,74 @@ import WrapperLayout from "@/components/wrapperLayout";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 export default function CallToAction() {
   const { t } = useLanguage();
 
   return (
-    <div className="bg-gray-50 dark:bg-zinc-900">
+    <div className="dark:bg-black overflow-hidden py-16 md:py-20 relative">
       <WrapperLayout>
-        <section className="container mx-auto py-16">
+        <section className="container mx-auto relative z-10 ">
           <div
-            className="relative overflow-hidden rounded-2xl 
-            bg-gradient-to-r from-cyan-600 to-teal-600 
-            p-8 md:p-12 text-center text-white"
+            className="relative overflow-hidden rounded-3xl border border-gray-100 dark:border-zinc-800
+            bg-gradient-to-br from-teal-700 via-teal-700 to-teal-900
+            p-10 md:py-10 text-center shadow-none shadow-teal-900/40"
           >
-            {/* GRID PATTERN */}
+            {/* GRID OVERLAY */}
             <GridPattern
+              width={20}
+              height={20}
               squares={[
-                [4, 4],
-                [5, 1],
-                [8, 2],
-                [5, 3],
-                [6, 6],
-                [10, 10],
-                [12, 15],
-                [18, 10],
+                [1, 1],
+                [3, 3],
+                [5, 2],
+                [8, 5],
+                [10, 1],
+                [12, 4],
+                [15, 2],
               ]}
               className={cn(
-                "pointer-events-none absolute inset-0",
-                "opacity-30",
-                "z-0",
-                "[mask-image:radial-gradient(1000px_circle_at_center,white,rgba(255,255,255,0.4))]"
+                "pointer-events-none absolute inset-0 h-full w-full",
+                "opacity-40",
+                "stroke-white/20 fill-white/10",
+                "[mask-image:linear-gradient(to_bottom_left,white_20%,transparent_70%)]"
               )}
             />
 
-            {/* CONTENT */}
-            <div className="relative z-10">
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                {t("cta_title")}
+            <div className="relative z-10 flex flex-col items-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-white/10 border border-white/20 mb-6 shadow-inner backdrop-blur">
+                <Sparkles className="w-4 h-4 text-white" />
+               <p className="text-white">roisdev</p>
+              </div>
+
+              {/* Title */}
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white leading-tight">
+                 {t("cta_title") || "Get Started"}
+                {/* <span className="text-teal-200">Google</span> technologies? */}
               </h2>
 
-              <p className="text-emerald-100 max-w-2xl mx-auto mb-8">
+              {/* Description */}
+              <p className="text-lg text-teal-100 max-w-2xl mx-auto mb-10 leading-relaxed">
                 {t("cta_desc")}
               </p>
 
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto group">
                 <Button
-                  size="lg"
-                  variant="secondary"
-                  className="bg-white text-teal-600 cursor-pointer hover:bg-emerald-50"
+                  className="bg-white text-teal-700 hover:bg-teal-50 rounded-lg px-8 shadow-none active:scale-95 transition-all w-full sm:w-auto"
+                  asChild
                 >
-                  <Link href="/about">
+                  <Link href="/about" className="flex items-center gap-2">
                     {t("cta_primary")}
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
 
                 <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white bg-transparent hover:text-teal-600 hover:bg-slate-100 cursor-pointer"
+                  variant="ghost"
+                  className="text-white border hover:text-white cursor-pointer hover:bg-white/10 rounded-lg w-full sm:w-auto"
                 >
                   {t("cta_secondary")}
                 </Button>
