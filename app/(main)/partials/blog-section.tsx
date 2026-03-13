@@ -42,7 +42,7 @@ const [posts, setPosts] = useState<Post[]>([]);
             category:category_id (name)
           `)
           .order('created_at', { ascending: false })
-          .limit(20);
+          .limit(3);
 
         if (error) throw error;
         setPosts(data);
