@@ -75,8 +75,8 @@ export default function ServiceSection() {
           <motion.div variants={cardVariants}>
             <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-700">
               <CardHeader>
-                <div className="h-10 w-10 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-4">
-                  <Code className="text-blue-600 h-5 w-5" />
+                <div className="h-10 w-10 rounded-lg bg-teal-600 dark:bg-blue-900 flex items-center justify-center mb-4">
+                  <Code className="text-white h-5 w-5" />
                 </div>
                 <CardTitle>{t("web_dev")}</CardTitle>
                 <CardDescription>
@@ -106,8 +106,8 @@ export default function ServiceSection() {
           <motion.div variants={cardVariants}>
             <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-700">
               <CardHeader>
-                <div className="h-10 w-10 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-4">
-                  <Smartphone className="text-purple-600 h-5 w-5" />
+                <div className="h-10 w-10 rounded-lg bg-teal-600 dark:bg-purple-900 flex items-center justify-center mb-4">
+                  <Smartphone className="text-white h-5 w-5" />
                 </div>
                 <CardTitle>{t("tools")}</CardTitle>
                 <CardDescription>
@@ -137,8 +137,8 @@ export default function ServiceSection() {
           <motion.div variants={cardVariants}>
             <Card className="hover:shadow-lg transition-all duration-300 border-0 dark:bg-zinc-700">
               <CardHeader>
-                <div className="h-10 w-10 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center mb-4">
-                  <Palette className="text-green-600 h-5 w-5" />
+                <div className="h-10 w-10 rounded-lg bg-teal-600 dark:bg-green-900 flex items-center justify-center mb-4">
+                  <Palette className="text-white h-5 w-5" />
                 </div>
                 <CardTitle>{t("ui_design")}</CardTitle>
                 <CardDescription>
