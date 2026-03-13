@@ -27,9 +27,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://roisdev.my.id"),
   title: "RoisDev | Frontend & Fullstack Developer",
   description: "Halo! Saya Muhammad Rois, seorang junior Software Engineer & Web Developer yang ahli di React, Next.js, dan JavaScript.",
-  keywords: ["Roisdev" ,"Muhammad Rois","frontend developer", "fullstack developer", "React.js", "Next.js", "JavaScript", "Web Developer"],
+  keywords: ["Roisdev", "Muhammad Rois", "frontend developer", "fullstack developer", "React.js", "Next.js", "JavaScript", "Web Developer"],
   authors: [{ name: "Muhammad Rois" }],
   creator: "Muhammad Rois",
+  verification: {
+    google: "70cimSw-hO3RuJfKrczHAjSF148cyG8PfLkmoWeo2cE",
+  },
   icons: {
     icon: "/favicon.jpeg",
     apple: "/favicon.jpeg",
@@ -55,7 +58,7 @@ export const metadata: Metadata = {
     title: "RoisDev | Frontend & Fullstack Developer",
     description: "Frontend & Fullstack Developer | React.js, Next.js, Tailwind CSS, Supabase",
     creator: "@roismuhammed",
-    images: ["/favicon.jpeg"], 
+    images: ["/favicon.jpeg"],
   },
 };
 
@@ -75,7 +78,7 @@ export default function RootLayout({
         >
           <LanguageProvider>{children}</LanguageProvider>
           <Analytics />
-          <SpeedInsights/>
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

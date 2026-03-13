@@ -17,8 +17,17 @@ import Link from "next/link";
 import WrapperLayout from "@/components/wrapperLayout";
 import GithubPage from "@/components/github";
 import { useLanguage } from "@/lib/language-context";
+import { Metadata } from "next";
+
+  // app/about/page.tsx
+export const metadata: Metadata = {
+  title: "About Me | RoisDev",
+  description: "Muhammad Rois - Frontend & Fullstack Developer...",
+}
+
 const AboutPage = () => {
   const { t } = useLanguage();
+
   const personalInfo = {
     name: "Muhammad Rois",
     title: "Full-Stack Developer ",
@@ -29,6 +38,7 @@ const AboutPage = () => {
     longBio:
       "With over 5 years of experience in web development and design, I've had the privilege of working with startups and established companies to bring their digital visions to life. My journey began with a curiosity about how websites work, and it has evolved into a passion for creating seamless, intuitive user experiences.",
   };
+
 
   return (
     <div className="min-h-screen dark:bg-zinc-800">
