@@ -1,6 +1,8 @@
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Github01Icon, InstagramIcon, Linkedin01Icon, TiktokIcon } from '@hugeicons/core-free-icons';
 import WrapperLayout from './wrapperLayout';
+import logo from '../public/assets/images/logo1.png'
+import Image from 'next/image';
 
 export default function Footer() {
     return (
@@ -12,7 +14,14 @@ export default function Footer() {
                             <div className="md:col-span-2">
                                 <div className="flex items-center space-x-2 mb-4">
                                     <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                                        <span className="text-white font-bold text-sm">R</span>
+                                        <Image
+                                            src={logo}
+                                            alt="Logo"
+                                            width={32}
+                                            height={32}
+                                            priority
+                                            className="object-cover rounded-md"
+                                        />
                                     </div>
                                     <span className="font-bold text-xl text-white">RoisDev</span>
                                 </div>
