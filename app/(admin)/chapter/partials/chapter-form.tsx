@@ -101,7 +101,7 @@ export default function AddChapterForm({ ebookId: initialEbookId, chapterId }: A
                 if (error) throw error;
                 toast.success("Bab diterbitkan!");
             }
-            router.push("/chapter/create");
+            router.push("/chapter");
             router.refresh();
         } catch (error: any) {
             toast.error(error.message);

@@ -1,6 +1,5 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import WrapperLayout from "@/components/wrapperLayout"
 import Image from "next/image"
 import potoProfile from "@/public/assets/images/roisbaru.jpeg"
 
@@ -16,9 +15,9 @@ export default function PostDetailSkeleton() {
       <section className="relative w-full h-[270px] md:h-[520px] overflow-hidden bg-muted">
         <Skeleton className="absolute inset-0 w-full h-full" />
 
-        <WrapperLayout>
+        <div className="max-w-6xl mx-auto px-4 h-full text-gray-900 dark:text-gray-200">
           <div className="relative z-10 mx-auto h-full flex flex-col justify-end pb-12">
-            <div className="space-y-4">
+            <div className="space-y-">
               <div className="flex items-center gap-3">
                 <Skeleton className="h-6 w-20" />
                 <Skeleton className="h-4 w-40" />
@@ -27,14 +26,14 @@ export default function PostDetailSkeleton() {
               <Skeleton className="h-8 md:h-12 w-full max-w-3xl" />
             </div>
           </div>
-        </WrapperLayout>
+        </div>
       </section>
 
-      <WrapperLayout>
-        <div className="mx-auto py-10">
+      <div className="text-gray-900 dark:text-gray-200">
+        <div className="max-w-6xl mx-auto px-4">
           <div className="grid gap-10 lg:grid-cols-[260px_1fr]">
             <aside className="space-y-4 lg:sticky lg:top-26 self-start">
-              <Card className="shadow-none mt-3 hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+              <Card className="shadow-none  hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
                 <CardHeader className="flex items-center gap-3">
                   <Image
                     src={potoProfile}
@@ -143,7 +142,7 @@ export default function PostDetailSkeleton() {
 
           </div>
         </div>
-      </WrapperLayout>
+      </div>
     </div>
   )
 }

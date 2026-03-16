@@ -65,6 +65,10 @@ const data = {
           title: "Category",
           url: "/category",
         },
+        {
+          title: "Komentar",
+          url: "/dashboard#komentar",
+        },
       ],
     },
       {

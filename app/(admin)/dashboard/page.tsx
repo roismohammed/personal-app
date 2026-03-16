@@ -6,6 +6,7 @@ import {
   CardContent,
 } from "@/components/ui/card"
 import { TrendingUp, Users, FileText, FolderOpen, Activity, Database, Globe, Calendar } from "lucide-react"
+import CommentsDashboard from "./comments-dashboard"
 
 const DashboardPage = () => {
   
@@ -183,6 +184,10 @@ const DashboardPage = () => {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      <div id="komentar" className="scroll-mt-24">
+        <CommentsDashboard />
       </div>
     </div>
   )

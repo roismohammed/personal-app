@@ -115,23 +115,54 @@ export default function IndexBlog() {
 
 function BlogPostsSkeleton() {
   return (
-    <main className="lg:col-span-3 space-y-6">
-      {[1, 2, 3].map((i) => (
-        <Card key={i}>
-          <CardHeader>
-            <Skeleton className="h-6 w-24 mb-3" />
-            <Skeleton className="h-8 w-3/4 mb-2" />
-            <Skeleton className="h-4 w-full mb-1" />
-            <Skeleton className="h-4 w-2/3" />
-          </CardHeader>
-          <CardContent>
-            <div className="flex gap-4">
-              <Skeleton className="h-4 w-24" />
+    <main className="lg:col-span-3 space-y-10">
+      <Card className="border shadow-none overflow-hidden bg-white/80 dark:bg-zinc-700/50 backdrop-blur-sm">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3 mb-3">
+            <Skeleton className="h-6 w-24 rounded-full" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+
+          <Skeleton className="h-9 w-4/5 mb-3" />
+          <Skeleton className="h-5 w-full mb-2" />
+          <Skeleton className="h-5 w-3/4" />
+        </CardHeader>
+
+        <CardContent className="-mt-2">
+          <div className="flex items-center gap-4">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-40" />
+          </div>
+        </CardContent>
+
+        <CardContent>
+          <Skeleton className="h-10 w-40 rounded-md" />
+        </CardContent>
+      </Card>
+
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
+        {[1, 2, 3, 4].map((i) => (
+          <Card key={i} className="rounded-3xl overflow-hidden border shadow-none">
+            <Skeleton className="aspect-[16/10] w-full" />
+
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between mb-3">
+                <Skeleton className="h-5 w-20 rounded-full" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+
+              <Skeleton className="h-6 w-full mb-2" />
+              <Skeleton className="h-6 w-2/3" />
+            </CardHeader>
+
+            <CardContent className="pb-6">
+              <Skeleton className="h-4 w-full mb-2" />
+              <Skeleton className="h-4 w-4/5 mb-5" />
               <Skeleton className="h-4 w-32" />
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </main>
   )
 }

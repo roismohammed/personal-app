@@ -15,11 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import logo from "@/public/assets/images/logo1.png";
 
-/* ✅ PAKAI BROWSER SUPABASE CLIENT */
-import { createClient } from "@supabase/supabase-js";
 
-/* ✅ instance dibuat SEKALI */
-const supabase = createClient(
+import { createBrowserClient } from "@supabase/ssr";
+
+const supabase = createBrowserClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
@@ -49,6 +48,7 @@ export function LoginForm({
     }
 
     toast.success("Login berhasil!");
+    router.refresh();
     router.replace("/dashboard");
     setLoading(false);
   };

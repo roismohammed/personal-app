@@ -3,9 +3,6 @@ import Image from "next/image";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import potoProfile from "@/public/assets/images/roisbaru.jpeg";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import WrapperLayout from "@/components/wrapperLayout";
 import { createClient } from "@supabase/supabase-js";
 import thumnail from "../../../../public/assets/images/bg-artikel.png";
@@ -30,6 +27,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { CopyLinkButton } from "@/components/copy-button";
 import { Metadata } from "next";
+import CommentsSection from "./comments-section";
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -341,22 +339,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                 dangerouslySetInnerHTML={{ __html: post.content || "" }}
               />
 
-              {/* COMMENT SECTION */}
-              <section className="mt-16 space-y-6">
-                <h2 className="text-xl font-semibold">Tinggalkan Komentar</h2>
-                <form className="space-y-4">
-                  <Input placeholder="Nama kamu" className="max-w-md" />
-                  <Textarea
-                    placeholder="Tulis komentar kamu di sini..."
-                    rows={4}
-                    className="max-w-2xl"
-                  />
-                  <Button type="submit">Kirim Komentar</Button>
-                </form>
-                <p className="text-sm text-muted-foreground">
-                  Komentar akan tampil setelah dimoderasi.
-                </p>
-              </section>
+              <CommentsSection slug={post.slug} />
             </article>
 
             {/* SIDEBAR MOBILE */}

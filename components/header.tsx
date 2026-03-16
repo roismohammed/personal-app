@@ -32,6 +32,7 @@ import Image from "next/image";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
+  Book01FreeIcons,
   Home01Icon,
   InboxIcon,
   LicenseDraftIcon,
@@ -43,6 +44,11 @@ const TopMenu = [
     name: "Beranda",
     href: "/",
     icon: Home01Icon,
+  },
+  {
+    name: "Ebook",
+    icon: Book01FreeIcons,
+    href: "/ebook",
   },
   {
     name: "Project",
@@ -104,118 +110,116 @@ export default function Header01() {
     <div className="">
       <div className={`px-3 lg:px-0 ${stickyHeader ? "lg:px-0" : ""}`}>
         <header
-          className={`w-[94%] md:w-[96%] lg:w-full mx-auto py-1.5 bg-white border-b rounded-xl  lg:rounded-none border-border/40 dark:bg-zinc-900 backdrop-blur-md fixed z-50 transition-all duration-300 ${
-            stickyHeader
+          className={`w-[94%] md:w-[96%] lg:w-full mx-auto py-1.5 bg-white border-b rounded-xl  lg:rounded-none border-border/40 dark:bg-zinc-900 backdrop-blur-md fixed z-50 transition-all duration-300 ${stickyHeader
               ? "fixed shadow-sm top-4 lg:top-0 bg-white transition-all border-b dark:border-b dark:border-zinc-700 duration-100 px-4 lg:px-0"
               : "top-3 lg:top-0 px-4 lg:px-0"
-          }`}
+            }`}
         >
           <div className="max-w-6xl mx-auto">
-            <nav className="hidden justify-between lg:flex">
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2">
-                  <Logo />
-                </div>
+            <nav className="hidden lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-6">
+              <div className="flex items-center gap-2">
+                <Logo />
               </div>
-              <div className="items-center flex gap-6">
-                <div className="flex items-center">
-                  <NavigationMenu className="relative z-[100]">
-                    <NavigationMenuList>
-                      {TopMenu.map((menu, index) =>
-                        menu.Dropdown ? (
-                          <NavigationMenuItem key={index}>
-                            <NavigationMenuTrigger className="bg-transparent gap-1 geist text-gray-500 dark:text-gray-300 hover:text-cyan-600 hover:bg-transparent focus:bg-transparent active:bg-transparent">
-                              <HugeiconsIcon icon={menu.icon} size={16} />
-                              {menu.name}
-                            </NavigationMenuTrigger>
-                            <NavigationMenuContent className="z-[100]">
-                              <ul className="w-80 p-3">
-                                {menu.Dropdown.map((item, index) => (
-                                  <li key={index} className="group">
-                                    <NavigationMenuLink asChild>
-                                      <Link
-                                      prefetch={true}
-                                        className={cn(
-                                          "flex flex-row selzect-none items-center hover:bg-gray-50 hover:dark:bg-zinc-700 gap-2 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-cyan-600 focus:bg-transparent",
-                                        )}
-                                        href={item.href}
-                                      >
-                                        <span className="transition-colors group-hover:text-primary">
-                                          <HugeiconsIcon
-                                            icon={item.icon}
-                                            size={16}
-                                          />
-                                        </span>
-                                        <div>
-                                          <div className="text-sm font-semibold">
-                                            {item.title}
-                                          </div>
-                                          <p className="text-sm leading-snug text-muted-foreground">
-                                            {item.description}
-                                          </p>
-                                        </div>
-                                      </Link>
-                                    </NavigationMenuLink>
-                                  </li>
-                                ))}
-                              </ul>
-                            </NavigationMenuContent>
-                          </NavigationMenuItem>
-                        ) : (
-                          <NavigationMenuItem key={index}>
-                            <Link
-                            prefetch={true}
-                              className={cn(
-                                navigationMenuTriggerStyle(),
-                                "bg-transparent hover:bg-transparent gap-2 hover:text-cyan-600 geist dark:text-gray-300 gap-1 hover:dark:text-cyan-600 text-gray-500 focus:bg-transparent active:bg-transparent",
-                              )}
-                              href={menu.href!}
-                            >
-                              <HugeiconsIcon icon={menu.icon} size={16} />
-                              {menu.name}
-                            </Link>
-                          </NavigationMenuItem>
-                        ),
-                      )}
-                    </NavigationMenuList>
-                  </NavigationMenu>
-                </div>
-            <div
-  className="
-    flex items-center gap-1.5
-    rounded-lg
-    bg-white/80 dark:bg-zinc-800/90
-    backdrop-blur
-     border-zinc-200 dark:border-zinc-700
-    px-1.5 py-1
-  "
->
 
-  <button
-    className="
+              <div className="flex items-center justify-center">
+                <NavigationMenu className="relative z-[100]">
+                  <NavigationMenuList>
+                    {TopMenu.map((menu, index) =>
+                      menu.Dropdown ? (
+                        <NavigationMenuItem key={index}>
+                          <NavigationMenuTrigger className="bg-transparent gap-1 geist text-gray-500 dark:text-gray-300 hover:text-cyan-600 hover:bg-transparent focus:bg-transparent active:bg-transparent">
+                            <HugeiconsIcon icon={menu.icon} size={16} />
+                            {menu.name}
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent className="z-[100]">
+                            <ul className="w-80 p-3">
+                              {menu.Dropdown.map((item, index) => (
+                                <li key={index} className="group">
+                                  <NavigationMenuLink asChild>
+                                    <Link
+                                      prefetch={true}
+                                      className={cn(
+                                        "flex flex-row selzect-none items-center hover:bg-gray-50 hover:dark:bg-zinc-700 gap-2 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-cyan-600 focus:bg-transparent",
+                                      )}
+                                      href={item.href}
+                                    >
+                                      <span className="transition-colors group-hover:text-primary">
+                                        <HugeiconsIcon
+                                          icon={item.icon}
+                                          size={16}
+                                        />
+                                      </span>
+                                      <div>
+                                        <div className="text-sm font-semibold">
+                                          {item.title}
+                                        </div>
+                                        <p className="text-sm leading-snug text-muted-foreground">
+                                          {item.description}
+                                        </p>
+                                      </div>
+                                    </Link>
+                                  </NavigationMenuLink>
+                                </li>
+                              ))}
+                            </ul>
+                          </NavigationMenuContent>
+                        </NavigationMenuItem>
+                      ) : (
+                        <NavigationMenuItem key={index}>
+                          <Link
+                            prefetch={true}
+                            className={cn(
+                              navigationMenuTriggerStyle(),
+                              "bg-transparent hover:bg-transparent gap-2 hover:text-cyan-600 geist dark:text-gray-300 gap-1 hover:dark:text-cyan-600 text-gray-500 focus:bg-transparent active:bg-transparent",
+                            )}
+                            href={menu.href!}
+                          >
+                            <HugeiconsIcon icon={menu.icon} size={16} />
+                            {menu.name}
+                          </Link>
+                        </NavigationMenuItem>
+                      ),
+                    )}
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </div>
+
+              <div
+                className="
+                  flex items-center gap-1.5
+                  rounded-lg
+                  bg-white/80 dark:bg-zinc-800/90
+                  backdrop-blur
+                  border-zinc-200 dark:border-zinc-700
+                  px-1.5 py-1
+                "
+              >
+
+                <button
+                  className="
       flex h-9 w-10 cursor-pointer transition-all items-center justify-center
       rounded-md
       text-zinc-600 dark:text-zinc-300
       hover:bg-zinc-100 border dark:bg-transparent dark:hover:bg-zinc-700
       transition-colors
     "
-  >
-    <AnimatedThemeToggler className="h-3.5 w-3.5 cursor-pointer" />
-  </button>
+                >
+                  <AnimatedThemeToggler className="h-3.5 w-3.5 cursor-pointer" />
+                </button>
 
-  {/* Language */}
-  <div className="h-7 flex items-center">
-    <LanguageSelect />
-  </div>
+                {/* Language */}
+                <div className="h-7 flex items-center">
+                  <LanguageSelect />
+                </div>
 
-  {/* Divider */}
-  <div className="mx-0.5 h-4 w-px bg-zinc-300 dark:bg-zinc-600" />
+                {/* Divider */}
+                <div className="mx-0.5 h-4 w-px bg-zinc-300 dark:bg-zinc-600" />
 
-  {/* CTA */}
-  <Link href="/about" prefetch>
-    <Button
-      size="lg"
-      className="
+                {/* CTA */}
+                <Link href="/about" prefetch>
+                  <Button
+                    size="lg"
+                    className="
         h-9 px-7
         rounded-md
         cursor-pointer
@@ -225,13 +229,11 @@ export default function Header01() {
         text-white
         shadow-none
       "
-    >
-      <HugeiconsIcon icon={User}/>
-      About
-    </Button>
-  </Link>
-</div>
-
+                  >
+                    <HugeiconsIcon icon={User} />
+                    About
+                  </Button>
+                </Link>
               </div>
             </nav>
 
@@ -288,7 +290,7 @@ export default function Header01() {
                                 <div className="flex flex-col space-y-3">
                                   {menu.Dropdown.map((item, index) => (
                                     <Link
-                                    prefetch={true}
+                                      prefetch={true}
                                       onClick={() => setOpen(false)}
                                       key={index}
                                       className={cn(
@@ -318,7 +320,7 @@ export default function Header01() {
                           </Accordion>
                         ) : (
                           <Link
-                          prefetch={true}
+                            prefetch={true}
                             key={index}
                             onClick={() => setOpen(false)}
                             href={menu.href!}
@@ -333,7 +335,7 @@ export default function Header01() {
                     <div className="border-t pt-4">
                       <div className="mt-2 flex flex-col gap-2">
                         <Link
-                        prefetch={true}
+                          prefetch={true}
                           href="/about"
                           onClick={() => setOpen(false)}
                           className={buttonVariants({ variant: "outline" })}
