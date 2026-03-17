@@ -12,7 +12,7 @@ export default function CallToAction() {
   const { t } = useLanguage();
 
   return (
-    <div className="dark:bg-black overflow-hidden py-16 md:py-20 relative">
+    <div className="dark:bg-zinc-900 overflow-hidden py-16 md:py-20 relative">
       <WrapperLayout>
         <section className="container mx-auto relative z-10 ">
           <div

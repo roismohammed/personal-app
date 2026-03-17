@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { Badge } from './ui/badge';
 import WrapperLayout from './wrapperLayout';
+import { useLanguage } from '@/lib/language-context';
 
 interface FAQ {
   question: string;
@@ -18,7 +19,7 @@ const FAQItem: React.FC<FAQ> = ({ question, answer }) => {
       <button
         className="flex w-full items-center text-muted-foregroun cursor-pointer justify-between text-left group focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
+        aria-expanded={isOpen}    
       >
         <span
           className={`text-md lg:text-lg font-semibold text-muted-foreground  transition-colors duration-300 ${isOpen ? 'text-teal-700' : 'text-slate-700 group-hover:text-teal-600'
@@ -27,7 +28,7 @@ const FAQItem: React.FC<FAQ> = ({ question, answer }) => {
           {question}
         </span>
         <div
-          className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'lg:bg-teal-700 text-teal-700 lg:text-white rotate-180' : 'bg-white lg:bg-slate-100 text-teal-700'
+          className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'lg:bg-teal-700 text-teal-700 lg:text-white rotate-180' : 'bg-none dark:bg-none  lg:bg-slate-100 text-teal-700'
             }`}
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,38 +54,44 @@ const FAQItem: React.FC<FAQ> = ({ question, answer }) => {
 const CodingQAPage: React.FC = () => {
   const codingFaqs: FAQ[] = [
     {
-      question: "Apa teknologi stack yang ideal untuk performa tinggi?",
-      answer: "Kombinasi Next.js dengan App Router, TypeScript, dan Tailwind CSS adalah standar industri saat ini. Untuk database, menggunakan ORM seperti Prisma atau Drizzle mempercepat pengembangan dengan type-safety yang kuat."
+      question: "Layanan apa saja yang bisa saya pesan?",
+      answer: "Saya melayani pembuatan website company profile, landing page, portfolio, blog, hingga website bisnis custom sesuai kebutuhan brand Anda."
     },
     {
-      question: "Bagaimana cara efektif melakukan Debugging pada aplikasi Web?",
-      answer: "Manfaatkan Chrome DevTools secara maksimal, gunakan fitur 'Source Maps' untuk melacak error di file asli, dan integrasikan tools seperti Sentry untuk monitoring error di sisi produksi secara real-time."
+      question: "Berapa lama proses pembuatan website?",
+      answer: "Durasi pengerjaan menyesuaikan kompleksitas fitur. Umumnya website basic selesai dalam 5-10 hari kerja, sedangkan website custom membutuhkan waktu lebih panjang dengan timeline yang disepakati di awal."
     },
     {
-      question: "Bagaimana Gemini AI mengoptimalkan workflow koding?",
-      answer: "Gemini membantu dalam melakukan refactoring kode yang kompleks, memberikan saran boilerplate, hingga menjelaskan dokumentasi API secara instan. Ini memungkinkan kita fokus pada arsitektur besar aplikasi."
+      question: "Apakah website bisa responsif di HP dan cepat diakses?",
+      answer: "Ya. Website dibangun mobile-first, responsif di berbagai ukuran layar, dan dioptimasi agar loading cepat untuk meningkatkan pengalaman pengguna dan konversi."
     },
     {
-      question: "Mengapa TypeScript wajib dikuasai oleh Web Developer modern?",
-      answer: "TypeScript meminimalisir error saat runtime melalui static typing. Ini sangat membantu dalam kolaborasi tim besar dan memastikan kontrak data antar komponen atau API tetap konsisten."
+      question: "Apakah ada revisi setelah website selesai?",
+      answer: "Tentu. Saya menyediakan revisi sesuai ruang lingkup yang disepakati agar hasil akhir benar-benar sesuai kebutuhan bisnis Anda sebelum website dipublikasikan."
+    },
+    {
+      question: "Apakah saya bisa minta maintenance setelah website online?",
+      answer: "Bisa. Tersedia layanan maintenance berkala untuk update konten, perbaikan bug, optimasi performa, dan pendampingan teknis setelah website live."
     }
   ];
 
+   const { t } = useLanguage();
   return (
     <div className="min-h-screen dark:bg-zinc-900 text-center bg-white py-16  font-sans antialiased">
       <WrapperLayout>
         <div className="mx-auto ">
           <div className="mb-16 flex flex-col items-center text-center">
             <Badge variant="outline" className="mb-4 border-teal-700/20 text-teal-700">
-              Developer Q&A
+              FAQ Layanan
             </Badge>
 
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight dark:text-white">
-              Coding <span className="text-teal-700">Knowledge</span> Base
+                  {t("faq_title")}
             </h2>
 
             <p className="mt-4 text-muted-foreground max-w-2xl">
-              Wawasan seputar pengembangan perangkat lunak, efisiensi workflow dengan AI, dan implementasi teknologi terbaru.
+              {t("faq_desc")}
+          
             </p>
           </div>
 

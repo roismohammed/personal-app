@@ -62,5 +62,10 @@
 
     "connect_title": "Let's Connect",
     "connect_desc": "Questions or collaborations? Reach out to me at",
-    "experience": "Experience"
+    "experience": "Experience",
+
+    "testimonial_title" : "Client Trust",
+
+    "faq_title": "Frequently Asked Questions",
+    "faq_desc": "Answers to common questions about my services and processes."
 }

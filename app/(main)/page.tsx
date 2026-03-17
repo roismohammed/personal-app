@@ -14,6 +14,7 @@ export default function Page() {
         <ServiceSection />
         <ProjectSection />
         <BlogSection/>
+        <TestimonialMarquee/>
         <CallToAction/>
         <CodingQAPage/>
       </div>

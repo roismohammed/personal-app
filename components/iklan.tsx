@@ -11,14 +11,15 @@ export default function Iklan() {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        const hasSeenAd = localStorage.getItem(AD_SEEN_KEY);
-        if (!hasSeenAd) {
+        const timer = setTimeout(() => {
             setIsOpen(true);
-        }
+        }, 2000); // muncul setelah 2 detik
+
+        return () => clearTimeout(timer);
     }, []);
 
     const handleClose = () => {
-        localStorage.setItem(AD_SEEN_KEY, "1");
+        // localStorage.setItem(AD_SEEN_KEY, "1");
         setIsOpen(false);
     };
 

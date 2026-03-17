@@ -63,5 +63,10 @@
 
     "connect_title": "Mari Terhubung",
     "connect_desc": "Ada pertanyaan atau ingin berkolaborasi? Hubungi saya melalui",
-    "experience": "Pengalaman"
+    "experience": "Pengalaman",
+
+     "testimonial_title" : "Kepercayaan Klien",
+
+     "faq_title" : "pertanyaan yang sering diajukan",
+     "faq_desc": "Jawaban atas pertanyaan umum tentang layanan dan proses saya."
 }
