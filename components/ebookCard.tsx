@@ -9,6 +9,7 @@ import { Button } from "./ui/button"
 type EbookItem = {
   id: string | number
   title: string
+  slug?: string | null
   author?: string
   cover?: string | null
   price?: number
@@ -21,6 +22,13 @@ interface EbookCardProps {
 }
 
 export default function EbookCard({ ebook }: EbookCardProps) {
+
+  const slugify = (value: string) =>
+    value
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
 
   const formatPrice = (value?: number) => {
     if (!value) return "-"
@@ -77,7 +85,7 @@ export default function EbookCard({ ebook }: EbookCardProps) {
 
         {/* Price */}
         <div className="">
-        <Link href={ `/ebook/${ebook.id}`} className="cursor-pointer">
+        <Link href={`/ebook/${encodeURIComponent(ebook.slug || slugify(ebook.title) || String(ebook.id))}`} className="cursor-pointer">
 
 
           <Button className="w-full rounded-full cursor-pointer">

@@ -245,14 +245,24 @@ export default function PostForm() {
                 menubar: false,
                 plugins: [
                   'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-                  'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                  'anchor', 'searchreplace', 'visualblocks', 'code', 'codesample', 'fullscreen',
                   'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
                 ],
                 toolbar:
                   'undo redo | blocks | ' +
                   'bold italic forecolor | alignleft aligncenter ' +
                   'alignright alignjustify | bullist numlist outdent indent | ' +
-                  'removeformat | code | help',
+                  'removeformat | code codesample | help',
+                codesample_languages: [
+                  { text: 'HTML/XML', value: 'markup' },
+                  { text: 'JavaScript', value: 'javascript' },
+                  { text: 'TypeScript', value: 'typescript' },
+                  { text: 'CSS', value: 'css' },
+                  { text: 'JSON', value: 'json' },
+                  { text: 'Bash', value: 'bash' }
+                ],
+                extended_valid_elements: 'pre[class|data-language],code[class],span[class]',
+                valid_children: '+pre[code]',
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; }',
                 placeholder: 'Write your content here...'
               }}

@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { 
-  Plus, Edit3, Trash2, Search, Loader2, FilePlus2, BookOpenText
+  Plus, Edit3, Trash2, Loader2, BookOpenText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "@/components/ui/table";
+import { ColumnDef } from "@tanstack/react-table";
+import { DataTable } from "@/components/datatable/table";
+import PageTitle from '@/components/page-title';
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/client';
 
@@ -23,32 +22,44 @@ type ChapterItem = {
     id: string;
     title: string;
     category: string | null;
-  } | null;
+  } | Array<{
+    id: string;
+    title: string;
+    category: string | null;
+  }> | null;
+};
+
+type ChapterRow = ChapterItem & {
+  name: string;
+};
+
+const getEbookTitle = (chapter: ChapterItem) => {
+  if (!chapter.ebooks) return 'E-BOOK TIDAK DITEMUKAN';
+  if (Array.isArray(chapter.ebooks)) return chapter.ebooks[0]?.title || 'E-BOOK TIDAK DITEMUKAN';
+  return chapter.ebooks.title || 'E-BOOK TIDAK DITEMUKAN';
 };
 
 const AdminChapterIndex = () => {
   const [chapters, setChapters] = useState<ChapterItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [search, setSearch] = useState('');
   const supabase = createSupabaseServerClient();
 
-  const fetchChapters = async () => {
-    setLoading(true);
+  const fetchChapters = useCallback(async () => {
     const { data, error } = await supabase
       .from('chapters')
       .select('id, title, slug, ebook_id, created_at, ebooks(id, title, category)')
       .order('created_at', { ascending: false });
 
-    // if (!error && data) {
-    //   setChapters(data as ChapterItem[]);
-    // }
+    if (!error && data) {
+      setChapters(data as ChapterItem[]);
+    }
     setLoading(false);
-  };
+  }, [supabase]);
 
   useEffect(() => {
     fetchChapters();
-  }, []);
+  }, [fetchChapters]);
 
   const handleDeleteChapter = async (chapterId: string) => {
     const confirmed = window.confirm('Hapus bab ini? Tindakan ini tidak bisa dibatalkan.');
@@ -62,28 +73,97 @@ const AdminChapterIndex = () => {
     setDeletingId(null);
   };
 
-  const filteredChapters = chapters.filter((chapter) => {
-    const keyword = search.toLowerCase();
-    return (
-      chapter.title.toLowerCase().includes(keyword) ||
-      chapter.slug.toLowerCase().includes(keyword) ||
-      (chapter.ebooks?.title || '').toLowerCase().includes(keyword) ||
-      (chapter.ebooks?.category || '').toLowerCase().includes(keyword)
-    );
-  });
+  const rows = useMemo<ChapterRow[]>(() => {
+    return chapters.map((chapter) => ({
+      ...chapter,
+      name: chapter.title,
+    }));
+  }, [chapters]);
+
+  const columns = useMemo<ColumnDef<ChapterRow>[]>(
+    () => [
+      {
+        accessorKey: 'name',
+        header: 'Judul Bab',
+        cell: ({ row }) => (
+          <div className="flex items-center gap-4 py-1">
+            <div className="w-10 h-10 bg-zinc-100 rounded-xl overflow-hidden relative border border-zinc-200 flex items-center justify-center text-zinc-700">
+              <BookOpenText size={18} />
+            </div>
+            <div className="space-y-1">
+              <p className="font-semibold text-zinc-900 text-sm leading-none">
+                {row.original.title}
+              </p>
+              <p className="text-zinc-500 text-[10px] font-semibold uppercase tracking-tighter italic">
+                /{row.original.slug}
+              </p>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: 'ebook',
+        header: 'E-Book',
+        accessorFn: (row) => getEbookTitle(row),
+        cell: ({ row }) => (
+          <Badge className="bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border-none font-bold text-[9px] uppercase px-3 py-1">
+            {getEbookTitle(row.original)}
+          </Badge>
+        ),
+      },
+      {
+        id: 'created_at',
+        header: 'Dibuat',
+        accessorFn: (row) => new Date(row.created_at).toISOString(),
+        cell: ({ row }) => (
+          <span className="text-xs text-zinc-600 font-medium">
+            {new Date(row.original.created_at).toLocaleDateString('id-ID', {
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric',
+            })}
+          </span>
+        ),
+      },
+      {
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }) => (
+          <div className="flex items-center justify-end gap-2">
+            <Link href={`/chapter/create?chapterId=${row.original.id}`}>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-9 w-9 rounded-lg border-zinc-300 text-zinc-700 hover:bg-zinc-100"
+              >
+                <Edit3 size={16} />
+              </Button>
+            </Link>
+            <Button
+              variant="outline"
+              size="icon"
+              disabled={deletingId === row.original.id}
+              onClick={() => handleDeleteChapter(row.original.id)}
+              className="h-9 w-9 rounded-lg border-zinc-300 text-zinc-700 hover:bg-zinc-100"
+            >
+              {deletingId === row.original.id ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+            </Button>
+          </div>
+        ),
+      },
+    ],
+    [deletingId]
+  );
 
   return (
     <div className="min-h-screen ">
-      <div className="w-full mx-auto space-y-8">
-        
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-8 rounded-3xl border border-slate-100 shadow-none">
-          <div>
-            <h1 className="text-3xl text-zinc-900 font-black tracking-tighter italic uppercase">Admin Chapter</h1>
-            <p className="text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em] mt-1">Kelola semua bab untuk e-book</p>
-          </div>
+      <div className="w-full mx-auto ">
+
+        <div className="flex justify-between items-center">
+          <PageTitle title='Admin Chapter' description='Kelola semua bab untuk e-book' />
           <Link href="/chapter/create">
-            <Button className="rounded-full bg-teal-700 hover:bg-teal-800 h-14 px-8 font-black transition-colors">
-              <Plus size={20} className="mr-2" /> TAMBAH BAB
+            <Button className='cursor-pointer bg-black hover:bg-zinc-800 text-white'>
+              <Plus size={16} className="mr-2" /> Tambah Bab
             </Button>
           </Link>
         </div>
@@ -91,89 +171,22 @@ const AdminChapterIndex = () => {
         <div className="bg-white rounded-3xl border border-slate-100 shadow-none overflow-hidden">
           <div className="p-8 border-b border-slate-50 flex flex-col md:flex-row justify-between items-center gap-4">
             <h3 className="font-black text-zinc-900 text-xl tracking-tight uppercase italic">Daftar Koleksi</h3>
-            <div className="relative w-full md:w-80">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-              <Input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-12 rounded-full bg-slate-50 border-none h-12 text-sm font-medium"
-                placeholder="Cari judul bab, slug, atau e-book..."
-              />
-            </div>
+            <p className="text-xs text-zinc-500 font-medium">Gunakan kolom search bawaan table untuk mencari bab.</p>
           </div>
+          {loading ? (
+            <div className="py-20 text-center">
+              <Loader2 className="animate-spin mx-auto text-zinc-700 mb-4" size={32} />
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Menghubungkan ke Database...</span>
+            </div>
+          ) : (
+            <div className="px-8 pb-8">
+              <DataTable columns={columns} data={rows} />
+            </div>
+          )}
 
-          <Table>
-            <TableHeader className="bg-slate-50/50">
-              <TableRow className="border-none">
-                <TableHead className="font-black text-teal-700 uppercase text-[10px] tracking-widest pl-10 h-14">Judul Bab</TableHead>
-                <TableHead className="font-black text-teal-700 uppercase text-[10px] tracking-widest h-14">E-Book</TableHead>
-                <TableHead className="font-black text-teal-700 uppercase text-[10px] tracking-widest h-14 text-center">Aksi Cepat</TableHead>
-                <TableHead className="font-black text-teal-700 uppercase text-[10px] tracking-widest h-14 text-right pr-10">Pengaturan</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
-                <TableRow>
-                  <TableCell colSpan={4} className="py-20 text-center">
-                    <Loader2 className="animate-spin mx-auto text-teal-700 mb-4" size={32} />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Menghubungkan ke Database...</span>
-                  </TableCell>
-                </TableRow>
-              ) : filteredChapters.map((chapter) => (
-                <TableRow key={chapter.id} className="border-slate-50 hover:bg-teal-50/20 transition-all group">
-                  <TableCell className="pl-10 py-6">
-                    <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 bg-teal-50 rounded-xl overflow-hidden relative border border-white flex items-center justify-center text-teal-700">
-                        <BookOpenText size={20} />
-                      </div>
-                      <div className="space-y-1">
-                        <p className="font-black text-zinc-900 text-base tracking-tight leading-none group-hover:text-teal-700 transition-colors">
-                          {chapter.title}
-                        </p>
-                        <p className="text-slate-400 text-[10px] font-bold uppercase tracking-tighter italic">/{chapter.slug}</p>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge className="bg-teal-50 text-teal-700 hover:bg-teal-100 border-none font-black text-[9px] uppercase px-3 py-1">
-                      {chapter.ebooks?.title || 'E-BOOK TIDAK DITEMUKAN'}
-                    </Badge>
-                  </TableCell>
-                  
-                  <TableCell className="text-center">
-                    <Link href={`/chapter/create?ebookId=${chapter.ebook_id}`}>
-                      <Button variant="outline" className="rounded-full border-teal-200 text-teal-700 hover:bg-teal-700 hover:text-white font-black text-[10px] uppercase gap-2 transition-colors px-5">
-                        <FilePlus2 size={14} /> Tambah Bab
-                      </Button>
-                    </Link>
-                  </TableCell>
-
-                  <TableCell className="text-right pr-10">
-                    <div className="flex justify-end gap-2">
-                      <Link href={`/chapter/create?chapterId=${chapter.id}`}>
-                        <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl hover:bg-amber-50 hover:text-amber-600 border border-transparent hover:border-amber-100 transition-all">
-                          <Edit3 size={18} />
-                        </Button>
-                      </Link>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        disabled={deletingId === chapter.id}
-                        onClick={() => handleDeleteChapter(chapter.id)}
-                        className="h-10 w-10 rounded-xl hover:bg-red-50 hover:text-red-600 border border-transparent hover:border-red-100 transition-all"
-                      >
-                        <Trash2 size={18} />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-
-          {filteredChapters.length === 0 && !loading && (
+          {rows.length === 0 && !loading && (
             <div className="p-20 text-center bg-slate-50/50">
-              <p className="text-slate-400 font-bold italic text-sm">Belum ada chapter. Klik "Tambah Bab" untuk memulai.</p>
+              <p className="text-slate-400 font-bold italic text-sm">Belum ada chapter. Klik Tambah Bab untuk memulai.</p>
             </div>
           )}
         </div>

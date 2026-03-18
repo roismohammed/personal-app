@@ -37,6 +37,7 @@ type ToolItem = {
 
 type EbookRow = {
     id: string;
+    slug: string | null;
     title: string | null;
     description: string | null;
     content: string | null;
@@ -172,24 +173,34 @@ function formatDate(dateString: string | null): string {
     });
 }
 
-async function getEbookById(id: string): Promise<EbookRow | null> {
-    const { data, error } = await supabase
+async function getEbookByIdentifier(identifier: string): Promise<EbookRow | null> {
+    const { data: bySlug, error: slugError } = await supabase
         .from('ebooks')
         .select('*')
-        .eq('id', id)
-        .single();
+        .eq('slug', identifier)
+        .maybeSingle();
 
-    if (error) {
-        console.error('Supabase detail ebook error:', error);
+    if (bySlug) {
+        return bySlug as EbookRow;
+    }
+
+    const { data: byId, error: idError } = await supabase
+        .from('ebooks')
+        .select('*')
+        .eq('id', identifier)
+        .maybeSingle();
+
+    if (!byId && (slugError || idError)) {
+        console.error('Supabase detail ebook error:', slugError || idError);
         return null;
     }
 
-    return data as EbookRow;
+    return (byId as EbookRow) || null;
 }
 
 export default async function EbookDetailPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
-    const ebook = await getEbookById(id);
+    const { id: identifier } = await params;
+    const ebook = await getEbookByIdentifier(identifier);
 
     if (!ebook) {
         notFound();
@@ -199,6 +210,7 @@ export default async function EbookDetailPage({ params }: { params: Promise<{ id
     const cover = ebook.cover || ebook.image || '';
     const category = ebook.category || ebook.category_badge || 'General';
     const description = ebook.description || 'Penjelasan ebook belum tersedia.';
+    const pathIdentifier = ebook.slug || ebook.id;
 
     const benefits = parseBenefits(ebook.benefits);
     const premiumBenefits = parsePremiumBenefits(ebook.premium_benefits);
@@ -238,7 +250,7 @@ export default async function EbookDetailPage({ params }: { params: Promise<{ id
                             </div>
 
                             <div className="flex flex-wrap gap-3">
-                                <Link href={`/ebook/${id}/learn`}>
+                                <Link href={`/ebook/${pathIdentifier}/learn`}>
                                     <Button className="h-12 rounded-full px-7 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 gap-2 font-semibold cursor-pointer">
                                         Mulai Belajar <ArrowRight size={16} />
                                     </Button>
@@ -377,7 +389,7 @@ export default async function EbookDetailPage({ params }: { params: Promise<{ id
                             <h3 className="text-2xl md:text-3xl font-bold">Siap Mulai Belajar?</h3>
                             <p className="text-zinc-300 mt-2">Akses materi ebook sekarang dan lanjutkan ke halaman pembelajaran interaktif.</p>
                         </div>
-                        <Link href={`/ebook/${id}/learn`}>
+                        <Link href={`/ebook/${pathIdentifier}/learn`}>
                             <Button className="h-12 px-7 rounded-full bg-teal-600 hover:bg-teal-500 text-white gap-2 font-semibold cursor-pointer">
                                 Akses Ebook <ArrowRight size={16} />
                             </Button>

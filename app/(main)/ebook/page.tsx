@@ -1,12 +1,9 @@
-import Link from 'next/link';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { BookOpen, ArrowRight, Clock3, Layers3, Library } from "lucide-react";
 import WrapperLayout from '@/components/wrapperLayout';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
 import { createClient } from '@supabase/supabase-js';
-import Image from 'next/image';
 import EbookCard from '@/components/ebookCard';
 
 const supabase = createClient(
@@ -19,6 +16,7 @@ async function getPosts() {
     .from('ebooks')
     .select(`
       id, 
+      slug,
       title, 
       created_at,
       cover,
