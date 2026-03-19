@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import { Badge } from '@/components/ui/badge';
@@ -196,6 +197,49 @@ async function getEbookByIdentifier(identifier: string): Promise<EbookRow | null
     }
 
     return (byId as EbookRow) || null;
+}
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+    const { id: identifier } = await params;
+    const ebook = await getEbookByIdentifier(identifier);
+
+    if (!ebook) {
+        return {
+            title: 'Ebook | RoisDev',
+            description: 'Detail ebook dari RoisDev.',
+        };
+    }
+
+    const title = ebook.title || 'Ebook';
+    const description = ebook.description || 'Detail ebook dari RoisDev.';
+    const pathIdentifier = ebook.slug || ebook.id;
+    const canonical = `https://roisdev.my.id/ebook/${pathIdentifier}`;
+
+    return {
+        title: `${title} | RoisDev`,
+        description,
+        alternates: {
+            canonical,
+        },
+        openGraph: {
+            type: 'article',
+            url: canonical,
+            title: `${title} | RoisDev`,
+            description,
+            images: [
+                {
+                    url: ebook.cover || ebook.image || '/favicon.jpeg',
+                    width: 1200,
+                    height: 630,
+                    alt: title,
+                },
+            ],
+        },
+    };
 }
 
 export default async function EbookDetailPage({ params }: { params: Promise<{ id: string }> }) {

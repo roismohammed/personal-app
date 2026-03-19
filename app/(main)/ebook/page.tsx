@@ -4,6 +4,7 @@ import WrapperLayout from '@/components/wrapperLayout';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
 import { createClient } from '@supabase/supabase-js';
+import type { Metadata } from 'next';
 import EbookCard from '@/components/ebookCard';
 
 const supabase = createClient(
@@ -11,6 +12,29 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+export const metadata: Metadata = {
+  title: 'Ebook | RoisDev',
+  description:
+    'Katalog ebook profesional dari RoisDev untuk belajar terstruktur, praktis, dan relevan dengan kebutuhan industri.',
+  alternates: {
+    canonical: 'https://roisdev.my.id/ebook',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://roisdev.my.id/ebook',
+    title: 'Ebook | RoisDev',
+    description:
+      'Katalog ebook profesional dari RoisDev untuk belajar terstruktur, praktis, dan relevan dengan kebutuhan industri.',
+    images: [
+      {
+        url: '/favicon.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'Katalog Ebook RoisDev',
+      },
+    ],
+  },
+};
 async function getPosts() {
   const { data: posts, error } = await supabase
     .from('ebooks')
