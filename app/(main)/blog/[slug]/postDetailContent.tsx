@@ -258,7 +258,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                 <CardContent className="space-y-4 ">
                   <div className="flex items-center gap-3">
                     <a
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${postUrl}`}
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-blue-500 hover:text-white transition"
@@ -268,7 +268,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                     </a>
 
                     <a
-                      href={`https://twitter.com/intent/tweet?url=${postUrl}&text=${post.title}`}
+                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(post.title)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-sky-500 hover:text-white transition"
@@ -278,7 +278,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                     </a>
 
                     <a
-                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`}
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-blue-700 hover:text-white transition"
@@ -288,7 +288,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                     </a>
 
                     <a
-                      href={`https://api.whatsapp.com/send?text=${post.title} ${postUrl}`}
+                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${post.title} ${postUrl}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-green-500 hover:text-white transition"
@@ -297,7 +297,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                       <HugeiconsIcon icon={Message} size={16} />
                     </a>
                   </div>
-                <CopyLinkButton url={`https://roisdev.my/blog/${post.slug}`} />
+                <CopyLinkButton url={`https://roisdev.my.id/blog/${post.slug}`} />
 
                 </CardContent>
               </Card>
@@ -424,7 +424,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                 <CardContent className="space-y-4 ">
                   <div className="flex items-center gap-3">
                     <a
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${postUrl}`}
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-blue-500 hover:text-white transition"
@@ -434,7 +434,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                     </a>
 
                     <a
-                      href={`https://twitter.com/intent/tweet?url=${postUrl}&text=${post.title}`}
+                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(post.title)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-sky-500 hover:text-white transition"
@@ -444,7 +444,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                     </a>
 
                     <a
-                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`}
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-blue-700 hover:text-white transition"
@@ -454,7 +454,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                     </a>
 
                     <a
-                      href={`https://api.whatsapp.com/send?text=${post.title} ${postUrl}`}
+                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${post.title} ${postUrl}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-full border text-gray-500 hover:bg-green-500 hover:text-white transition"

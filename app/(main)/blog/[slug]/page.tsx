@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { data: post } = await supabase
     .from('posts')
-    .select('title, description') 
+    .select('title, description, image, slug') 
     .eq('slug', slug)
     .single()
 
@@ -48,15 +48,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const baseUrl = "https://roisdev.my.id"
-  const imageUrl = `${baseUrl}/og-default.jpg`
+  const rawImage = post.image as string | null | undefined
+
+  let imageUrl = `${baseUrl}/assets/images/bg-artikel.png`
+  if (rawImage) {
+    if (rawImage.startsWith('http://') || rawImage.startsWith('https://')) {
+      imageUrl = rawImage
+    } else if (rawImage.startsWith('/')) {
+      imageUrl = `${baseUrl}${rawImage}`
+    } else if (rawImage.startsWith('blog-images/')) {
+      imageUrl = `${baseUrl}/storage/v1/object/public/${rawImage}`
+    } else {
+      imageUrl = `${baseUrl}/storage/v1/object/public/blog-images/${rawImage}`
+    }
+  }
 
   return {
     title: post.title,
     description: post.description ?? "",
+    alternates: {
+      canonical: `${baseUrl}/blog/${post.slug || slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.description ?? "",
-      url: `${baseUrl}/blog/${slug}`,
+      url: `${baseUrl}/blog/${post.slug || slug}`,
       siteName: "RoisDev",
       images: [
         {
