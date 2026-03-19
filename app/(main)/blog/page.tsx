@@ -62,8 +62,8 @@ export default function IndexBlog() {
       </div>
 
       <WrapperLayout>
-        <div className="min-h-screen py-8 grid grid-cols-1 lg:grid-cols-4 gap-8 overflow-visible">
-          <aside className="lg:sticky lg:top-28 self-start space-y-4">
+        <div className="min-h-screen  py-8 grid grid-cols-1 lg:grid-cols-4 gap-8 overflow-visible">
+          <aside className="lg:sticky hidden lg:block lg:top-28 self-start space-y-4">
             <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
               <CardHeader className="flex items-center gap-3">
                 <Image
