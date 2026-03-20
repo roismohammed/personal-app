@@ -62,46 +62,7 @@ export default function IndexBlog() {
       </div>
 
       <WrapperLayout>
-        <div className="min-h-screen  py-8 grid grid-cols-1 lg:grid-cols-4 gap-8 overflow-visible">
-          <aside className="lg:sticky hidden lg:block lg:top-28 self-start space-y-4">
-            <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
-              <CardHeader className="flex items-center gap-3">
-                <Image
-                  src={potoProfile}
-                  alt="Foto Penulis"
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                />
-                <div>
-                  <CardTitle className="text-lg">RoisDev</CardTitle>
-                  <small>Web Developer</small>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm">
-                  Web developer yang selalu ingin berkembang dan mempelajari
-                  hal-hal baru.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-sm">
-                  <Tag className="h-4 w-4" />
-                  Popular Topics
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-wrap gap-2">
-                {popularTags.map((tag) => (
-                  <Badge key={tag} variant="outline">
-                    {tag}
-                  </Badge>
-                ))}
-              </CardContent>
-            </Card>
-          </aside>
+        <div className="min-h-screen  py-8 grid grid-cols-1 lg:grid-cols-3 gap-8 overflow-visible">
 
           <Suspense fallback={<BlogPostsSkeleton />}>
             <BlogPosts />
@@ -140,7 +101,7 @@ function BlogPostsSkeleton() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {[1, 2, 3, 4].map((i) => (
           <Card key={i} className="rounded-3xl overflow-hidden border shadow-none">
             <Skeleton className="aspect-[16/10] w-full" />

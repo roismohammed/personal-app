@@ -3,7 +3,7 @@ import { Badge } from './ui/badge';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import Image from 'next/image';
-import { PostData } from '@/types/index';
+import potoProfile from '@/public/assets/images/roisbaru.jpeg';
 export interface Post {
   id: string | number;
   title: string;
@@ -24,7 +24,7 @@ export default function CardBlog({ posts }: CardBlogProps) {
         <div key={posts.id}>
             <Link href={`/blog/${posts.slug}`} key={posts.id} prefetch={false}>
                 <Card
-                    className="group py-0 cursor-pointer hover:shadow-lg rounded-3xl transition-all duration-300 border-0 dark:bg-zinc-700 overflow-hidden"
+                    className="group py-0 cursor-pointer rounded-3xl border border-slate-200 shadow-none transition-colors duration-300 dark:border-zinc-600 dark:bg-zinc-700 overflow-hidden"
                 >
                     {/* Gambar */}
                     <div className="relative h-58 w-full overflow-hidden">
@@ -66,8 +66,15 @@ export default function CardBlog({ posts }: CardBlogProps) {
                         </CardDescription>
 
                         <div className="flex justify-between items-center text-sm text-muted-foreground">
-                            <span>
-                              Roisdev
+                            <span className="inline-flex items-center gap-2">
+                                <Image
+                                    src={potoProfile}
+                                    alt="Foto profil Roisdev"
+                                    width={20}
+                                    height={20}
+                                    className="rounded-full object-cover"
+                                />
+                                Roisdev
                             </span>
 
                             <Button variant="ghost" size="sm" className="h-8 px-3 cursor-pointer">
