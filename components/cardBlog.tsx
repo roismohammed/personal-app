@@ -21,10 +21,10 @@ interface CardBlogProps {
 
 export default function CardBlog({ posts }: CardBlogProps) {
     return (
-        <div key={posts.id}>
-            <Link href={`/blog/${posts.slug}`} key={posts.id} prefetch={false}>
+        <div key={posts.id} className="h-full">
+            <Link href={`/blog/${posts.slug}`} key={posts.id} prefetch={false} className="block h-full">
                 <Card
-                    className="group py-0 cursor-pointer rounded-3xl border border-slate-200 shadow-none transition-colors duration-300 dark:border-zinc-600 dark:bg-zinc-700 overflow-hidden"
+                    className="group py-0 h-full cursor-pointer rounded-3xl border border-slate-200 shadow-none transition-colors duration-300 dark:border-zinc-600 dark:bg-zinc-700 overflow-hidden flex flex-col"
                 >
                     {/* Gambar */}
                     <div className="relative h-58 w-full overflow-hidden">
@@ -54,18 +54,18 @@ export default function CardBlog({ posts }: CardBlogProps) {
                             </span>
                         </div>
 
-                        <CardTitle className="text-lg group-hover:text-teal-600 transition-colors">
+                        <CardTitle className="text-lg min-h-[56px] line-clamp-2 group-hover:text-teal-600 transition-colors">
                             {posts.title.slice(0, 50) + " ..."}
                         </CardTitle>
                     </CardHeader>
 
-                    <CardContent className="mb-4">
+                    <CardContent className="mb-4 flex flex-1 flex-col">
 
-                        <CardDescription className="mb-4 -mt-4">
+                        <CardDescription className="mb-4 -mt-4 min-h-[44px] line-clamp-2">
                             {posts.description?.slice(0, 70) ?? ""} ...
                         </CardDescription>
 
-                        <div className="flex justify-between items-center text-sm text-muted-foreground">
+                        <div className="mt-auto flex justify-between items-center text-sm text-muted-foreground">
                             <span className="inline-flex items-center gap-2">
                                 <Image
                                     src={potoProfile}
