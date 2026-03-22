@@ -61,7 +61,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Stats Grid (Bisa dibuat dinamis nanti) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard label="Total E-Book" value={ebooks.length.toString()} icon={Book} color="text-blue-600" bg="bg-blue-50" />
           <StatCard label="Total Pembaca" value="1,284" icon={Users} color="text-teal-600" bg="bg-teal-50" />
