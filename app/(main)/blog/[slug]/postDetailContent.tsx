@@ -341,6 +341,14 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                 [&_strong]:font-semibold
 
                 [&_img]:rounded-xl [&_img]:shadow [&_img]:my-6
+
+                [&_figure.table]:my-6 [&_figure.table]:w-full [&_figure.table]:overflow-x-auto
+                [&_table]:w-full [&_table]:border-collapse [&_table]:text-[15px] [&_table]:my-4
+                [&_thead]:bg-slate-100 dark:[&_thead]:bg-slate-800/70
+                [&_th]:border [&_th]:border-slate-300 dark:[&_th]:border-slate-700
+                [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold
+                [&_td]:border [&_td]:border-slate-200 dark:[&_td]:border-slate-700
+                [&_td]:px-3 [&_td]:py-2
               "
                 dangerouslySetInnerHTML={{ __html: post.content || "" }}
               />
