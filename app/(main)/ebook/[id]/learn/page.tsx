@@ -592,7 +592,7 @@ export default function LearnPage() {
               'min-h-full mx-auto max-w-3xl p-5 transition-colors duration-300',
             )}>
 
-              {/* Meta chips */}
+
               <div className="mb-5 flex flex-wrap items-center gap-2">
                 <span className="flex items-center gap-1.5 rounded-full bg-teal-500/15 px-3 py-1 text-[11px] font-semibold text-teal-500 ring-1 ring-inset ring-teal-500/20">
                   <Bookmark className="h-3 w-3" /> Bab {activeTab + 1} • {currentModule?.pages} Halaman
@@ -604,7 +604,6 @@ export default function LearnPage() {
                 )}
               </div>
 
-              {/* Chapter title */}
               <h1 className={cn('mb-10 text-4xl md:text-5xl font-bold tracking-tighter', t.titleColor)}>
                 {currentModule?.title}
               </h1>
