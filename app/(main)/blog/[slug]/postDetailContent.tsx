@@ -28,6 +28,7 @@ import {
 import { CopyLinkButton } from "@/components/copy-button";
 import { Metadata } from "next";
 import CommentsSection from "./comments-section";
+import PostContent from "@/components/post-content";
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -76,22 +77,22 @@ async function fetchPostBySlug(slug: string): Promise<Post | null> {
   }
 }
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: { slug: string } 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
 }): Promise<Metadata> {
   const post = await fetchPostBySlug(params.slug);
 
   if (!post) {
     return {
-      title: 'Post Not Found - RoisDev',
+      title: "Post Not Found - RoisDev",
     };
   }
 
   const baseUrl = "https://roisdev.my.id";
   const postUrl = `${baseUrl}/blog/${post.slug}`;
-  
+
   const ogImage = post.image || `${baseUrl}/assets/images/bg-artikel.png`;
 
   return {
@@ -101,28 +102,27 @@ export async function generateMetadata({
       title: post.title,
       description: post.description,
       url: postUrl,
-      siteName: 'RoisDev Blog',
+      siteName: "RoisDev Blog",
       images: [
         {
           url: ogImage,
           width: 1200,
           height: 630,
           alt: post.title,
-        }
+        },
       ],
-      locale: 'id_ID',
-      type: 'article',
+      locale: "id_ID",
+      type: "article",
       publishedTime: post.created_at,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: post.title,
       description: post.description,
       images: [ogImage],
     },
   };
 }
-
 
 export default async function PostDetailContent({ slug }: { slug: string }) {
   const post = await fetchPostBySlug(slug);
@@ -303,14 +303,16 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                       <HugeiconsIcon icon={Message} size={16} />
                     </a>
                   </div>
-                <CopyLinkButton url={`https://roisdev.my.id/blog/${post.slug}`} />
-
+                  <CopyLinkButton
+                    url={`https://roisdev.my.id/blog/${post.slug}`}
+                  />
                 </CardContent>
               </Card>
             </aside>
 
             <article className="-mt-20 lg:-mt-0 space-y-8">
-              <div
+              <PostContent
+                html={post.content || ""}
                 className="
                 prose max-w-none
                 prose-slate dark:prose-invert
@@ -350,7 +352,6 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                 [&_td]:border [&_td]:border-slate-200 dark:[&_td]:border-slate-700
                 [&_td]:px-3 [&_td]:py-2
               "
-                dangerouslySetInnerHTML={{ __html: post.content || "" }}
               />
 
               <CommentsSection slug={post.slug} />

@@ -47,19 +47,19 @@
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   @keyframes marquee {
-  from {
-    transform: translateX(0);
+    from {
+      transform: translateX(0);
     }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
     }
   }
   @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
+    from {
+      transform: translateY(0);
     }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
     }
   }
 }
@@ -142,13 +142,44 @@
   }
 }
 
-::view-transition-old(root), ::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
   }
+}
+
+/* Shiki dual-theme: light/dark otomatis */
+.code-block .shiki span {
+  color: var(--shiki-light);
+}
+
+.dark .code-block .shiki span {
+  color: var(--shiki-dark);
+}
+
+/* Shiki body — background mengikuti inner wrapper, bukan shiki default */
+.code-block-body .shiki {
+  margin: 0;
+  border-radius: 0;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  font-family: var(--font-geist-mono), ui-monospace, "Fira Code", monospace;
+  background-color: transparent !important;
+}
+
+/* Background inner wrapper ikut tema shiki */
+.code-block .code-block-body {
+  background-color: var(--shiki-light-bg);
+}
+
+.dark .code-block .code-block-body {
+  background-color: var(--shiki-dark-bg);
 }
