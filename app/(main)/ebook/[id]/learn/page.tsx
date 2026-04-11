@@ -608,7 +608,7 @@ export default function LearnPage() {
                 {currentModule?.title}
               </h1>
 
-              {/* Content styles */}
+              
               <style>{`
                 .reader { font-size: ${fontSize}px; line-height: 1.875; }
                 .reader.dark  { color: #94a3b8; }
