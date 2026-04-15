@@ -34,7 +34,7 @@ export default function CodeBlockClient({
             }, 2000);
           }
         } catch {
-          // fallback jika clipboard API tidak tersedia
+
           const textarea = document.createElement("textarea");
           textarea.value = code;
           textarea.style.position = "fixed";
