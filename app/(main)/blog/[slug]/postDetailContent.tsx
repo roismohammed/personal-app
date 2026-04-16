@@ -357,7 +357,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
               <CommentsSection slug={post.slug} />
             </article>
 
-            {/* SIDEBAR MOBILE */}
+
             <aside className="space-y-4">
               <div className="block lg:hidden">
                 <Card className="shadow-none mt-3  bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
