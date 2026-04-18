@@ -415,7 +415,6 @@ export default function LearnPage() {
 
       {/* ══ TOP NAV ══════════════════════════════════════════════════════════ */}
       <nav className={cn('flex h-14 shrink-0 items-center justify-between border-b px-5 z-50', t.nav)}>
-        {/* Left */}
         <div className="flex items-center gap-3 min-w-0">
           <Link
             href="/ebook"
