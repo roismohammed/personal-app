@@ -141,7 +141,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
   }).format(new Date(post.created_at));
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <section className="relative w-full min-h-[270px] lg:min-h-[400px] overflow-hidden">
         <Image
           src={post.image || thumnail}
@@ -310,13 +310,14 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
               </Card>
             </aside>
 
-            <article className="-mt-20 lg:-mt-0 space-y-8">
+            <article className="-mt-20 lg:-mt-0 space-y-8 min-w-0">
               <PostContent
                 html={post.content || ""}
                 className="
                 prose max-w-none
                 prose-slate dark:prose-invert
                 leading-relaxed tracking-normal text-[15.5px]
+                w-full min-w-0
 
                 [&_h1]:text-2xl [&_h1]:md:text-5xl [&_h1]:font-extrabold
                 [&_h1]:text-zinc-800 [&_h1]:dark:text-slate-100
@@ -332,17 +333,24 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
 
                 [&_p]:text-[16px]
                 [&_p]:text-gray-500 [&_p]:dark:text-slate-300
-                [&_p]:mb-2
+                [&_p]:mb-2 [&_p]:break-words
 
                 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-3
                 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-2
                 [&_li]:mb-1.5
-                [&_li]:text-muted-foreground [&_li]:dark:text-slate-300
+                [&_li]:text-muted-foreground [&_li]:dark:text-slate-300 [&_li]:break-words
 
                 [&_strong]:text-slate-900 [&_strong]:dark:text-white
                 [&_strong]:font-semibold
 
-                [&_img]:rounded-xl [&_img]:shadow [&_img]:my-6
+                [&_img]:rounded-xl [&_img]:shadow [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto
+
+                [&_a]:break-all
+                [&_*]:max-w-full
+                [&_pre]:max-w-full [&_pre]:overflow-x-auto
+                [&_iframe]:max-w-full
+                [&_video]:max-w-full
+                [&_figure]:max-w-full
 
                 [&_figure.table]:my-6 [&_figure.table]:w-full [&_figure.table]:overflow-x-auto
                 [&_table]:w-full [&_table]:border-collapse [&_table]:text-[15px] [&_table]:my-4
