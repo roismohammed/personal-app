@@ -141,7 +141,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
   }).format(new Date(post.created_at));
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden lg:overflow-x-visible">
       <section className="relative w-full min-h-[270px] lg:min-h-[400px] overflow-hidden">
         <Image
           src={post.image || thumnail}
@@ -185,28 +185,28 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
       </section>
 
       <WrapperLayout>
-        <div className="mx-auto pt- py-6">
-          <div className="grid gap-10  lg:grid-cols-[260px_1fr]">
-            <aside className="space-y-4 lg:sticky lg:top-26 self-start">
-              <Card className="shadow-none mt-3 hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
-                <CardHeader className="flex items-center gap-3">
+        <div className="mx-auto pt-20 lg:pt-6 py-6">
+          <div className="grid gap-10 lg:grid-cols-[260px_1fr] lg:items-start">
+            <aside className="hidden lg:block lg:sticky lg:top-24 lg:self-start h-fit space-y-6">
+              {/* Card Profil Penulis */}
+              <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+                <CardHeader className="flex flex-row items-center gap-3">
                   <Image
                     src={potoProfile}
                     alt="Foto Penulis"
                     width={48}
                     height={48}
-                    className="rounded-full"
+                    className="rounded-full shrink-0"
                   />
-                  <div>
-                    <CardTitle className="text-lg ">RoisDev</CardTitle>
-                    <p className="-mt-1 text-sm text-gray-500">Web Developer</p>
+                  <div className="min-w-0">
+                    <CardTitle className="text-lg truncate">RoisDev</CardTitle>
+                    <p className="text-sm text-gray-500">Web Developer</p>
                   </div>
                 </CardHeader>
 
                 <CardContent>
-                  <p className="text-sm mt-2 text-gray-500">
-                    Web developer yang selalu ingin berkembang dan mempelajari
-                    hal-hal baru.
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    Web developer yang selalu ingin berkembang dan mempelajari hal-hal baru.
                   </p>
 
                   <div className="mt-4 flex items-center gap-4">
@@ -243,8 +243,9 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                 </CardContent>
               </Card>
 
-              <div className="border rounded-xl p-5 hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+              {/* Tags Section */}
+              <div className="border rounded-xl p-5 bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
                   Tags
                 </h2>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -256,12 +257,13 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                 </div>
               </div>
 
-              <Card className="shadow-none hidden lg:block bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
+              {/* Share Section */}
+              <Card className="shadow-none bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="text-base">Bagikan Artikel</CardTitle>
                 </CardHeader>
 
-                <CardContent className="space-y-4 ">
+                <CardContent className="space-y-4">
                   <div className="flex items-center gap-3">
                     <a
                       href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`}
@@ -303,9 +305,7 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                       <HugeiconsIcon icon={Message} size={16} />
                     </a>
                   </div>
-                  <CopyLinkButton
-                    url={`https://roisdev.my.id/blog/${post.slug}`}
-                  />
+                  <CopyLinkButton url={`https://roisdev.my.id/blog/${post.slug}`} />
                 </CardContent>
               </Card>
             </aside>
@@ -366,8 +366,8 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
             </article>
 
 
-            <aside className="space-y-4">
-              <div className="block lg:hidden">
+            <aside className="space-y-4 lg:hidden">
+              <div className="block">
                 <Card className="shadow-none mt-3  bg-white dark:bg-zinc-700/50 backdrop-blur-sm">
                   <CardHeader className="flex items-center gap-3">
                     <Image
