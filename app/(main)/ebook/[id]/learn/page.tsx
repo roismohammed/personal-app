@@ -536,7 +536,6 @@ export default function LearnPage() {
         {/* ══ CENTER CONTENT ═══════════════════════════════════════════════════ */}
         <main className="flex flex-1 flex-col ">
             
-          {/* Top content bar */}
           <div className={cn('flex h-11 shrink-0 items-center gap-3 border-b px-4', t.topbar)}>
             <button
               onClick={() => setSidebarOpen(v => !v)}
