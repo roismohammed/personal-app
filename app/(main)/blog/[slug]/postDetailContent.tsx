@@ -319,15 +319,15 @@ export default async function PostDetailContent({ slug }: { slug: string }) {
                 leading-relaxed tracking-normal text-[15.5px]
 
                 [&_h1]:text-2xl [&_h1]:md:text-5xl [&_h1]:font-extrabold
-                [&_h1]:text-muted-foreground [&_h1]:dark:text-slate-100
+                [&_h1]:text-zinc-800 [&_h1]:dark:text-slate-100
                 [&_h1]:mt-8 [&_h1]:mb-4
 
                 [&_h2]:text-xl [&_h2]:font-bold
-                [&_h2]:text-muted-foreground [&_h2]:dark:text-gray-200
+                [&_h2]:text-zinc-800 [&_h2]:dark:text-gray-200
                 [&_h2]:mt-8 [&_h2]:mb-3
 
                 [&_h3]:text-xl [&_h3]:font-semibold
-                [&_h3]:text-gray-600 [&_h3]:dark:text-gray-300
+                [&_h3]:text-zinc-600 [&_h3]:dark:text-gray-300
                 [&_h3]:mt-6 [&_h3]:mb-2
 
                 [&_p]:text-[16px]
